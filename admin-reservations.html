@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration Réservations | Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --corail: #FF6B6B;
+            --turquoise: #4ECDC4;
+            --lavande: #A78BFA;
+            --rose: #FF6B9D;
+            --vert: #6BCF7F;
+            --orange: #FF8C42;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', Arial, sans-serif;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 25px 35px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: #1A1A2E;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-back {
+            background: var(--turquoise);
+            color: white;
+        }
+        
+        .btn-export {
+            background: #9C27B0;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card .label {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .tab:hover {
+            border-color: var(--turquoise);
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Sections */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            font-size: 1.5rem;
+            color: #1A1A2E;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Ateliers Grid */
+        .ateliers-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .atelier-admin-card {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid var(--turquoise);
+            transition: all 0.3s;
+        }
+        
+        .atelier-admin-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .atelier-admin-card.complet {
+            border-left-color: #EF4444;
+            opacity: 0.8;
+        }
+        
+        .atelier-admin-card.solo {
+            border-left-color: var(--corail);
+        }
+        
+        .atelier-admin-card.duo {
+            border-left-color: var(--turquoise);
+        }
+        
+        .atelier-admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .atelier-admin-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1A1A2E;
+        }
+        
+        .atelier-admin-badge {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-solo {
+            background: rgba(255, 107, 107, 0.15);
+            color: #DC2626;
+        }
+        
+        .badge-duo {
+            background: rgba(78, 205, 196, 0.15);
+            color: #0D9488;
+        }
+        
+        .atelier-admin-info {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .atelier-admin-places {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .places-bar {
+            flex: 1;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .places-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .places-fill.ok { background: var(--vert); }
+        .places-fill.warning { background: #F59E0B; }
+        .places-fill.danger { background: #EF4444; }
+        
+        .places-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .atelier-admin-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .btn-small:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn-complet {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .btn-rouvrir {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        
+        .btn-edit {
+            background: #E0E7FF;
+            color: #4F46E5;
+        }
+        
+        /* Réservations Table */
+        .reservations-container {
+            overflow-x: auto;
+        }
+        
+        .reservations-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .reservations-table th,
+        .reservations-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .reservations-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #1A1A2E;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .reservations-table tr:hover {
+            background: #f9fafb;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-confirmee {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        
+        .status-annulee {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-right: 5px;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .action-btn.view { background: #E0E7FF; color: #4F46E5; }
+        .action-btn.cancel { background: #FEE2E2; color: #DC2626; }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+        
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .modal h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #1A1A2E;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f3f4f6;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1A1A2E;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--turquoise);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 18px 28px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10001;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success { border-left: 5px solid #10B981; }
+        .toast.error { border-left: 5px solid #EF4444; }
+        .toast.warning { border-left: 5px solid #F59E0B; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>📋 Gestion des Réservations</h1>
+                <p style="color: #666; margin-top: 5px;">Gérez les ateliers et les réservations</p>
+            </div>
+            <div class="header-actions">
+                <a href="admin.html" class="btn btn-back">← Retour Admin</a>
+                <button class="btn btn-export" onclick="exportReservations()">📥 Exporter CSV</button>
+                <button class="btn btn-danger" onclick="logout()">🚪 Déconnexion</button>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number" id="statReservations">0</div>
+                <div class="label">Réservations totales</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="statAteliersComplets">0</div>
+                <div class="label">Ateliers complets</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="statPlacesRestantes">0</div>
+                <div class="label">Places restantes</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="statRevenu">0€</div>
+                <div class="label">Revenu estimé</div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="ateliers">🎨 Ateliers (16)</button>
+            <button class="tab" data-tab="reservations">📝 Réservations</button>
+            <button class="tab" data-tab="parametres">⚙️ Paramètres</button>
+        </div>
+        
+        <!-- Section Ateliers -->
+        <div class="section" id="sectionAteliers">
+            <h2>🗓️ Gestion des 16 Ateliers</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <select id="filterType" onchange="renderAteliers()" style="padding: 10px 20px; border: 2px solid #e5e7eb; border-radius: 10px; font-family: inherit;">
+                    <option value="all">Tous les ateliers</option>
+                    <option value="solo">E&V Solo uniquement</option>
+                    <option value="duo">E&V Duo uniquement</option>
+                    <option value="complet">Ateliers complets</option>
+                    <option value="disponible">Places disponibles</option>
+                </select>
+            </div>
+            
+            <div class="ateliers-admin-grid" id="ateliersGrid">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+        
+        <!-- Section Réservations -->
+        <div class="section" id="sectionReservations" style="display: none;">
+            <h2>📝 Liste des Réservations</h2>
+            
+            <div class="reservations-container">
+                <table class="reservations-table" id="reservationsTable">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Atelier</th>
+                            <th>Date</th>
+                            <th>Parent</th>
+                            <th>Enfant</th>
+                            <th>Contact</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsBody">
+                        <!-- Généré dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="empty-state" id="emptyReservations" style="display: none;">
+                <div class="icon">📭</div>
+                <h3>Aucune réservation</h3>
+                <p>Les réservations apparaîtront ici</p>
+            </div>
+        </div>
+        
+        <!-- Section Paramètres -->
+        <div class="section" id="sectionParametres" style="display: none;">
+            <h2>⚙️ Paramètres</h2>
+            
+            <div style="max-width: 500px;">
+                <div class="form-group">
+                    <label>📧 Email de notification admin</label>
+                    <input type="email" id="adminEmail" value="contact@eveiletvouss.fr">
+                </div>
+                
+                <div class="form-group">
+                    <label>👥 Places max par atelier Solo</label>
+                    <input type="number" id="maxPlacesSolo" value="8" min="1" max="20">
+                </div>
+                
+                <div class="form-group">
+                    <label>👥 Places max par atelier Duo</label>
+                    <input type="number" id="maxPlacesDuo" value="6" min="1" max="20">
+                </div>
+                
+                <button class="btn" style="background: linear-gradient(135deg, var(--orange), var(--turquoise)); color: white;" onclick="saveSettings()">
+                    💾 Sauvegarder les paramètres
+                </button>
+                
+                <hr style="margin: 30px 0; border: none; border-top: 2px dashed #e5e7eb;">
+                
+                <h3 style="margin-bottom: 15px; color: #DC2626;">⚠️ Zone dangereuse</h3>
+                
+                <button class="btn btn-danger" onclick="resetAllData()">
+                    🗑️ Réinitialiser toutes les données
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Édition Places -->
+    <div class="modal-overlay" id="modalEdit">
+        <div class="modal">
+            <button class="modal-close" onclick="closeEditModal()">×</button>
+            <h3 id="modalEditTitle">Modifier l'atelier</h3>
+            
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <input type="hidden" id="editType">
+                
+                <div class="form-group">
+                    <label>📅 Date</label>
+                    <input type="text" id="editDate">
+                </div>
+                
+                <div class="form-group">
+                    <label>⏰ Horaire</label>
+                    <input type="text" id="editHeure">
+                </div>
+                
+                <div class="form-group">
+                    <label>👥 Places restantes</label>
+                    <input type="number" id="editPlaces" min="0" max="20">
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, var(--orange), var(--turquoise)); color: white;">
+                    💾 Enregistrer
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Détails Réservation -->
+    <div class="modal-overlay" id="modalDetails">
+        <div class="modal">
+            <button class="modal-close" onclick="closeDetailsModal()">×</button>
+            <h3>📋 Détails de la réservation</h3>
+            <div id="reservationDetails"></div>
+        </div>
+    </div>
+    
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✅</span>
+        <span id="toastMessage">Message</span>
+    </div>
+
+    <script>
+        // =============================================
+        // DONNÉES
+        // =============================================
+        
+        let ateliersData = { ateliersSolo: [], ateliersDuo: [] };
+        let reservations = [];
+        
+        // Données par défaut
+        const defaultData = {
+            ateliersSolo: [
+                { id: 1, titre: "Éveil Créatif", emoji: "🎨", date: "Mercredi 15 Janvier 2025", heure: "14h30 - 16h00", description: "Arts plastiques et expression artistique.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#FF6B6B" },
+                { id: 2, titre: "Éveil Sensoriel", emoji: "👃", date: "Mercredi 22 Janvier 2025", heure: "14h30 - 16h00", description: "Découverte des 5 sens.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 5, complet: false, couleur: "#4ECDC4" },
+                { id: 3, titre: "Yoga & Relaxation", emoji: "🧘", date: "Mercredi 29 Janvier 2025", heure: "14h30 - 16h00", description: "Postures ludiques et relaxation.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 6, complet: false, couleur: "#A78BFA" },
+                { id: 4, titre: "Gestion des Émotions", emoji: "❤️", date: "Mercredi 5 Février 2025", heure: "14h30 - 16h00", description: "Identifier et accueillir ses émotions.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 7, complet: false, couleur: "#FF6B9D" },
+                { id: 5, titre: "Activités Nature", emoji: "🌳", date: "Mercredi 12 Février 2025", heure: "14h30 - 16h00", description: "Jardinage et land art.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#6BCF7F" },
+                { id: 6, titre: "Éveil Créatif", emoji: "🎨", date: "Mercredi 19 Février 2025", heure: "14h30 - 16h00", description: "Nouvelles techniques artistiques.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#FF6B6B" },
+                { id: 7, titre: "Éveil Sensoriel", emoji: "👃", date: "Mercredi 26 Février 2025", heure: "14h30 - 16h00", description: "Explorations sensorielles.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 6, complet: false, couleur: "#4ECDC4" },
+                { id: 8, titre: "Yoga & Relaxation", emoji: "🧘", date: "Mercredi 5 Mars 2025", heure: "14h30 - 16h00", description: "Approfondissement yoga.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 7, complet: false, couleur: "#A78BFA" }
+            ],
+            ateliersDuo: [
+                { id: 9, titre: "Éveil Créatif en Duo", emoji: "🎨", date: "Samedi 18 Janvier 2025", heure: "10h00 - 12h00", description: "Création artistique en binôme.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B6B" },
+                { id: 10, titre: "Éveil Sensoriel en Duo", emoji: "👃", date: "Samedi 25 Janvier 2025", heure: "10h00 - 12h00", description: "Exploration des sens ensemble.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 5, complet: false, couleur: "#4ECDC4" },
+                { id: 11, titre: "Yoga & Relaxation en Duo", emoji: "🧘", date: "Samedi 1er Février 2025", heure: "10h00 - 12h00", description: "Yoga en binôme.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#A78BFA" },
+                { id: 12, titre: "Gestion des Émotions en Duo", emoji: "❤️", date: "Samedi 8 Février 2025", heure: "10h00 - 12h00", description: "Émotions en famille.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B9D" },
+                { id: 13, titre: "Activités Nature en Duo", emoji: "🌳", date: "Samedi 15 Février 2025", heure: "10h00 - 12h00", description: "Nature en famille.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 7, complet: false, couleur: "#6BCF7F" },
+                { id: 14, titre: "Éveil Créatif en Duo", emoji: "🎨", date: "Samedi 22 Février 2025", heure: "10h00 - 12h00", description: "Nouvelles techniques duo.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B6B" },
+                { id: 15, titre: "Éveil Sensoriel en Duo", emoji: "👃", date: "Samedi 1er Mars 2025", heure: "10h00 - 12h00", description: "Sensorialité partagée.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 5, complet: false, couleur: "#4ECDC4" },
+                { id: 16, titre: "Yoga & Relaxation en Duo", emoji: "🧘", date: "Samedi 8 Mars 2025", heure: "10h00 - 12h00", description: "Yoga duo approfondi.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#A78BFA" }
+            ]
+        };
+        
+        // =============================================
+        // INITIALISATION
+        // =============================================
+        
+        function init() {
+            // Vérifier connexion admin
+            if (!sessionStorage.getItem('adminLoggedIn')) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            
+            loadData();
+            renderAteliers();
+            renderReservations();
+            updateStats();
+            initTabs();
+            initEditForm();
+        }
+        
+        function loadData() {
+            const savedAteliers = localStorage.getItem('ateliers-reservations-data');
+            if (savedAteliers) {
+                ateliersData = JSON.parse(savedAteliers);
+            } else {
+                ateliersData = JSON.parse(JSON.stringify(defaultData));
+            }
+            
+            const savedReservations = localStorage.getItem('reservations-list');
+            if (savedReservations) {
+                reservations = JSON.parse(savedReservations);
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('ateliers-reservations-data', JSON.stringify(ateliersData));
+            localStorage.setItem('reservations-list', JSON.stringify(reservations));
+        }
+        
+        // =============================================
+        // TABS
+        // =============================================
+        
+        function initTabs() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    document.getElementById('sectionAteliers').style.display = 'none';
+                    document.getElementById('sectionReservations').style.display = 'none';
+                    document.getElementById('sectionParametres').style.display = 'none';
+                    
+                    document.getElementById('section' + capitalizeFirst(tab.dataset.tab)).style.display = 'block';
+                });
+            });
+        }
+        
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        // =============================================
+        // STATS
+        // =============================================
+        
+        function updateStats() {
+            const allAteliers = [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo];
+            const complets = allAteliers.filter(a => a.complet).length;
+            const placesRestantes = allAteliers.reduce((sum, a) => sum + a.placesRestantes, 0);
+            const reservationsConfirmees = reservations.filter(r => r.statut === 'confirmée').length;
+            const revenu = reservationsConfirmees * 18;
+            
+            document.getElementById('statReservations').textContent = reservationsConfirmees;
+            document.getElementById('statAteliersComplets').textContent = complets;
+            document.getElementById('statPlacesRestantes').textContent = placesRestantes;
+            document.getElementById('statRevenu').textContent = revenu + '€';
+        }
+        
+        // =============================================
+        // ATELIERS
+        // =============================================
+        
+        function renderAteliers() {
+            const filter = document.getElementById('filterType').value;
+            let allAteliers = [];
+            
+            ateliersData.ateliersSolo.forEach(a => allAteliers.push({...a, type: 'solo'}));
+            ateliersData.ateliersDuo.forEach(a => allAteliers.push({...a, type: 'duo'}));
+            
+            // Filtrer
+            if (filter === 'solo') allAteliers = allAteliers.filter(a => a.type === 'solo');
+            if (filter === 'duo') allAteliers = allAteliers.filter(a => a.type === 'duo');
+            if (filter === 'complet') allAteliers = allAteliers.filter(a => a.complet);
+            if (filter === 'disponible') allAteliers = allAteliers.filter(a => !a.complet);
+            
+            const grid = document.getElementById('ateliersGrid');
+            grid.innerHTML = allAteliers.map(a => createAtelierCard(a)).join('');
+        }
+        
+        function createAtelierCard(atelier) {
+            const pourcent = ((atelier.placesMax - atelier.placesRestantes) / atelier.placesMax) * 100;
+            const fillClass = pourcent >= 100 ? 'danger' : (pourcent >= 75 ? 'warning' : 'ok');
+            
+            return `
+                <div class="atelier-admin-card ${atelier.type} ${atelier.complet ? 'complet' : ''}">
+                    <div class="atelier-admin-header">
+                        <div>
+                            <span style="font-size: 1.5rem;">${atelier.emoji}</span>
+                            <div class="atelier-admin-title">${atelier.titre}</div>
+                        </div>
+                        <span class="atelier-admin-badge badge-${atelier.type}">${atelier.type === 'solo' ? 'Solo' : 'Duo'}</span>
+                    </div>
+                    <div class="atelier-admin-info">
+                        📅 ${atelier.date}<br>
+                        ⏰ ${atelier.heure}
+                    </div>
+                    <div class="atelier-admin-places">
+                        <div class="places-bar">
+                            <div class="places-fill ${fillClass}" style="width: ${pourcent}%"></div>
+                        </div>
+                        <span class="places-text">${atelier.placesRestantes}/${atelier.placesMax}</span>
+                    </div>
+                    <div class="atelier-admin-actions">
+                        ${atelier.complet 
+                            ? `<button class="btn-small btn-rouvrir" onclick="rouvrirAtelier(${atelier.id}, '${atelier.type}')">🔓 Rouvrir</button>`
+                            : `<button class="btn-small btn-complet" onclick="marquerComplet(${atelier.id}, '${atelier.type}')">🔒 Complet</button>`
+                        }
+                        <button class="btn-small btn-edit" onclick="openEditModal(${atelier.id}, '${atelier.type}')">✏️ Éditer</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function marquerComplet(id, type) {
+            const source = type === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+            const atelier = source.find(a => a.id === id);
+            if (atelier) {
+                atelier.complet = true;
+                atelier.placesRestantes = 0;
+                saveData();
+                renderAteliers();
+                updateStats();
+                showToast('✅ Atelier marqué comme complet', 'success');
+            }
+        }
+        
+        function rouvrirAtelier(id, type) {
+            const source = type === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+            const atelier = source.find(a => a.id === id);
+            if (atelier) {
+                atelier.complet = false;
+                atelier.placesRestantes = 1; // Au moins une place
+                saveData();
+                renderAteliers();
+                updateStats();
+                showToast('✅ Atelier réouvert', 'success');
+            }
+        }
+        
+        // =============================================
+        // MODAL ÉDITION
+        // =============================================
+        
+        function openEditModal(id, type) {
+            const source = type === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+            const atelier = source.find(a => a.id === id);
+            if (!atelier) return;
+            
+            document.getElementById('modalEditTitle').textContent = `Modifier: ${atelier.titre}`;
+            document.getElementById('editId').value = id;
+            document.getElementById('editType').value = type;
+            document.getElementById('editDate').value = atelier.date;
+            document.getElementById('editHeure').value = atelier.heure;
+            document.getElementById('editPlaces').value = atelier.placesRestantes;
+            document.getElementById('editPlaces').max = atelier.placesMax;
+            
+            document.getElementById('modalEdit').classList.add('active');
+        }
+        
+        function closeEditModal() {
+            document.getElementById('modalEdit').classList.remove('active');
+        }
+        
+        function initEditForm() {
+            document.getElementById('editForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const id = parseInt(document.getElementById('editId').value);
+                const type = document.getElementById('editType').value;
+                const source = type === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+                const atelier = source.find(a => a.id === id);
+                
+                if (atelier) {
+                    atelier.date = document.getElementById('editDate').value;
+                    atelier.heure = document.getElementById('editHeure').value;
+                    atelier.placesRestantes = parseInt(document.getElementById('editPlaces').value);
+                    atelier.complet = atelier.placesRestantes <= 0;
+                    
+                    saveData();
+                    renderAteliers();
+                    updateStats();
+                    closeEditModal();
+                    showToast('✅ Atelier mis à jour', 'success');
+                }
+            });
+        }
+        
+        // =============================================
+        // RÉSERVATIONS
+        // =============================================
+        
+        function renderReservations() {
+            const tbody = document.getElementById('reservationsBody');
+            const empty = document.getElementById('emptyReservations');
+            
+            if (reservations.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            
+            empty.style.display = 'none';
+            
+            tbody.innerHTML = reservations.map(r => `
+                <tr>
+                    <td>#${r.id}</td>
+                    <td><strong>${r.atelierTitre}</strong></td>
+                    <td>${r.atelierDate}<br><small>${r.atelierHeure}</small></td>
+                    <td>${r.parentNom}</td>
+                    <td>${r.enfantPrenom} (${r.enfantAge} ans)</td>
+                    <td>${r.parentEmail}<br><small>${r.parentTel}</small></td>
+                    <td><span class="status-badge status-${r.statut}">${r.statut}</span></td>
+                    <td>
+                        <button class="action-btn view" onclick="viewReservation(${r.id})">👁️</button>
+                        ${r.statut === 'confirmée' ? `<button class="action-btn cancel" onclick="cancelReservation(${r.id})">❌</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function viewReservation(id) {
+            const r = reservations.find(res => res.id === id);
+            if (!r) return;
+            
+            document.getElementById('reservationDetails').innerHTML = `
+                <p><strong>N° Réservation:</strong> #${r.id}</p>
+                <p><strong>Atelier:</strong> ${r.atelierTitre}</p>
+                <p><strong>Date:</strong> ${r.atelierDate}</p>
+                <p><strong>Horaire:</strong> ${r.atelierHeure}</p>
+                <hr style="margin: 15px 0;">
+                <p><strong>Parent:</strong> ${r.parentNom}</p>
+                <p><strong>Email:</strong> ${r.parentEmail}</p>
+                <p><strong>Téléphone:</strong> ${r.parentTel}</p>
+                <p><strong>Enfant:</strong> ${r.enfantPrenom} (${r.enfantAge} ans)</p>
+                ${r.parentParticipant ? `<p><strong>Parent participant:</strong> ${r.parentParticipant}</p>` : ''}
+                ${r.message ? `<p><strong>Message:</strong> ${r.message}</p>` : ''}
+                <hr style="margin: 15px 0;">
+                <p><strong>Réservé le:</strong> ${r.dateReservation}</p>
+                <p><strong>Statut:</strong> <span class="status-badge status-${r.statut}">${r.statut}</span></p>
+            `;
+            
+            document.getElementById('modalDetails').classList.add('active');
+        }
+        
+        function closeDetailsModal() {
+            document.getElementById('modalDetails').classList.remove('active');
+        }
+        
+        function cancelReservation(id) {
+            if (!confirm('Voulez-vous vraiment annuler cette réservation ?')) return;
+            
+            const r = reservations.find(res => res.id === id);
+            if (r) {
+                r.statut = 'annulée';
+                
+                // Rendre la place
+                const source = r.atelierType === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+                const atelier = source.find(a => a.id === r.atelierId);
+                if (atelier) {
+                    atelier.placesRestantes++;
+                    atelier.complet = false;
+                }
+                
+                saveData();
+                renderReservations();
+                renderAteliers();
+                updateStats();
+                showToast('✅ Réservation annulée', 'warning');
+            }
+        }
+        
+        // =============================================
+        // EXPORT
+        // =============================================
+        
+        function exportReservations() {
+            if (reservations.length === 0) {
+                showToast('❌ Aucune réservation à exporter', 'error');
+                return;
+            }
+            
+            let csv = 'N°,Atelier,Date,Horaire,Parent,Email,Téléphone,Enfant,Age,Statut,Date Réservation\n';
+            
+            reservations.forEach(r => {
+                csv += `${r.id},"${r.atelierTitre}","${r.atelierDate}","${r.atelierHeure}","${r.parentNom}","${r.parentEmail}","${r.parentTel}","${r.enfantPrenom}",${r.enfantAge},"${r.statut}","${r.dateReservation}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `reservations-eveil-vous-${Date.now()}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('✅ Export CSV téléchargé', 'success');
+        }
+        
+        // =============================================
+        // PARAMÈTRES
+        // =============================================
+        
+        function saveSettings() {
+            showToast('✅ Paramètres sauvegardés', 'success');
+        }
+        
+        function resetAllData() {
+            if (!confirm('⚠️ Voulez-vous vraiment supprimer TOUTES les données ?')) return;
+            if (!confirm('🚨 Cette action est irréversible ! Confirmer ?')) return;
+            
+            localStorage.removeItem('ateliers-reservations-data');
+            localStorage.removeItem('reservations-list');
+            
+            ateliersData = JSON.parse(JSON.stringify(defaultData));
+            reservations = [];
+            
+            saveData();
+            renderAteliers();
+            renderReservations();
+            updateStats();
+            
+            showToast('✅ Données réinitialisées', 'warning');
+        }
+        
+        // =============================================
+        // UTILITAIRES
+        // =============================================
+        
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toastIcon').textContent = type === 'success' ? '✅' : (type === 'error' ? '❌' : '⚠️');
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            window.location.href = 'admin.html';
+        }
+        
+        // =============================================
+        // LANCEMENT
+        // =============================================
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

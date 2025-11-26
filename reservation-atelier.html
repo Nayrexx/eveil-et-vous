@@ -14,20 +14,29 @@
 </head>
 <body>
 
-    <header style="background: white; box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 20px 0; position: sticky; top: 0; z-index: 1000;">
+    <header>
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="index.html" style="text-decoration: none;">
+            <div class="header-content">
+                <a href="index.html" class="logo">
                     <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
                 </a>
                 
-                <nav style="display: flex; gap: 35px; align-items: center;">
-                    <a href="about.html" style="color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a>
-                    <a href="activites.html" style="color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a>
-                    <a href="ateliers.html" style="color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s;">Ateliers</a>
-                    <a href="contact.html" style="color: var(--text-color); text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
-                    <a href="reservation.html" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(255, 181, 197, 0.3);">Réserver un séjour</a>
+                <nav>
+                    <ul>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
                 </nav>
+                
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>

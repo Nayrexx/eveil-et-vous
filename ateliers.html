@@ -3,13 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ateliers d'éveil hebdomadaires pour enfants et familles - Mercredis et Samedis à Limoux">
-    <title>Ateliers Hebdomadaires | Éveil & Vous</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Ateliers d'Éveil Enfants Limoux | E&V Solo, Duo & Mon Moment Magique</title>
+    <meta name="description" content="Ateliers hebdomadaires d'éveil pour enfants 3-11 ans à Limoux : E&V Solo (mercredi), E&V Duo parent-enfant (samedi), Mon Moment Magique. Éveil créatif, sensoriel, yoga, émotions, nature.">
+    <meta name="keywords" content="atelier éveil Limoux, activités enfants Aude, yoga enfant, éveil créatif, atelier parent-enfant, Mon Moment Magique, mercredi enfant, samedi famille">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://eveiletvouss.fr/ateliers.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eveiletvouss.fr/ateliers.html">
+    <meta property="og:title" content="Ateliers d'Éveil Hebdomadaires pour Enfants à Limoux">
+    <meta property="og:description" content="Réservez votre atelier d'éveil : Solo (mercredi 14h30-16h), Duo parent-enfant (samedi 10h-12h), Mon Moment Magique (mercredi 10h-11h30). 5 thématiques : créatif, sensoriel, yoga, émotions, nature.">
+    <meta property="og:image" content="https://eveiletvouss.fr/images/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ateliers d'Éveil Enfants à Limoux">
+    <meta name="twitter:description" content="Ateliers hebdomadaires 3-11 ans : Solo, Duo parent-enfant, Mon Moment Magique. Réservez en ligne !">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Ateliers d'Éveil Hebdomadaires",
+      "description": "Ateliers d'éveil pour enfants de 3 à 11 ans : E&V Solo, E&V Duo parent-enfant, Mon Moment Magique",
+      "location": {
+        "@type": "Place",
+        "name": "Éveil & Vous",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Limoux",
+          "addressRegion": "Aude",
+          "addressCountry": "FR"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "18",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Éveil & Vous",
+        "url": "https://eveiletvouss.fr"
+      }
+    }
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://c                Rejoignez nos ateliers E&V Solo, E&V Duo ou MMM Junior.<br>
+                Places limitées pour garantir un accompagnement personnalisé et bienveillant.
+            </p>
+            <a href="contact.html" style="display: inline-block; background: white; color: var(--rose); padding: 20px 50px; border-radius: 35px; text-decoration: none; font-weight: 700; font-size: 1.2rem; box-shadow: 0 15px 50px rgba(0,0,0,0.25); transition: all 0.3s; border: 3px solid white;">
+                📞 Nous contacter
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION CARTES D'ATELIERS PROGRAMMÉS -->
+    <section class="workshops-cards" style="padding: 100px 0; background: linear-gradient(180deg, white 0%, rgba(255, 215, 153, 0.08) 100%);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">
+                    🗓️ Ateliers Programmés
+                </h2>
+                <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.7;">
+                    Réservez votre place pour nos prochains ateliers. Places limitées !
+                </p>
+            </div>
+
+            <!-- ATELIERS E&V SOLO (Mercredi) -->
+            <div style="margin-bottom: 80px;">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 40px; color: #1A1A2E; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                    <span style="display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--corail), #FF9A76); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem;">🌟</span>
+                    Ateliers E&V Solo - Mercredis Après-midi
+                </h3>
+                
+                <div id="ateliers-solo-grid" class="workshops-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+                    <!-- Les ateliers Solo seront chargés ici dynamiquement depuis data/ateliers-data.json -->
+                    <!-- Carte 1: Éveil Créatif -->
+                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--corail); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 15 Janvier</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Arts plastiques et expression artistique pour libérer la créativité.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Éveil Créatif', 'Mercredi 15 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--corail), #FF9A76); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 2: Éveil Sensoriel -->
+                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 22 Janvier</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Découverte des 5 sens à travers des expériences tactiles, olfactives et gustatives.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Éveil Sensoriel', 'Mercredi 22 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), #7ECFC0); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 3: Yoga & Relaxation -->
+                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--lavande); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 29 Janvier</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Postures ludiques et techniques de retour au calme adaptées aux enfants.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Yoga & Relaxation', 'Mercredi 29 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--lavande), #B593D6); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 4: Gestion des Émotions -->
+                    <div class="workshop-card" data-theme="emotion" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--rose); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">❤️</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Gestion des Émotions</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 5 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Identifier, nommer et accueillir ses émotions avec des outils concrets.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Gestion des Émotions', 'Mercredi 5 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--rose), #EA8FA3); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 5: Activités Nature -->
+                    <div class="workshop-card" data-theme="nature" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--vert); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🌳</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Activités Nature</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 12 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Jardinage, land art et exploration extérieure pour se reconnecter à la nature.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Activités Nature', 'Mercredi 12 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--vert), #9FD99F); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 6: Éveil Créatif (cycle 2) -->
+                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--corail); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 19 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Nouvelles techniques artistiques et exploration créative approfondie.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Éveil Créatif', 'Mercredi 19 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--corail), #FF9A76); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 7: Éveil Sensoriel (cycle 2) -->
+                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 26 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Nouvelles explorations sensorielles et expériences enrichissantes.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Éveil Sensoriel', 'Mercredi 26 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), #7ECFC0); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+
+                    <!-- Carte 8: Yoga & Relaxation (cycle 2) -->
+                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--lavande); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 5 Mars</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Approfondissement des postures et nouvelles techniques de relaxation.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 places</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Solo - Yoga & Relaxation', 'Mercredi 5 Mars 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--lavande), #B593D6); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver ma place
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATELIERS E&V DUO (Samedi) -->
+            <div style="margin-bottom: 60px;">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 40px; color: #1A1A2E; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                    <span style="display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem;">👨‍👩‍👧</span>
+                    Ateliers E&V Duo - Samedis Matin
+                </h3>
+                
+                <div id="ateliers-duo-grid" class="workshops-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+                    <!-- Les ateliers Duo seront chargés ici dynamiquement depuis data/ateliers-data.json -->
+                    <!-- Carte 1 Duo: Éveil Créatif -->
+                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 18 Janvier</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Créez ensemble des œuvres artistiques uniques et partagez un moment créatif.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Éveil Créatif', 'Samedi 18 Janvier 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 2 Duo: Éveil Sensoriel -->
+                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 25 Janvier</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Explorez les 5 sens ensemble à travers des expériences ludiques en binôme.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Éveil Sensoriel', 'Samedi 25 Janvier 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 3 Duo: Yoga & Relaxation -->
+                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 1er Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Postures de yoga en binôme et relaxation partagée pour se ressourcer.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Yoga & Relaxation', 'Samedi 1er Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 4 Duo: Gestion des Émotions -->
+                    <div class="workshop-card" data-theme="emotion" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">❤️</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Gestion des Émotions en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 8 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Apprenez à identifier et gérer les émotions ensemble avec bienveillance.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Gestion des Émotions', 'Samedi 8 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 5 Duo: Activités Nature -->
+                    <div class="workshop-card" data-theme="nature" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🌳</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Activités Nature en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 15 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Jardinage et land art pour se reconnecter à la nature en famille.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Activités Nature', 'Samedi 15 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 6 Duo: Éveil Créatif (cycle 2) -->
+                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 22 Février</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Nouvelles techniques artistiques à découvrir ensemble en duo.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Éveil Créatif', 'Samedi 22 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 7 Duo: Éveil Sensoriel (cycle 2) -->
+                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 1er Mars</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Nouvelles explorations sensorielles à vivre en complicité.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Éveil Sensoriel', 'Samedi 1er Mars 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+
+                    <!-- Carte 8 Duo: Yoga & Relaxation (cycle 2) -->
+                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
+                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation en Duo</h4>
+                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 8 Mars</p>
+                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
+                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
+                            Approfondissement des postures en duo et relaxation profonde.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
+                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
+                        </div>
+                        <button onclick="openBookingModal('E&V Duo - Yoga & Relaxation', 'Samedi 8 Mars 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                            Réserver notre place
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE RÉSERVATION -->
+    <div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 30px; padding: 50px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative;">
+            <button onclick="closeBookingModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; transition: color 0.3s;">×</button>
+            
+            <h3 id="modalTitle" style="font-size: 2rem; margin-bottom: 10px; color: #1A1A2E; text-align: center;">Réserver</h3>
+            <p id="modalDate" style="text-align: center; color: #FF8C42; font-weight: 600; font-size: 1.2rem; margin-bottom: 30px;"></p>
+            
+            <form id="bookingForm" onsubmit="submitBooking(event)" style="display: flex; flex-direction: column; gap: 20px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Nom complet *</label>
+                    <input type="text" id="bookingName" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Email *</label>
+                    <input type="email" id="bookingEmail" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Téléphone *</label>
+                    <input type="tel" id="bookingPhone" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Âge de l'enfant *</label>
+                    <input type="number" id="bookingAge" min="3" max="11" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Nombre de participants *</label>
+                    <select id="bookingParticipants" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
+                        <option value="1">1 enfant (E&V Solo)</option>
+                        <option value="2">1 duo parent-enfant (E&V Duo)</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Message ou remarque</label>
+                    <textarea id="bookingMessage" rows="4" style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem; resize: vertical;"></textarea>
+                </div>
+                
+                <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--rose), #EA8FA3); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; font-size: 1.15rem; cursor: pointer; transition: transform 0.2s;">
+                    ✓ Confirmer ma réservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer style="background: #2D3436; color: white; padding: 60px 0 20px;">flare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/decorative-backgrounds.css">
     
@@ -136,21 +566,29 @@
 <body>
 
     <!-- HEADER -->
-    <header style="background: white; box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 20px 0; position: sticky; top: 0; z-index: 1000;">
+    <header>
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="index.html" style="text-decoration: none;">
+            <div class="header-content">
+                <a href="index.html" class="logo">
                     <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
                 </a>
                 
-                <nav style="display: flex; gap: 35px; align-items: center;">
-                    <a href="about.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a>
-                    <a href="activites.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a>
-                    <a href="ateliers.html" style="color: var(--rose); text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--rose);">Ateliers</a>
-                    <a href="galerie.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Galerie</a>
-                    <a href="contact.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
-                    <a href="reservation.html" style="background: linear-gradient(135deg, var(--rose), var(--turquoise)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(244, 166, 184, 0.3);">Réserver un séjour</a>
+                <nav>
+                    <ul>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="ateliers.html" style="color: var(--primary);">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
                 </nav>
+                
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>
@@ -221,6 +659,15 @@
                         <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Durée</h4>
                         <p style="color: #666; font-size: 0.95rem;">2 heures</p>
                     </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(255, 140, 66, 0.2);">
+                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
+                        <strong>Tarif : 18€ TTC</strong> par enfant
+                    </p>
+                    <p style="font-size: 0.95rem; color: #666;">
+                        Inscription à la séance
+                    </p>
                 </div>
                 
                 <div style="text-align: center;">
@@ -326,13 +773,22 @@
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">⏰</div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Horaires</h4>
-                        <p style="color: #666; font-size: 0.95rem;">14h30 - 16h30</p>
+                        <p style="color: #666; font-size: 0.95rem;">10h00 - 12h00</p>
                     </div>
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">⏱️</div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Durée</h4>
                         <p style="color: #666; font-size: 0.95rem;">2 heures</p>
                     </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(78, 205, 196, 0.3);">
+                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
+                        <strong>Tarif : 18€ TTC</strong> par duo (parent + enfant)
+                    </p>
+                    <p style="font-size: 0.95rem; color: #666;">
+                        Inscription à la séance
+                    </p>
                 </div>
                 
                 <div style="text-align: center;">
@@ -441,13 +897,13 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 40px;">
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">📅</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Fréquence</h4>
-                        <p style="color: #666; font-size: 0.95rem;">2 fois par semaine</p>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Jour</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Mercredi</p>
                     </div>
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⏱️</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Durée</h4>
-                        <p style="color: #666; font-size: 0.95rem;">1h30 par séance</p>
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⏰</div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Horaires</h4>
+                        <p style="color: #666; font-size: 0.95rem;">10h00 - 11h30</p>
                     </div>
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">👶</div>
@@ -482,6 +938,15 @@
                             <p style="color: #666; font-size: 0.9rem;">Retour au calme</p>
                         </div>
                     </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(197, 168, 224, 0.3);">
+                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
+                        <strong>Tarif : 15€ TTC</strong> par enfant
+                    </p>
+                    <p style="font-size: 0.95rem; color: #666;">
+                        Inscription à la séance
+                    </p>
                 </div>
                 
                 <div style="text-align: center;">
@@ -686,8 +1151,127 @@
                 });
             });
         });
+
+        // ===== GESTION DES CARTES D'ATELIERS ET RÉSERVATIONS =====
+        let currentWorkshop = { name: '', date: '' };
+
+        // Animation au hover des cartes
+        document.querySelectorAll('.workshop-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 20px 60px rgba(0,0,0,0.15)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
+            });
+        });
+
+        // Ouvrir le modal de réservation
+        function openBookingModal(workshopName, workshopDate) {
+            currentWorkshop = { name: workshopName, date: workshopDate };
+            document.getElementById('modalTitle').textContent = workshopName;
+            document.getElementById('modalDate').textContent = workshopDate;
+            
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                modal.querySelector('div').style.animation = 'modalSlideIn 0.4s ease-out';
+            }, 10);
+        }
+
+        // Fermer le modal
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('bookingForm').reset();
+        }
+
+        // Fermer en cliquant à l'extérieur
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target.id === 'bookingModal') {
+                closeBookingModal();
+            }
+        });
+
+        // Soumettre le formulaire
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const formData = {
+                workshop: currentWorkshop.name,
+                date: currentWorkshop.date,
+                name: document.getElementById('bookingName').value,
+                email: document.getElementById('bookingEmail').value,
+                phone: document.getElementById('bookingPhone').value,
+                age: document.getElementById('bookingAge').value,
+                participants: document.getElementById('bookingParticipants').value,
+                message: document.getElementById('bookingMessage').value
+            };
+            
+            // Simuler l'envoi (en production, envoyer à un serveur/email service)
+            console.log('Réservation:', formData);
+            
+            // Afficher un message de confirmation
+            alert(`✅ Votre réservation pour "${currentWorkshop.name}" a été enregistrée !\n\nNous vous contacterons rapidement au ${formData.phone} pour confirmer votre place.\n\nÀ bientôt ! 🌟`);
+            
+            // Fermer le modal
+            closeBookingModal();
+            
+            // En production, vous pourriez envoyer les données via fetch/axios vers un backend
+            // ou utiliser un service comme Formspree, EmailJS, etc.
+            /*
+            fetch('/api/booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Réservation confirmée !');
+                    closeBookingModal();
+                }
+            });
+            */
+        }
+
+        // Animation CSS pour le modal
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes modalSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .workshop-card button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            }
+            
+            @media (max-width: 768px) {
+                .workshops-grid {
+                    grid-template-columns: 1fr !important;
+                }
+                
+                #bookingModal > div {
+                    padding: 30px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 
+    <!-- Chargement dynamique des ateliers -->
+    <script src="js/ateliers-loader.js"></script>
     <script src="js/app.js"></script>
     <script src="js/cookies.js"></script>
 </body>

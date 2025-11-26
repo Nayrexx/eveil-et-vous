@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Galerie photos des ateliers et séjours Éveil & Vous - Découvrez nos activités en images">
-    <title>Galerie Photos | Éveil & Vous</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Galerie Photos Ateliers & Séjours | Éveil & Vous Limoux</title>
+    <meta name="description" content="Découvrez en images nos ateliers d'éveil et séjours en famille à Limoux : activités créatives, yoga enfants, nature, moments parent-enfant. Galerie photo interactive avec upload.">
+    <meta name="keywords" content="photos ateliers éveil Limoux, galerie photos enfants, activités nature enfants, yoga enfant photos, séjours famille images">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://eveiletvouss.fr/galerie.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eveiletvouss.fr/galerie.html">
+    <meta property="og:title" content="Galerie Photos | Ateliers & Séjours Éveil & Vous">
+    <meta property="og:description" content="Découvrez nos ateliers d'éveil, séjours en famille et activités nature en images. Partagez vos moments magiques !">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -271,21 +282,29 @@
 <body>
 
     <!-- HEADER -->
-    <header style="background: white; box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 20px 0; position: sticky; top: 0; z-index: 1000;">
+    <header>
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="index.html" style="text-decoration: none;">
+            <div class="header-content">
+                <a href="index.html" class="logo">
                     <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
                 </a>
                 
-                <nav style="display: flex; gap: 35px; align-items: center;">
-                    <a href="about.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a>
-                    <a href="activites.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a>
-                    <a href="ateliers.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Ateliers</a>
-                    <a href="galerie.html" style="color: var(--primary); text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--primary);">Galerie</a>
-                    <a href="contact.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
-                    <a href="reservation.html" style="background: linear-gradient(135deg, var(--primary), var(--turquoise)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(255, 140, 66, 0.3);">Réserver</a>
+                <nav>
+                    <ul>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="galerie.html" style="color: var(--primary);">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
                 </nav>
+                
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>
@@ -327,6 +346,89 @@
                 <button class="filter-btn" data-filter="mmm">
                     ✨ MMM Junior
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODULE D'UPLOAD (Admin) -->
+    <section id="uploadSection" style="padding: 40px 0; background: #f9fafb; border-top: 1px solid #e5e7eb;">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 style="font-size: 1.8rem; color: #1A1A2E; margin-bottom: 10px;">
+                        📤 Ajouter des Photos
+                    </h3>
+                    <p style="color: #666; font-size: 0.95rem;">Module d'administration - Uploadez vos photos d'ateliers</p>
+                </div>
+
+                <form id="uploadForm" style="display: grid; gap: 20px;">
+                    <!-- Titre de l'atelier -->
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1A1A2E;">
+                            📝 Titre de l'atelier *
+                        </label>
+                        <input type="text" id="photoTitle" required 
+                               placeholder="Ex: Atelier créatif - E&V Solo"
+                               style="width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;">
+                    </div>
+
+                    <!-- Catégorie -->
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1A1A2E;">
+                            🏷️ Catégorie *
+                        </label>
+                        <select id="photoCategory" required 
+                                style="width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; background: white; cursor: pointer;">
+                            <option value="">Sélectionnez une catégorie</option>
+                            <option value="ateliers solo">E&V Solo</option>
+                            <option value="ateliers duo">E&V Duo</option>
+                            <option value="ateliers mmm">MMM Junior</option>
+                            <option value="sejours">Séjours</option>
+                        </select>
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1A1A2E;">
+                            💬 Description
+                        </label>
+                        <textarea id="photoDescription" rows="3"
+                                  placeholder="Ajoutez une description de la photo (optionnel)"
+                                  style="width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; resize: vertical;"></textarea>
+                    </div>
+
+                    <!-- Upload fichier -->
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1A1A2E;">
+                            📷 Image *
+                        </label>
+                        <div style="border: 3px dashed #FF8C42; border-radius: 15px; padding: 40px; text-align: center; background: linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(78, 205, 196, 0.05)); transition: all 0.3s; cursor: pointer;" 
+                             onclick="document.getElementById('photoFile').click();">
+                            <input type="file" id="photoFile" accept="image/*" required 
+                                   style="display: none;" 
+                                   onchange="displayFileName(this)">
+                            <div id="uploadIcon" style="font-size: 3rem; margin-bottom: 15px;">📁</div>
+                            <p id="uploadText" style="font-size: 1.1rem; color: #555; margin-bottom: 5px; font-weight: 600;">
+                                Cliquez ou déposez votre image ici
+                            </p>
+                            <p style="font-size: 0.85rem; color: #999;">Formats acceptés : JPG, PNG, WebP (Max 5MB)</p>
+                        </div>
+                    </div>
+
+                    <!-- Bouton d'envoi -->
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+                        <button type="submit" 
+                                style="background: linear-gradient(135deg, #FF8C42, #FFB366); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-weight: 600; font-size: 1.05rem; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3); transition: all 0.3s;">
+                            ✅ Ajouter la photo
+                        </button>
+                        <button type="button" onclick="document.getElementById('uploadForm').reset(); document.getElementById('uploadText').innerHTML = 'Cliquez ou déposez votre image ici';"
+                                style="background: white; color: #666; padding: 15px 30px; border: 2px solid #e5e7eb; border-radius: 30px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s;">
+                            🔄 Réinitialiser
+                        </button>
+                    </div>
+                </form>
+
+                <div id="uploadStatus" style="margin-top: 20px; padding: 15px; border-radius: 10px; display: none;"></div>
             </div>
         </div>
     </section>
@@ -610,6 +712,139 @@
                 closeLightbox();
             }
         });
+
+        // ===== GESTION DU FORMULAIRE D'UPLOAD =====
+        function displayFileName(input) {
+            const fileName = input.files[0]?.name;
+            if (fileName) {
+                document.getElementById('uploadText').innerHTML = `<strong style="color: #FF8C42;">✓ ${fileName}</strong>`;
+                document.getElementById('uploadIcon').textContent = '✅';
+            }
+        }
+
+        // Gestion de la soumission du formulaire
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('photoTitle').value;
+            const category = document.getElementById('photoCategory').value;
+            const description = document.getElementById('photoDescription').value;
+            const fileInput = document.getElementById('photoFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showStatus('Veuillez sélectionner une image', 'error');
+                return;
+            }
+
+            // Vérification de la taille du fichier (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                showStatus('Le fichier est trop volumineux (max 5MB)', 'error');
+                return;
+            }
+
+            // Simulation d'upload (en production, envoyer à un serveur)
+            showStatus('Upload en cours...', 'loading');
+            
+            // Simuler un délai d'upload
+            setTimeout(() => {
+                // Créer une prévisualisation de l'image uploadée
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    addPhotoToGallery(event.target.result, title, category, description);
+                    showStatus('✅ Photo ajoutée avec succès !', 'success');
+                    document.getElementById('uploadForm').reset();
+                    document.getElementById('uploadText').innerHTML = 'Cliquez ou déposez votre image ici';
+                    document.getElementById('uploadIcon').textContent = '📁';
+                };
+                reader.readAsDataURL(file);
+            }, 1500);
+        });
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.textContent = message;
+            
+            if (type === 'success') {
+                statusDiv.style.background = 'linear-gradient(135deg, rgba(107, 207, 127, 0.1), rgba(78, 205, 196, 0.1))';
+                statusDiv.style.color = '#059669';
+                statusDiv.style.border = '2px solid #6BCF7F';
+            } else if (type === 'error') {
+                statusDiv.style.background = 'linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 140, 66, 0.1))';
+                statusDiv.style.color = '#DC2626';
+                statusDiv.style.border = '2px solid #FF6B6B';
+            } else {
+                statusDiv.style.background = 'linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1))';
+                statusDiv.style.color = '#555';
+                statusDiv.style.border = '2px solid #FF8C42';
+            }
+            
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function addPhotoToGallery(imageSrc, title, category, description) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            // Créer le nouvel élément
+            const newItem = document.createElement('div');
+            newItem.className = 'gallery-item';
+            newItem.setAttribute('data-category', category);
+            newItem.setAttribute('data-title', title);
+            newItem.setAttribute('data-description', description || 'Nouvelle photo');
+            
+            newItem.innerHTML = `<img src="${imageSrc}" alt="${title}">`;
+            
+            // Ajouter l'événement click pour le lightbox
+            newItem.addEventListener('click', () => {
+                currentImages = Array.from(document.querySelectorAll('.gallery-item')).filter(i => i.style.display !== 'none' && !i.classList.contains('placeholder-card'));
+                currentImageIndex = currentImages.indexOf(newItem);
+                openLightbox(newItem);
+            });
+            
+            // Insérer au début de la galerie
+            galleryGrid.insertBefore(newItem, galleryGrid.firstChild);
+            
+            // Scroll vers la galerie
+            document.getElementById('galleryGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Drag & Drop
+        const dropZone = document.querySelector('[onclick*="photoFile"]');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.style.borderColor = '#FF8C42';
+                dropZone.style.background = 'linear-gradient(135deg, rgba(255, 140, 66, 0.15), rgba(78, 205, 196, 0.15))';
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.style.borderColor = '#FF8C42';
+                dropZone.style.background = 'linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(78, 205, 196, 0.05))';
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            document.getElementById('photoFile').files = files;
+            displayFileName(document.getElementById('photoFile'));
+        }, false);
     </script>
 
     <script src="js/app.js"></script>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin | Éveil & Vous</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', Arial, sans-serif;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 35px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #FF8C42;
+            box-shadow: 0 0 0 4px rgba(255, 140, 66, 0.1);
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 140, 66, 0.3);
+        }
+        
+        .error {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: #FF8C42;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">🔐</div>
+        <h1>Espace Administration</h1>
+        <p class="subtitle">Éveil & Vous</p>
+        
+        <div class="error" id="errorMsg">
+            ❌ Mot de passe incorrect
+        </div>
+        
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="Entrez le mot de passe" required autofocus>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                Se connecter →
+            </button>
+        </form>
+        
+        <a href="index.html" class="back-link">← Retour au site</a>
+    </div>
+    
+    <script>
+        // Mot de passe admin (vous pouvez le changer)
+        const ADMIN_PASSWORD = 'eveil2025';
+        
+        function login(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (password === ADMIN_PASSWORD) {
+                // Connexion réussie
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                window.location.href = 'admin.html';
+            } else {
+                // Mot de passe incorrect
+                errorMsg.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        }
+        
+        // Si déjà connecté, rediriger vers admin
+        if (sessionStorage.getItem('adminLoggedIn')) {
+            window.location.href = 'admin.html';
+        }
+    </script>
+</body>
+</html>

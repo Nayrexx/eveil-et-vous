@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📸 Upload Galerie - Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', Arial, sans-serif;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Zone de drop */
+        .drop-zone {
+            border: 4px dashed #4ECDC4;
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #E5F9F6 0%, #FFE5D9 100%);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+        }
+        
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #FF8C42;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            transform: scale(1.02);
+        }
+        
+        .drop-zone .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        
+        .drop-zone h3 {
+            font-size: 1.4rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+        
+        .drop-zone p {
+            color: #888;
+        }
+        
+        /* Formulaire */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1A1A2E;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4ECDC4;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Boutons */
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            color: white;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Aperçu */
+        .preview {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .preview.active {
+            display: block;
+        }
+        
+        .preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        /* Statuts */
+        .status {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .status.loading {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+        
+        .status.success {
+            background: #E8F5E9;
+            color: #388E3C;
+        }
+        
+        .status.error {
+            background: #FFEBEE;
+            color: #D32F2F;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Résultat URL */
+        .result-box {
+            display: none;
+            background: linear-gradient(135deg, #E8F5E9, #E3F2FD);
+            border: 3px solid #4CAF50;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .result-box h3 {
+            color: #388E3C;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .url-display {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .btn-copy {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-copy:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+        
+        .btn-new {
+            background: #FF8C42;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-new:hover {
+            background: #e67b35;
+        }
+        
+        /* Galerie sauvegardée */
+        .saved-photos {
+            margin-top: 30px;
+        }
+        
+        .saved-photos h3 {
+            margin-bottom: 20px;
+            color: #1A1A2E;
+        }
+        
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .photo-card-info {
+            padding: 12px;
+        }
+        
+        .photo-card-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #1A1A2E;
+        }
+        
+        .photo-card-category {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        .photo-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-small.copy {
+            background: #4ECDC4;
+            color: white;
+        }
+        
+        .btn-small.delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: linear-gradient(135deg, #FFF9E6, #FFE5D9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .instructions h4 {
+            color: #FF8C42;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .instructions code {
+            background: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        
+        /* Header avec lien retour */
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            background: #4ECDC4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #3db8af;
+            transform: translateX(-5px);
+        }
+        
+        /* Export */
+        .export-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed #e5e7eb;
+        }
+        
+        .btn-export {
+            background: #9C27B0;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-export:hover {
+            background: #7B1FA2;
+        }
+        
+        /* Loader spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="header-nav">
+            <a href="admin.html" class="back-link">← Retour Admin</a>
+            <a href="galerie.html" class="back-link" style="background: #FF8C42;">Voir Galerie →</a>
+        </div>
+        
+        <!-- Carte principale -->
+        <div class="card">
+            <h1>📸 Upload Photo Galerie</h1>
+            <p class="subtitle">Uploadez vos images sur un hébergeur externe gratuit</p>
+            
+            <!-- Zone de drop -->
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <div class="drop-zone" id="dropZone">
+                <div class="icon">📷</div>
+                <h3>Glissez votre photo ici</h3>
+                <p>ou cliquez pour sélectionner (JPG, PNG, max 32MB)</p>
+            </div>
+            
+            <!-- Aperçu -->
+            <div class="preview" id="preview">
+                <img id="previewImg" src="" alt="Aperçu">
+            </div>
+            
+            <!-- Statut -->
+            <div class="status" id="status"></div>
+            
+            <!-- Formulaire -->
+            <form id="uploadForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📝 Titre de la photo *</label>
+                        <input type="text" id="title" required placeholder="Ex: Atelier créatif">
+                    </div>
+                    <div class="form-group">
+                        <label>🏷️ Catégorie *</label>
+                        <select id="category" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="ateliers solo">E&V Solo</option>
+                            <option value="ateliers duo">E&V Duo</option>
+                            <option value="ateliers mmm">MMM Junior</option>
+                            <option value="sejours">Séjours</option>
+                            <option value="nature">Nature</option>
+                            <option value="creatif">Créatif</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>💬 Description (optionnel)</label>
+                    <textarea id="description" rows="2" placeholder="Décrivez ce moment..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                    🚀 Uploader et Ajouter à la Galerie
+                </button>
+            </form>
+            
+            <!-- Résultat -->
+            <div class="result-box" id="resultBox">
+                <h3>✅ Photo uploadée avec succès !</h3>
+                <p style="margin-bottom: 10px; color: #666;">URL de votre image :</p>
+                <div class="url-display" id="imageUrl"></div>
+                <button class="btn-copy" onclick="copyUrl()">📋 Copier l'URL</button>
+                <button class="btn-new" onclick="resetForm()">➕ Nouvelle photo</button>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="instructions">
+                <h4>💡 Comment ça marche ?</h4>
+                <ol>
+                    <li>Sélectionnez ou glissez une image</li>
+                    <li>Remplissez le titre et la catégorie</li>
+                    <li>Cliquez sur "Uploader" - l'image est envoyée sur <strong>ImgBB</strong> (gratuit)</li>
+                    <li>L'URL est sauvegardée automatiquement dans votre galerie locale</li>
+                    <li>Exportez vos données pour les intégrer au site</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Galerie locale -->
+        <div class="card">
+            <h3>🖼️ Photos sauvegardées (<span id="photoCount">0</span>)</h3>
+            
+            <div class="photos-grid" id="photosGrid">
+                <!-- Photos ajoutées dynamiquement -->
+            </div>
+            
+            <div class="export-section">
+                <p style="color: #666; margin-bottom: 15px;">Exportez vos photos pour les intégrer au site</p>
+                <button class="btn-export" onclick="exportJSON()">📥 Exporter JSON</button>
+                <button class="btn-export" onclick="exportHTML()" style="background: #FF8C42;">📄 Générer Code HTML</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // CONFIGURATION - Clé API ImgBB
+        // ========================================
+        const IMGBB_API_KEY = 'eb10481445fa1c4e3d182ac81380a460';
+        
+        // Variables globales
+        let selectedFile = null;
+        let galleryData = { photos: [] };
+        
+        // Éléments DOM
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const status = document.getElementById('status');
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultBox = document.getElementById('resultBox');
+        const imageUrl = document.getElementById('imageUrl');
+        
+        // === DRAG & DROP ===
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+        
+        // === GESTION DU FICHIER ===
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showStatus('❌ Ce fichier n\'est pas une image !', 'error');
+                return;
+            }
+            
+            if (file.size > 32 * 1024 * 1024) {
+                showStatus('❌ Image trop grande ! Max 32MB', 'error');
+                return;
+            }
+            
+            selectedFile = file;
+            
+            // Aperçu
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                preview.classList.add('active');
+            };
+            reader.readAsDataURL(file);
+            
+            // Activer le bouton
+            submitBtn.disabled = false;
+            showStatus('✅ Image prête ! Remplissez les infos et cliquez sur Uploader.', 'success');
+        }
+        
+        // === UPLOAD VERS IMGBB ===
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!selectedFile) {
+                showStatus('❌ Sélectionnez d\'abord une image !', 'error');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Upload en cours...';
+            showStatus('⏳ Upload vers ImgBB en cours...', 'loading');
+            
+            try {
+                // Convertir en base64
+                const base64 = await fileToBase64(selectedFile);
+                
+                // Envoyer à ImgBB
+                const formData = new FormData();
+                formData.append('key', IMGBB_API_KEY);
+                formData.append('image', base64.split(',')[1]); // Retirer le préfixe data:image/...
+                formData.append('name', document.getElementById('title').value);
+                
+                const response = await fetch('https://api.imgbb.com/1/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const url = data.data.display_url;
+                    
+                    // Sauvegarder dans la galerie
+                    const photoData = {
+                        id: Date.now(),
+                        url: url,
+                        thumb: data.data.thumb?.url || url,
+                        title: document.getElementById('title').value,
+                        category: document.getElementById('category').value,
+                        description: document.getElementById('description').value || '',
+                        date: new Date().toLocaleDateString('fr-FR'),
+                        deleteUrl: data.data.delete_url || ''
+                    };
+                    
+                    galleryData.photos.push(photoData);
+                    saveData();
+                    renderGallery();
+                    
+                    // Afficher le résultat
+                    imageUrl.textContent = url;
+                    resultBox.classList.add('show');
+                    showStatus('🎉 Photo uploadée et ajoutée à la galerie !', 'success');
+                    
+                } else {
+                    throw new Error(data.error?.message || 'Erreur inconnue');
+                }
+                
+            } catch (error) {
+                console.error('Erreur upload:', error);
+                showStatus('❌ Erreur: ' + error.message, 'error');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '🚀 Uploader et Ajouter à la Galerie';
+        });
+        
+        // === UTILITAIRES ===
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status show ${type}`;
+        }
+        
+        function copyUrl() {
+            navigator.clipboard.writeText(imageUrl.textContent);
+            showStatus('📋 URL copiée dans le presse-papier !', 'success');
+        }
+        
+        function resetForm() {
+            uploadForm.reset();
+            selectedFile = null;
+            preview.classList.remove('active');
+            resultBox.classList.remove('show');
+            status.classList.remove('show');
+            submitBtn.disabled = true;
+            fileInput.value = '';
+        }
+        
+        // === GALERIE LOCALE ===
+        function saveData() {
+            localStorage.setItem('upload-galerie-data', JSON.stringify(galleryData));
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('upload-galerie-data');
+            if (saved) {
+                galleryData = JSON.parse(saved);
+                renderGallery();
+            }
+        }
+        
+        function renderGallery() {
+            const grid = document.getElementById('photosGrid');
+            const count = document.getElementById('photoCount');
+            
+            count.textContent = galleryData.photos.length;
+            
+            if (galleryData.photos.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">Aucune photo pour le moment 📸</p>';
+                return;
+            }
+            
+            grid.innerHTML = galleryData.photos.map(photo => `
+                <div class="photo-card">
+                    <img src="${photo.thumb || photo.url}" alt="${photo.title}" loading="lazy">
+                    <div class="photo-card-info">
+                        <div class="photo-card-title">${photo.title}</div>
+                        <div class="photo-card-category">📁 ${photo.category}</div>
+                        <div class="photo-card-actions">
+                            <button class="btn-small copy" onclick="copyPhotoUrl('${photo.url}')">📋 URL</button>
+                            <button class="btn-small delete" onclick="deletePhoto(${photo.id})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function copyPhotoUrl(url) {
+            navigator.clipboard.writeText(url);
+            showStatus('📋 URL copiée !', 'success');
+        }
+        
+        function deletePhoto(id) {
+            if (!confirm('Supprimer cette photo de la liste ?')) return;
+            galleryData.photos = galleryData.photos.filter(p => p.id !== id);
+            saveData();
+            renderGallery();
+            showStatus('✅ Photo supprimée de la liste', 'success');
+        }
+        
+        // === EXPORT ===
+        function exportJSON() {
+            const dataStr = JSON.stringify(galleryData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `galerie-eveil-vous-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showStatus('✅ JSON téléchargé !', 'success');
+        }
+        
+        function exportHTML() {
+            let html = '<!-- PHOTOS GALERIE ÉVEIL & VOUS -->\n';
+            html += '<!-- Collez ce code dans galerie.html dans la div .gallery-grid -->\n\n';
+            
+            galleryData.photos.forEach(photo => {
+                html += `<div class="gallery-item" data-category="${photo.category}" data-title="${photo.title}" data-description="${photo.description}">\n`;
+                html += `    <img src="${photo.url}" alt="${photo.title}" loading="lazy">\n`;
+                html += `    <div class="gallery-item-overlay">\n`;
+                html += `        <div class="gallery-item-title">${photo.title}</div>\n`;
+                html += `        <div class="gallery-item-category">${photo.category}</div>\n`;
+                html += `    </div>\n`;
+                html += `</div>\n\n`;
+            });
+            
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `code-galerie-${Date.now()}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showStatus('✅ Code HTML téléchargé ! Copiez-le dans galerie.html', 'success');
+        }
+        
+        // === INITIALISATION ===
+        loadData();
+    </script>
+</body>
+</html>
