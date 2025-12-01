@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
     <style>
         :root {
             --primary: #FF8C42;
@@ -621,9 +626,94 @@
     </footer>
 
     <script>
+        // =============================================
+        // CHARGEMENT FIREBASE GALERIE
+        // =============================================
+        
+        let firebaseGalleryReady = false;
+        let firebasePhotos = [];
+        
+        async function initFirebaseGallery() {
+            try {
+                FirebaseDB.init();
+                firebaseGalleryReady = true;
+                console.log('🔥 Firebase Galerie prêt');
+                
+                // Écoute temps réel
+                db.collection('galerie').orderBy('dateAjout', 'desc').onSnapshot((snapshot) => {
+                    firebasePhotos = [];
+                    snapshot.forEach(doc => {
+                        firebasePhotos.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderFirebasePhotos();
+                });
+            } catch (e) {
+                console.warn('Firebase galerie non disponible:', e);
+            }
+        }
+        
+        function renderFirebasePhotos() {
+            const grid = document.getElementById('galleryGrid');
+            
+            // Supprimer les anciennes photos Firebase (garder les placeholders)
+            const existingFirebasePhotos = grid.querySelectorAll('.firebase-photo');
+            existingFirebasePhotos.forEach(el => el.remove());
+            
+            // Ajouter les nouvelles photos au début
+            firebasePhotos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item firebase-photo';
+                item.setAttribute('data-category', photo.category || 'autres');
+                item.setAttribute('data-title', photo.title);
+                item.setAttribute('data-description', photo.description || '');
+                
+                item.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.title}" onerror="this.parentElement.style.display='none'">
+                    <div class="gallery-overlay">
+                        <h3>${photo.title}</h3>
+                        <p>${getCategoryLabel(photo.category)}</p>
+                    </div>
+                `;
+                
+                // Insérer au début de la grille
+                grid.insertBefore(item, grid.firstChild);
+                
+                // Ajouter événement lightbox
+                item.addEventListener('click', () => openLightbox(item));
+            });
+            
+            // Mettre à jour les références pour le filtrage
+            updateGalleryItems();
+        }
+        
+        function getCategoryLabel(category) {
+            const labels = {
+                'ateliers-solo': 'E&V Solo',
+                'ateliers-duo': 'E&V Duo',
+                'sejours': 'Séjours',
+                'nature': 'Nature',
+                'creatif': 'Créatif',
+                'yoga': 'Yoga',
+                'autres': 'Autres'
+            };
+            return labels[category] || category;
+        }
+        
+        function updateGalleryItems() {
+            // Mettre à jour la liste des items pour le filtrage
+            window.allGalleryItems = document.querySelectorAll('.gallery-item');
+        }
+        
+        // Charger au démarrage
+        window.addEventListener('load', initFirebaseGallery);
+        
+        // =============================================
+        // SYSTÈME DE FILTRAGE (mis à jour)
+        // =============================================
+        
         // Système de filtrage
         const filterButtons = document.querySelectorAll('.filter-btn');
-        const galleryItems = document.querySelectorAll('.gallery-item');
+        let galleryItems = document.querySelectorAll('.gallery-item');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -634,10 +724,16 @@
 
                 const filter = button.getAttribute('data-filter');
 
-                galleryItems.forEach(item => {
+                // Récupérer tous les items (y compris ceux ajoutés par Firebase)
+                const allItems = document.querySelectorAll('.gallery-item');
+                
+                allItems.forEach(item => {
                     const category = item.getAttribute('data-category');
                     
-                    if (filter === 'all' || category.includes(filter)) {
+                    // Convertir les catégories Firebase au format attendu
+                    const normalizedCategory = category.replace('-', ' ');
+                    
+                    if (filter === 'all' || normalizedCategory.includes(filter) || category.includes(filter)) {
                         item.style.display = 'block';
                         // Animation d'apparition
                         item.style.animation = 'fadeInUp 0.5s ease';
@@ -652,14 +748,15 @@
         let currentImageIndex = 0;
         let currentImages = [];
 
-        galleryItems.forEach((item, index) => {
+        // Initialiser les événements pour les items existants
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
             item.addEventListener('click', () => {
                 // Ne pas ouvrir le lightbox pour les cartes placeholder
                 if (item.classList.contains('placeholder-card')) {
                     return;
                 }
                 
-                currentImages = Array.from(galleryItems).filter(i => i.style.display !== 'none' && !i.classList.contains('placeholder-card'));
+                currentImages = Array.from(document.querySelectorAll('.gallery-item')).filter(i => i.style.display !== 'none' && !i.classList.contains('placeholder-card'));
                 currentImageIndex = currentImages.indexOf(item);
                 openLightbox(item);
             });
