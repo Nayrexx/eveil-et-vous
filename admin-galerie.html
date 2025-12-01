@@ -433,7 +433,10 @@
 
         <!-- Galerie existante -->
         <div class="gallery-section">
-            <h2>🖼️ Photos de la galerie (<span id="photoCount">0</span>)</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+                <h2 style="margin: 0;">🖼️ Photos de la galerie (<span id="photoCount">0</span>)</h2>
+                <button class="btn btn-danger" onclick="deleteAllPhotos()" style="font-size: 0.9rem; padding: 8px 16px;">🗑️ Tout supprimer</button>
+            </div>
             <div class="gallery-grid" id="galleryGrid">
                 <!-- Photos chargées ici -->
             </div>
@@ -554,19 +557,30 @@
             
             emptyState.style.display = 'none';
             
-            grid.innerHTML = galleryData.map(photo => `
-                <div class="gallery-card">
-                    <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+non+disponible'">
+            grid.innerHTML = galleryData.map((photo, index) => `
+                <div class="gallery-card" data-index="${index}">
+                    <img src="${escapeHtml(photo.url || '')}" alt="${escapeHtml(photo.title || 'Photo')}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+erreur'">
                     <div class="gallery-card-info">
-                        <div class="gallery-card-title">${photo.title}</div>
+                        <div class="gallery-card-title">${escapeHtml(photo.title || 'Sans titre')}</div>
                         <div class="gallery-card-category">${getCategoryLabel(photo.category)}</div>
                         <div class="gallery-card-date">📅 ${photo.date || 'Non daté'}</div>
                         <div class="gallery-card-actions">
-                            <button class="btn-small btn-delete" onclick="deletePhoto('${photo.id}')">🗑️ Supprimer</button>
+                            <button class="btn-small btn-delete" onclick="deletePhotoByIndex(${index})">🗑️ Supprimer</button>
                         </div>
                     </div>
                 </div>
             `).join('');
+        }
+        
+        // Échapper les caractères spéciaux pour éviter les bugs
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
         }
         
         function getCategoryLabel(category) {
@@ -622,25 +636,77 @@
         }
         
         // =============================================
-        // SUPPRIMER UNE PHOTO
+        // SUPPRIMER UNE PHOTO (par index, plus sûr)
         // =============================================
         
-        async function deletePhoto(id) {
-            if (!confirm('Supprimer cette photo ?')) return;
+        async function deletePhotoByIndex(index) {
+            const photo = galleryData[index];
+            if (!photo) {
+                showToast('❌ Photo non trouvée', 'error');
+                return;
+            }
             
-            if (firebaseReady) {
+            if (!confirm(`Supprimer "${photo.title || 'cette photo'}" ?`)) return;
+            
+            if (firebaseReady && photo.id) {
                 try {
-                    await db.collection('galerie').doc(id).delete();
+                    await db.collection('galerie').doc(photo.id).delete();
                     showToast('✅ Photo supprimée', 'success');
                 } catch (e) {
                     console.error('Erreur suppression:', e);
                     showToast('❌ Erreur lors de la suppression', 'error');
                 }
             } else {
-                galleryData = galleryData.filter(p => p.id !== id);
+                galleryData.splice(index, 1);
                 localStorage.setItem('galerie-data', JSON.stringify({ photos: galleryData }));
                 renderGallery();
                 showToast('✅ Photo supprimée (mode local)', 'success');
+            }
+        }
+        
+        // Ancienne fonction gardée pour compatibilité
+        async function deletePhoto(id) {
+            const index = galleryData.findIndex(p => p.id === id);
+            if (index !== -1) {
+                await deletePhotoByIndex(index);
+            } else {
+                showToast('❌ Photo non trouvée', 'error');
+            }
+        }
+        
+        // =============================================
+        // SUPPRIMER TOUTES LES PHOTOS
+        // =============================================
+        
+        async function deleteAllPhotos() {
+            if (galleryData.length === 0) {
+                showToast('ℹ️ Aucune photo à supprimer', 'info');
+                return;
+            }
+            
+            if (!confirm(`⚠️ ATTENTION !\n\nSupprimer les ${galleryData.length} photo(s) ?\n\nCette action est irréversible !`)) return;
+            
+            if (firebaseReady) {
+                try {
+                    // Supprimer toutes les photos de Firebase
+                    const batch = db.batch();
+                    for (const photo of galleryData) {
+                        if (photo.id) {
+                            const docRef = db.collection('galerie').doc(photo.id);
+                            batch.delete(docRef);
+                        }
+                    }
+                    await batch.commit();
+                    showToast('✅ Toutes les photos ont été supprimées', 'success');
+                } catch (e) {
+                    console.error('Erreur suppression globale:', e);
+                    showToast('❌ Erreur lors de la suppression', 'error');
+                }
+            } else {
+                localStorage.removeItem('galerie-data');
+                galleryData = [];
+                renderGallery();
+                showToast('✅ Toutes les photos ont été supprimées (mode local)', 'success');
             }
         }
         
