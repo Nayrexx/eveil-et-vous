@@ -25,6 +25,11 @@
     <!-- EmailJS pour les notifications -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
     <style>
         :root {
             --corail: #FF6B6B;
@@ -33,6 +38,307 @@
             --rose: #FF6B9D;
             --vert: #6BCF7F;
             --orange: #FF8C42;
+        }
+
+        /* ===== CALENDRIER INTERACTIF ===== */
+        .calendar-section {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A1A2E;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav button {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav button:hover {
+            transform: scale(1.1);
+        }
+
+        .calendar-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #555;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 700;
+            color: #888;
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: default;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        .calendar-day.today {
+            background: #f0f0f0;
+            font-weight: 700;
+        }
+
+        .calendar-day.has-atelier {
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.15), rgba(78, 205, 196, 0.15));
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        .calendar-day.has-atelier:hover {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .calendar-day.has-atelier .atelier-count {
+            position: absolute;
+            bottom: 4px;
+            font-size: 0.65rem;
+            background: var(--turquoise);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .calendar-day.complet {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+        }
+
+        .calendar-day.complet:hover {
+            background: #EF4444;
+            color: white;
+        }
+
+        /* Liste des ateliers du jour sélectionné */
+        .day-ateliers {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed #e5e7eb;
+            display: none;
+        }
+
+        .day-ateliers.show {
+            display: block;
+        }
+
+        .day-ateliers-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 15px;
+        }
+
+        .day-atelier-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .day-atelier-item:hover {
+            background: #f0f0f0;
+        }
+
+        .day-atelier-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .day-atelier-emoji {
+            font-size: 2rem;
+        }
+
+        .day-atelier-details h4 {
+            font-size: 1rem;
+            color: #1A1A2E;
+            margin-bottom: 3px;
+        }
+
+        .day-atelier-details span {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* ===== VUE TOGGLE ===== */
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .view-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ===== LISTE D'ATTENTE ===== */
+        .waitlist-btn {
+            background: linear-gradient(135deg, #9333EA, #EC4899);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .waitlist-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        /* Modal Liste d'attente */
+        .waitlist-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .waitlist-modal.show {
+            display: flex;
+        }
+
+        .waitlist-content {
+            background: white;
+            border-radius: 25px;
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .waitlist-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .waitlist-content h3 {
+            font-size: 1.5rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+
+        .waitlist-content p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .waitlist-form input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: var(--lavande);
+        }
+
+        .waitlist-submit {
+            background: linear-gradient(135deg, #9333EA, #EC4899);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .waitlist-close {
+            background: none;
+            border: none;
+            color: #888;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: inherit;
         }
 
         /* Filtres */
@@ -632,8 +938,43 @@
     <section style="padding: 60px 0 100px; background: white;">
         <div class="container">
             
+            <!-- Toggle Vue Calendrier / Grille -->
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">📋 Vue Grille</button>
+                <button class="view-btn" data-view="calendar">📅 Vue Calendrier</button>
+            </div>
+
+            <!-- CALENDRIER INTERACTIF -->
+            <div class="calendar-section" id="calendarSection" style="display: none;">
+                <div class="calendar-header">
+                    <h3 class="calendar-title">📅 Calendrier des Ateliers</h3>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)">←</button>
+                        <span class="calendar-month" id="calendarMonth">Décembre 2024</span>
+                        <button onclick="changeMonth(1)">→</button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <div class="calendar-day-header">Lun</div>
+                    <div class="calendar-day-header">Mar</div>
+                    <div class="calendar-day-header">Mer</div>
+                    <div class="calendar-day-header">Jeu</div>
+                    <div class="calendar-day-header">Ven</div>
+                    <div class="calendar-day-header">Sam</div>
+                    <div class="calendar-day-header">Dim</div>
+                    <!-- Jours générés dynamiquement -->
+                </div>
+                
+                <!-- Ateliers du jour sélectionné -->
+                <div class="day-ateliers" id="dayAteliers">
+                    <h4 class="day-ateliers-title" id="dayAteliersTitle">Ateliers du jour</h4>
+                    <div id="dayAteliersList"></div>
+                </div>
+            </div>
+
             <!-- Filtres -->
-            <div class="filters">
+            <div class="filters" id="filtersSection">
                 <button class="filter-btn active" data-filter="all">✨ Tous les ateliers</button>
                 <button class="filter-btn" data-filter="solo">🌟 E&V Solo (Mercredis)</button>
                 <button class="filter-btn" data-filter="duo">👨‍👩‍👧 E&V Duo (Samedis)</button>
@@ -647,6 +988,23 @@
 
         </div>
     </section>
+
+    <!-- MODAL LISTE D'ATTENTE -->
+    <div class="waitlist-modal" id="waitlistModal">
+        <div class="waitlist-content">
+            <div class="waitlist-icon">🔔</div>
+            <h3>Liste d'attente</h3>
+            <p>Recevez une notification si une place se libère pour cet atelier</p>
+            <form class="waitlist-form" onsubmit="submitWaitlist(event)">
+                <input type="hidden" id="waitlistAtelierId">
+                <input type="text" id="waitlistNom" placeholder="Votre nom" required>
+                <input type="email" id="waitlistEmail" placeholder="Votre email" required>
+                <input type="tel" id="waitlistTel" placeholder="Votre téléphone (optionnel)">
+                <button type="submit" class="waitlist-submit">🔔 M'inscrire à la liste d'attente</button>
+            </form>
+            <button class="waitlist-close" onclick="closeWaitlistModal()">Annuler</button>
+        </div>
+    </div>
 
     <!-- CTA -->
     <section style="background: linear-gradient(135deg, var(--orange), var(--turquoise), var(--lavande)); padding: 80px 0; text-align: center;">
@@ -846,13 +1204,29 @@
         // Réservations stockées
         let reservations = [];
         
+        // Flag Firebase
+        let firebaseReady = false;
+        
         // =============================================
         // INITIALISATION
         // =============================================
         
-        function init() {
+        async function init() {
+            // Initialiser Firebase
+            try {
+                FirebaseDB.init();
+                firebaseReady = true;
+                console.log('🔥 Firebase prêt');
+                
+                // Vérifier et migrer si nécessaire
+                await FirebaseDB.checkAndMigrate();
+            } catch (e) {
+                console.warn('⚠️ Firebase non disponible, utilisation localStorage:', e);
+                firebaseReady = false;
+            }
+            
             // Charger les données
-            loadData();
+            await loadData();
             
             // Afficher les ateliers
             renderAteliers();
@@ -867,13 +1241,45 @@
             initForm();
         }
         
-        function loadData() {
+        async function loadData() {
+            if (firebaseReady) {
+                // Charger depuis Firebase
+                try {
+                    const firebaseAteliers = await FirebaseDB.getAteliers();
+                    if (firebaseAteliers && Object.keys(firebaseAteliers).length > 0) {
+                        // Convertir le format Firebase au format attendu
+                        if (firebaseAteliers.ateliersSolo && firebaseAteliers.ateliersDuo) {
+                            ateliersData = firebaseAteliers;
+                        } else {
+                            // Première fois, sauvegarder les données par défaut
+                            ateliersData = JSON.parse(JSON.stringify(defaultData));
+                            await saveData();
+                        }
+                    } else {
+                        // Base vide, utiliser les données par défaut
+                        ateliersData = JSON.parse(JSON.stringify(defaultData));
+                        await saveData();
+                    }
+                    
+                    // Charger les réservations
+                    reservations = await FirebaseDB.getReservations();
+                    console.log('✅ Données chargées depuis Firebase');
+                } catch (e) {
+                    console.error('Erreur Firebase, fallback localStorage:', e);
+                    loadFromLocalStorage();
+                }
+            } else {
+                loadFromLocalStorage();
+            }
+        }
+        
+        function loadFromLocalStorage() {
             const saved = localStorage.getItem('ateliers-reservations-data');
             if (saved) {
                 ateliersData = JSON.parse(saved);
             } else {
                 ateliersData = JSON.parse(JSON.stringify(defaultData));
-                saveData();
+                saveDataLocal();
             }
             
             const savedReservations = localStorage.getItem('reservations-list');
@@ -882,7 +1288,23 @@
             }
         }
         
-        function saveData() {
+        async function saveData() {
+            if (firebaseReady) {
+                try {
+                    // Sauvegarder les ateliers dans Firebase
+                    await db.collection('ateliers').doc('ateliersSolo').set({ items: ateliersData.ateliersSolo });
+                    await db.collection('ateliers').doc('ateliersDuo').set({ items: ateliersData.ateliersDuo });
+                    console.log('✅ Données sauvegardées dans Firebase');
+                } catch (e) {
+                    console.error('Erreur sauvegarde Firebase:', e);
+                    saveDataLocal();
+                }
+            } else {
+                saveDataLocal();
+            }
+        }
+        
+        function saveDataLocal() {
             localStorage.setItem('ateliers-reservations-data', JSON.stringify(ateliersData));
             localStorage.setItem('reservations-list', JSON.stringify(reservations));
         }
@@ -1085,7 +1507,17 @@
             
             // Sauvegarder la réservation
             reservations.push(formData);
-            saveData();
+            await saveData();
+            
+            // Sauvegarder aussi dans Firebase si disponible
+            if (firebaseReady) {
+                try {
+                    await FirebaseDB.addReservation(formData);
+                    console.log('✅ Réservation sauvegardée dans Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur Firebase, réservation sauvegardée localement');
+                }
+            }
             
             // Simuler envoi d'email (à remplacer par EmailJS si configuré)
             await simulateEmailSend(formData);
@@ -1233,10 +1665,390 @@
         }
         
         // =============================================
+        // CALENDRIER INTERACTIF
+        // =============================================
+        
+        let currentCalendarDate = new Date();
+        
+        function initCalendar() {
+            renderCalendar();
+            initViewToggle();
+        }
+        
+        function initViewToggle() {
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const view = btn.dataset.view;
+                    const calendarSection = document.getElementById('calendarSection');
+                    const filtersSection = document.getElementById('filtersSection');
+                    const ateliersGrid = document.getElementById('ateliersGrid');
+                    
+                    if (view === 'calendar') {
+                        calendarSection.style.display = 'block';
+                        filtersSection.style.display = 'none';
+                        ateliersGrid.style.display = 'none';
+                        renderCalendar();
+                    } else {
+                        calendarSection.style.display = 'none';
+                        filtersSection.style.display = 'flex';
+                        ateliersGrid.style.display = 'grid';
+                    }
+                });
+            });
+        }
+        
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthLabel = document.getElementById('calendarMonth');
+            
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+            
+            // Nom du mois
+            const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+                               'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            monthLabel.textContent = `${monthNames[month]} ${year}`;
+            
+            // Vider la grille (garder les headers)
+            const headers = grid.querySelectorAll('.calendar-day-header');
+            grid.innerHTML = '';
+            headers.forEach(h => grid.appendChild(h));
+            
+            // Premier jour du mois
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // Jour de la semaine du premier jour (0 = dimanche, on veut lundi = 0)
+            let startDay = firstDay.getDay() - 1;
+            if (startDay < 0) startDay = 6;
+            
+            // Jours du mois précédent
+            const prevMonth = new Date(year, month, 0);
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.textContent = prevMonth.getDate() - i;
+                grid.appendChild(day);
+            }
+            
+            // Récupérer tous les ateliers avec leurs dates parsées
+            const allAteliers = getAllAteliers();
+            
+            // Jours du mois actuel
+            const today = new Date();
+            for (let d = 1; d <= lastDay.getDate(); d++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.textContent = d;
+                
+                const currentDate = new Date(year, month, d);
+                
+                // Vérifier si c'est aujourd'hui
+                if (currentDate.toDateString() === today.toDateString()) {
+                    day.classList.add('today');
+                }
+                
+                // Vérifier s'il y a des ateliers ce jour
+                const dayAteliers = allAteliers.filter(a => {
+                    const atelierDate = parseAtelierDate(a.date);
+                    return atelierDate && 
+                           atelierDate.getDate() === d && 
+                           atelierDate.getMonth() === month && 
+                           atelierDate.getFullYear() === year;
+                });
+                
+                if (dayAteliers.length > 0) {
+                    const allComplet = dayAteliers.every(a => a.complet || a.placesRestantes <= 0);
+                    
+                    if (allComplet) {
+                        day.classList.add('has-atelier', 'complet');
+                    } else {
+                        day.classList.add('has-atelier');
+                    }
+                    
+                    if (dayAteliers.length > 1) {
+                        const badge = document.createElement('span');
+                        badge.className = 'atelier-count';
+                        badge.textContent = dayAteliers.length;
+                        day.appendChild(badge);
+                    }
+                    
+                    day.addEventListener('click', () => showDayAteliers(dayAteliers, currentDate));
+                }
+                
+                grid.appendChild(day);
+            }
+            
+            // Jours du mois suivant pour compléter la grille
+            const totalCells = grid.querySelectorAll('.calendar-day').length;
+            const remaining = (7 - (totalCells % 7)) % 7;
+            for (let i = 1; i <= remaining; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.textContent = i;
+                grid.appendChild(day);
+            }
+        }
+        
+        function changeMonth(delta) {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + delta);
+            renderCalendar();
+            document.getElementById('dayAteliers').classList.remove('show');
+        }
+        
+        function parseAtelierDate(dateStr) {
+            // Parse "Mercredi 15 Janvier 2025" ou "Samedi 1er Février 2025"
+            const months = {
+                'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+                'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
+            };
+            
+            const parts = dateStr.toLowerCase().replace('1er', '1').split(' ');
+            if (parts.length >= 4) {
+                const day = parseInt(parts[1]);
+                const month = months[parts[2]];
+                const year = parseInt(parts[3]);
+                if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                    return new Date(year, month, day);
+                }
+            }
+            return null;
+        }
+        
+        function showDayAteliers(ateliers, date) {
+            const container = document.getElementById('dayAteliers');
+            const title = document.getElementById('dayAteliersTitle');
+            const list = document.getElementById('dayAteliersList');
+            
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            title.textContent = `📅 ${date.toLocaleDateString('fr-FR', options)}`;
+            
+            list.innerHTML = ateliers.map(a => {
+                const type = a.id <= 8 ? 'solo' : 'duo';
+                const disponible = !a.complet && a.placesRestantes > 0;
+                
+                return `
+                    <div class="day-atelier-item">
+                        <div class="day-atelier-info">
+                            <span class="day-atelier-emoji">${a.emoji}</span>
+                            <div class="day-atelier-details">
+                                <h4>${a.titre}</h4>
+                                <span>${a.heure} • ${a.placesRestantes} place(s) • ${a.prixAffiche}</span>
+                            </div>
+                        </div>
+                        ${disponible 
+                            ? `<button class="btn-reserver" onclick="openModal(${a.id}, '${type}')">Réserver</button>`
+                            : `<button class="waitlist-btn" style="width: auto; padding: 10px 20px;" onclick="openWaitlistModal(${a.id})">🔔 Liste d'attente</button>`
+                        }
+                    </div>
+                `;
+            }).join('');
+            
+            container.classList.add('show');
+        }
+        
+        function getAllAteliers() {
+            return [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo];
+        }
+        
+        // =============================================
+        // LISTE D'ATTENTE
+        // =============================================
+        
+        let waitlistData = JSON.parse(localStorage.getItem('waitlist-data')) || [];
+        
+        // Charger la liste d'attente depuis Firebase au démarrage
+        async function loadWaitlistFromFirebase() {
+            if (firebaseReady) {
+                try {
+                    waitlistData = await FirebaseDB.getWaitlist();
+                    console.log('✅ Liste d\'attente chargée depuis Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur chargement liste d\'attente Firebase');
+                }
+            }
+        }
+        
+        function openWaitlistModal(atelierId) {
+            document.getElementById('waitlistAtelierId').value = atelierId;
+            document.getElementById('waitlistModal').classList.add('show');
+        }
+        
+        function closeWaitlistModal() {
+            document.getElementById('waitlistModal').classList.remove('show');
+            document.getElementById('waitlistNom').value = '';
+            document.getElementById('waitlistEmail').value = '';
+            document.getElementById('waitlistTel').value = '';
+        }
+        
+        async function submitWaitlist(e) {
+            e.preventDefault();
+            
+            const atelierId = parseInt(document.getElementById('waitlistAtelierId').value);
+            const nom = document.getElementById('waitlistNom').value;
+            const email = document.getElementById('waitlistEmail').value;
+            const tel = document.getElementById('waitlistTel').value;
+            
+            const atelier = getAllAteliers().find(a => a.id === atelierId);
+            
+            const entry = {
+                id: Date.now(),
+                atelierId: atelierId,
+                atelierTitre: atelier ? atelier.titre : 'Atelier',
+                atelierDate: atelier ? atelier.date : '',
+                nom: nom,
+                email: email,
+                tel: tel,
+                dateInscription: new Date().toLocaleString('fr-FR'),
+                notified: false
+            };
+            
+            waitlistData.push(entry);
+            localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+            
+            // Sauvegarder dans Firebase
+            if (firebaseReady) {
+                try {
+                    await FirebaseDB.addToWaitlist(entry);
+                    console.log('✅ Liste d\'attente sauvegardée dans Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur Firebase liste d\'attente');
+                }
+            }
+            
+            closeWaitlistModal();
+            showToast('🔔 Vous êtes inscrit(e) à la liste d\'attente !', 'success');
+            
+            // Envoyer un email de confirmation liste d'attente (optionnel)
+            sendWaitlistConfirmationEmail(entry);
+        }
+        
+        async function sendWaitlistConfirmationEmail(entry) {
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, {
+                    to_email: entry.email,
+                    parent_nom: entry.nom,
+                    atelier_titre: entry.atelierTitre,
+                    atelier_date: entry.atelierDate,
+                    subject: "Inscription liste d'attente - " + entry.atelierTitre
+                });
+            } catch (error) {
+                console.log('Email liste attente non envoyé:', error);
+            }
+        }
+        
+        // Notifier les personnes en liste d'attente quand une place se libère
+        async function notifyWaitlist(atelierId) {
+            const waitingPeople = waitlistData.filter(w => w.atelierId === atelierId && !w.notified);
+            
+            for (const person of waitingPeople) {
+                try {
+                    // Envoyer email de notification
+                    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, {
+                        to_email: person.email,
+                        parent_nom: person.nom,
+                        atelier_titre: person.atelierTitre,
+                        atelier_date: person.atelierDate,
+                        subject: "🎉 Une place s'est libérée - " + person.atelierTitre
+                    });
+                    
+                    // Marquer comme notifié
+                    person.notified = true;
+                    localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+                    
+                } catch (error) {
+                    console.error('Erreur notification liste attente:', error);
+                }
+            }
+        }
+        
+        // =============================================
+        // SMS RAPPEL (Configuration Twilio)
+        // =============================================
+        
+        // Configuration SMS (à remplir avec vos identifiants Twilio)
+        const SMS_CONFIG = {
+            enabled: false, // Mettre à true une fois configuré
+            // Pour activer les SMS, créez un compte Twilio et renseignez :
+            // - Account SID
+            // - Auth Token  
+            // - Numéro Twilio
+            twilioAccountSid: 'VOTRE_ACCOUNT_SID',
+            twilioAuthToken: 'VOTRE_AUTH_TOKEN',
+            twilioPhoneNumber: '+33XXXXXXXXX',
+            reminderHoursBefore: 24 // Rappel 24h avant
+        };
+        
+        // Fonction pour programmer un rappel SMS (appelée après réservation)
+        function scheduleReminderSMS(reservationData) {
+            if (!SMS_CONFIG.enabled || !reservationData.parentTel) return;
+            
+            // Stocker les rappels à envoyer
+            let reminders = JSON.parse(localStorage.getItem('sms-reminders')) || [];
+            
+            const atelierDate = parseAtelierDate(reservationData.atelierDate);
+            if (!atelierDate) return;
+            
+            // Date de rappel = 24h avant
+            const reminderDate = new Date(atelierDate);
+            reminderDate.setHours(reminderDate.getHours() - SMS_CONFIG.reminderHoursBefore);
+            
+            reminders.push({
+                id: reservationData.id,
+                phone: reservationData.parentTel,
+                name: reservationData.parentNom,
+                childName: reservationData.enfantPrenom,
+                atelierTitre: reservationData.atelierTitre,
+                atelierDate: reservationData.atelierDate,
+                atelierHeure: reservationData.atelierHeure,
+                reminderDate: reminderDate.toISOString(),
+                sent: false
+            });
+            
+            localStorage.setItem('sms-reminders', JSON.stringify(reminders));
+            console.log('📱 Rappel SMS programmé pour:', reminderDate.toLocaleString('fr-FR'));
+        }
+        
+        // Vérifier et envoyer les rappels SMS (à appeler périodiquement)
+        async function checkAndSendReminders() {
+            if (!SMS_CONFIG.enabled) return;
+            
+            let reminders = JSON.parse(localStorage.getItem('sms-reminders')) || [];
+            const now = new Date();
+            
+            for (let reminder of reminders) {
+                if (reminder.sent) continue;
+                
+                const reminderDate = new Date(reminder.reminderDate);
+                if (now >= reminderDate) {
+                    // Envoyer le SMS via votre backend ou service
+                    const message = `Bonjour ${reminder.name} ! 🌟 Rappel : ${reminder.childName} a un atelier "${reminder.atelierTitre}" demain ${reminder.atelierDate} à ${reminder.atelierHeure}. À bientôt ! - Éveil & Vous`;
+                    
+                    console.log('📱 SMS à envoyer:', message);
+                    // await sendSMS(reminder.phone, message);
+                    
+                    reminder.sent = true;
+                }
+            }
+            
+            localStorage.setItem('sms-reminders', JSON.stringify(reminders));
+        }
+        
+        // Vérifier les rappels toutes les heures
+        setInterval(checkAndSendReminders, 3600000);
+        
+        // =============================================
         // LANCEMENT
         // =============================================
         
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+            initCalendar();
+            checkAndSendReminders();
+        });
     </script>
 
 </body>

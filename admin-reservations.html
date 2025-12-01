@@ -499,6 +499,11 @@
             }
         }
     </style>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
 </head>
 <body>
     <div class="container">
@@ -539,6 +544,8 @@
         <div class="tabs">
             <button class="tab active" data-tab="ateliers">🎨 Ateliers (16)</button>
             <button class="tab" data-tab="reservations">📝 Réservations</button>
+            <button class="tab" data-tab="waitlist">🔔 Liste d'attente</button>
+            <button class="tab" data-tab="emailing">📧 Emailing</button>
             <button class="tab" data-tab="parametres">⚙️ Paramètres</button>
         </div>
         
@@ -592,11 +599,106 @@
             </div>
         </div>
         
+        <!-- Section Liste d'attente -->
+        <div class="section" id="sectionWaitlist" style="display: none;">
+            <h2>🔔 Liste d'attente</h2>
+            <p style="color: #666; margin-bottom: 20px;">Personnes inscrites pour être notifiées si une place se libère.</p>
+            
+            <div class="reservations-container">
+                <table class="reservations-table" id="waitlistTable">
+                    <thead>
+                        <tr>
+                            <th>Atelier</th>
+                            <th>Date atelier</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Inscrit le</th>
+                            <th>Notifié</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="waitlistBody">
+                        <!-- Généré dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="empty-state" id="emptyWaitlist" style="display: none;">
+                <div class="icon">📭</div>
+                <h3>Aucune inscription en liste d'attente</h3>
+                <p>Les inscriptions apparaîtront ici quand des ateliers seront complets</p>
+            </div>
+        </div>
+        
+        <!-- Section Emailing -->
+        <div class="section" id="sectionEmailing" style="display: none;">
+            <h2>📧 Emailing Groupé</h2>
+            <p style="color: #666; margin-bottom: 25px;">Envoyez un email à tous les inscrits d'un atelier spécifique.</p>
+            
+            <div style="max-width: 600px;">
+                <div class="form-group">
+                    <label>🎯 Sélectionner l'atelier</label>
+                    <select id="emailAtelierId" onchange="updateEmailRecipients()" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-family: inherit;">
+                        <option value="">-- Choisir un atelier --</option>
+                        <option value="all">📢 TOUS les inscrits (tous ateliers)</option>
+                    </select>
+                </div>
+                
+                <div id="emailRecipientsInfo" style="background: #f0f9ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none;">
+                    <strong>👥 Destinataires :</strong> <span id="emailRecipientsCount">0</span> personne(s)
+                    <div id="emailRecipientsList" style="font-size: 0.85rem; color: #666; margin-top: 5px;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>📝 Objet de l'email</label>
+                    <input type="text" id="emailSubject" placeholder="Ex: Rappel atelier de demain !">
+                </div>
+                
+                <div class="form-group">
+                    <label>✉️ Message</label>
+                    <textarea id="emailMessage" rows="8" style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-family: inherit; resize: vertical;" placeholder="Bonjour {nom},
+
+Nous vous rappelons que l'atelier {atelier} aura lieu le {date} à {heure}.
+
+À très bientôt !
+L'équipe Éveil & Vous"></textarea>
+                </div>
+                
+                <div style="background: #FEF3C7; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong>💡 Variables disponibles :</strong><br>
+                    <code>{nom}</code> - Nom du parent<br>
+                    <code>{enfant}</code> - Prénom de l'enfant<br>
+                    <code>{atelier}</code> - Nom de l'atelier<br>
+                    <code>{date}</code> - Date de l'atelier<br>
+                    <code>{heure}</code> - Horaire
+                </div>
+                
+                <button class="btn" style="background: linear-gradient(135deg, #9333EA, #EC4899); color: white; width: 100%;" onclick="sendGroupEmail()">
+                    📧 Envoyer l'email groupé
+                </button>
+            </div>
+        </div>
+        
         <!-- Section Paramètres -->
         <div class="section" id="sectionParametres" style="display: none;">
             <h2>⚙️ Paramètres</h2>
             
             <div style="max-width: 500px;">
+                <!-- Firebase Status -->
+                <div id="firebaseStatusBox" style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 15px; padding: 20px; margin-bottom: 25px;">
+                    <h3 style="color: #10B981; margin-bottom: 10px;">🔥 Firebase Database</h3>
+                    <p id="firebaseStatusText" style="color: #065F46;">Connecté - Données synchronisées en temps réel</p>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" onclick="syncFromFirebase()" style="background: #10B981; color: white;">
+                            🔄 Rafraîchir depuis Firebase
+                        </button>
+                        <button class="btn" onclick="migrateToFirebase()" style="background: #F59E0B; color: white;">
+                            📤 Migrer vers Firebase
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label>📧 Email de notification admin</label>
                     <input type="email" id="adminEmail" value="contact@eveiletvouss.fr">
@@ -638,13 +740,28 @@
                 <input type="hidden" id="editType">
                 
                 <div class="form-group">
-                    <label>📅 Date</label>
-                    <input type="text" id="editDate">
+                    <label>🎨 Nom de l'atelier</label>
+                    <input type="text" id="editTitre" placeholder="Ex: Éveil Créatif">
+                </div>
+                
+                <div class="form-group">
+                    <label>😀 Emoji</label>
+                    <input type="text" id="editEmoji" placeholder="Ex: 🎨" style="font-size: 1.5rem; text-align: center;">
+                </div>
+                
+                <div class="form-group">
+                    <label>� Description</label>
+                    <textarea id="editDescription" rows="2" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>�📅 Date</label>
+                    <input type="text" id="editDate" placeholder="Ex: Mercredi 15 Janvier 2025">
                 </div>
                 
                 <div class="form-group">
                     <label>⏰ Horaire</label>
-                    <input type="text" id="editHeure">
+                    <input type="text" id="editHeure" placeholder="Ex: 14h30 - 16h00">
                 </div>
                 
                 <div class="form-group">
@@ -653,7 +770,7 @@
                 </div>
                 
                 <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, var(--orange), var(--turquoise)); color: white;">
-                    💾 Enregistrer
+                    💾 Enregistrer les modifications
                 </button>
             </form>
         </div>
@@ -706,26 +823,89 @@
             ]
         };
         
+        // Flag Firebase
+        let firebaseReady = false;
+        let waitlistData = [];
+        
         // =============================================
         // INITIALISATION
         // =============================================
         
-        function init() {
+        async function init() {
             // Vérifier connexion admin
             if (!sessionStorage.getItem('adminLoggedIn')) {
                 window.location.href = 'admin-login.html';
                 return;
             }
             
-            loadData();
+            // Initialiser Firebase
+            try {
+                FirebaseDB.init();
+                firebaseReady = true;
+                console.log('🔥 Firebase Admin prêt');
+            } catch (e) {
+                console.warn('⚠️ Firebase non disponible, utilisation localStorage:', e);
+                firebaseReady = false;
+            }
+            
+            await loadData();
             renderAteliers();
             renderReservations();
+            renderWaitlist();
+            populateEmailAtelierSelect();
             updateStats();
             initTabs();
             initEditForm();
+            
+            // Afficher indicateur Firebase
+            showFirebaseStatus();
         }
         
-        function loadData() {
+        function showFirebaseStatus() {
+            const header = document.querySelector('.header p');
+            if (firebaseReady) {
+                header.innerHTML = 'Gérez les ateliers et les réservations <span style="background: #10B981; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;">🔥 Firebase connecté</span>';
+            } else {
+                header.innerHTML = 'Gérez les ateliers et les réservations <span style="background: #F59E0B; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;">💾 Mode local</span>';
+            }
+            
+            // Mettre à jour aussi le box des paramètres
+            setTimeout(updateFirebaseStatusBox, 100);
+        }
+        
+        async function loadData() {
+            if (firebaseReady) {
+                try {
+                    // Charger les ateliers depuis Firebase
+                    const soloDoc = await db.collection('ateliers').doc('ateliersSolo').get();
+                    const duoDoc = await db.collection('ateliers').doc('ateliersDuo').get();
+                    
+                    if (soloDoc.exists && duoDoc.exists) {
+                        ateliersData.ateliersSolo = soloDoc.data().items || [];
+                        ateliersData.ateliersDuo = duoDoc.data().items || [];
+                    } else {
+                        // Première utilisation, sauvegarder les données par défaut
+                        ateliersData = JSON.parse(JSON.stringify(defaultData));
+                        await saveData();
+                    }
+                    
+                    // Charger les réservations
+                    reservations = await FirebaseDB.getReservations();
+                    
+                    // Charger la liste d'attente
+                    waitlistData = await FirebaseDB.getWaitlist();
+                    
+                    console.log('✅ Données chargées depuis Firebase');
+                } catch (e) {
+                    console.error('Erreur Firebase, fallback localStorage:', e);
+                    loadFromLocalStorage();
+                }
+            } else {
+                loadFromLocalStorage();
+            }
+        }
+        
+        function loadFromLocalStorage() {
             const savedAteliers = localStorage.getItem('ateliers-reservations-data');
             if (savedAteliers) {
                 ateliersData = JSON.parse(savedAteliers);
@@ -737,11 +917,25 @@
             if (savedReservations) {
                 reservations = JSON.parse(savedReservations);
             }
+            
+            waitlistData = JSON.parse(localStorage.getItem('waitlist-data')) || [];
         }
         
-        function saveData() {
+        async function saveData() {
+            // Toujours sauvegarder en local comme backup
             localStorage.setItem('ateliers-reservations-data', JSON.stringify(ateliersData));
             localStorage.setItem('reservations-list', JSON.stringify(reservations));
+            
+            // Sauvegarder dans Firebase si disponible
+            if (firebaseReady) {
+                try {
+                    await db.collection('ateliers').doc('ateliersSolo').set({ items: ateliersData.ateliersSolo });
+                    await db.collection('ateliers').doc('ateliersDuo').set({ items: ateliersData.ateliersDuo });
+                    console.log('✅ Données sauvegardées dans Firebase');
+                } catch (e) {
+                    console.error('Erreur sauvegarde Firebase:', e);
+                }
+            }
         }
         
         // =============================================
@@ -756,6 +950,8 @@
                     
                     document.getElementById('sectionAteliers').style.display = 'none';
                     document.getElementById('sectionReservations').style.display = 'none';
+                    document.getElementById('sectionWaitlist').style.display = 'none';
+                    document.getElementById('sectionEmailing').style.display = 'none';
                     document.getElementById('sectionParametres').style.display = 'none';
                     
                     document.getElementById('section' + capitalizeFirst(tab.dataset.tab)).style.display = 'block';
@@ -877,6 +1073,9 @@
             document.getElementById('modalEditTitle').textContent = `Modifier: ${atelier.titre}`;
             document.getElementById('editId').value = id;
             document.getElementById('editType').value = type;
+            document.getElementById('editTitre').value = atelier.titre;
+            document.getElementById('editEmoji').value = atelier.emoji;
+            document.getElementById('editDescription').value = atelier.description || '';
             document.getElementById('editDate').value = atelier.date;
             document.getElementById('editHeure').value = atelier.heure;
             document.getElementById('editPlaces').value = atelier.placesRestantes;
@@ -899,6 +1098,9 @@
                 const atelier = source.find(a => a.id === id);
                 
                 if (atelier) {
+                    atelier.titre = document.getElementById('editTitre').value;
+                    atelier.emoji = document.getElementById('editEmoji').value;
+                    atelier.description = document.getElementById('editDescription').value;
                     atelier.date = document.getElementById('editDate').value;
                     atelier.heure = document.getElementById('editHeure').value;
                     atelier.placesRestantes = parseInt(document.getElementById('editPlaces').value);
@@ -1032,22 +1234,253 @@
             showToast('✅ Paramètres sauvegardés', 'success');
         }
         
-        function resetAllData() {
+        async function resetAllData() {
             if (!confirm('⚠️ Voulez-vous vraiment supprimer TOUTES les données ?')) return;
             if (!confirm('🚨 Cette action est irréversible ! Confirmer ?')) return;
             
             localStorage.removeItem('ateliers-reservations-data');
             localStorage.removeItem('reservations-list');
+            localStorage.removeItem('waitlist-data');
             
             ateliersData = JSON.parse(JSON.stringify(defaultData));
             reservations = [];
+            waitlistData = [];
             
-            saveData();
+            await saveData();
             renderAteliers();
             renderReservations();
+            renderWaitlist();
             updateStats();
             
             showToast('✅ Données réinitialisées', 'warning');
+        }
+        
+        // Fonctions Firebase
+        async function syncFromFirebase() {
+            if (!firebaseReady) {
+                showToast('❌ Firebase non connecté', 'error');
+                return;
+            }
+            
+            showToast('🔄 Synchronisation...', 'success');
+            await loadData();
+            renderAteliers();
+            renderReservations();
+            renderWaitlist();
+            updateStats();
+            showToast('✅ Données synchronisées depuis Firebase', 'success');
+        }
+        
+        async function migrateToFirebase() {
+            if (!firebaseReady) {
+                showToast('❌ Firebase non connecté', 'error');
+                return;
+            }
+            
+            if (!confirm('Migrer toutes les données locales vers Firebase ?')) return;
+            
+            showToast('🔄 Migration en cours...', 'success');
+            
+            try {
+                await FirebaseDB.migrateFromLocalStorage();
+                showToast('✅ Migration vers Firebase terminée !', 'success');
+            } catch (e) {
+                console.error('Erreur migration:', e);
+                showToast('❌ Erreur lors de la migration', 'error');
+            }
+        }
+        
+        function updateFirebaseStatusBox() {
+            const box = document.getElementById('firebaseStatusBox');
+            const text = document.getElementById('firebaseStatusText');
+            
+            if (firebaseReady) {
+                box.style.background = '#F0FDF4';
+                box.style.borderColor = '#10B981';
+                text.textContent = 'Connecté - Données synchronisées en temps réel';
+                text.style.color = '#065F46';
+            } else {
+                box.style.background = '#FEF3C7';
+                box.style.borderColor = '#F59E0B';
+                text.textContent = 'Mode hors-ligne - Données stockées localement';
+                text.style.color = '#92400E';
+            }
+        }
+        
+        // =============================================
+        // LISTE D'ATTENTE
+        // =============================================
+        
+        function renderWaitlist() {
+            const tbody = document.getElementById('waitlistBody');
+            const emptyState = document.getElementById('emptyWaitlist');
+            
+            if (waitlistData.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            tbody.innerHTML = waitlistData.map(w => `
+                <tr>
+                    <td><strong>${w.atelierTitre}</strong></td>
+                    <td>${w.atelierDate}</td>
+                    <td>${w.nom}</td>
+                    <td><a href="mailto:${w.email}">${w.email}</a></td>
+                    <td>${w.tel || '-'}</td>
+                    <td>${w.dateInscription}</td>
+                    <td>
+                        <span class="status-badge ${w.notified ? 'status-confirmee' : 'status-attente'}">
+                            ${w.notified ? '✅ Notifié' : '⏳ En attente'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-small btn-edit" onclick="notifyWaitlistPerson('${w.id}')">📧 Notifier</button>
+                        <button class="btn-small btn-complet" onclick="removeFromWaitlistAdmin('${w.id}')">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        async function notifyWaitlistPerson(id) {
+            const person = waitlistData.find(w => w.id === id || w.id === parseInt(id));
+            
+            if (!person) return;
+            
+            // Marquer comme notifié
+            person.notified = true;
+            localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+            
+            // Sauvegarder dans Firebase si disponible
+            if (firebaseReady && person.id) {
+                try {
+                    await db.collection('waitlist').doc(String(person.id)).update({ notified: true });
+                } catch (e) {
+                    console.warn('⚠️ Erreur mise à jour Firebase waitlist');
+                }
+            }
+            
+            // Envoyer email (simulation - utiliser EmailJS en production)
+            const subject = encodeURIComponent(`🎉 Une place s'est libérée - ${person.atelierTitre}`);
+            const body = encodeURIComponent(`Bonjour ${person.nom},\n\nBonne nouvelle ! Une place s'est libérée pour l'atelier "${person.atelierTitre}" du ${person.atelierDate}.\n\nRéservez vite sur notre site !\n\nÉveil & Vous`);
+            window.open(`mailto:${person.email}?subject=${subject}&body=${body}`);
+            
+            renderWaitlist();
+            showToast('📧 Email de notification ouvert', 'success');
+        }
+        
+        async function removeFromWaitlistAdmin(id) {
+            if (!confirm('Supprimer cette inscription de la liste d\'attente ?')) return;
+            
+            waitlistData = waitlistData.filter(w => w.id !== id && w.id !== parseInt(id));
+            localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+            
+            // Supprimer de Firebase si disponible
+            if (firebaseReady) {
+                try {
+                    await FirebaseDB.removeFromWaitlist(String(id));
+                } catch (e) {
+                    console.warn('⚠️ Erreur suppression Firebase waitlist');
+                }
+            }
+            
+            renderWaitlist();
+            showToast('✅ Supprimé de la liste d\'attente', 'success');
+        }
+        
+        // =============================================
+        // EMAILING GROUPÉ
+        // =============================================
+        
+        function populateEmailAtelierSelect() {
+            const select = document.getElementById('emailAtelierId');
+            const allAteliers = [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo];
+            
+            allAteliers.forEach(a => {
+                const option = document.createElement('option');
+                option.value = a.id;
+                option.textContent = `${a.emoji} ${a.titre} - ${a.date}`;
+                select.appendChild(option);
+            });
+        }
+        
+        function updateEmailRecipients() {
+            const atelierId = document.getElementById('emailAtelierId').value;
+            const infoDiv = document.getElementById('emailRecipientsInfo');
+            const countSpan = document.getElementById('emailRecipientsCount');
+            const listDiv = document.getElementById('emailRecipientsList');
+            
+            if (!atelierId) {
+                infoDiv.style.display = 'none';
+                return;
+            }
+            
+            let recipients = [];
+            
+            if (atelierId === 'all') {
+                recipients = reservations.filter(r => r.statut === 'confirmee');
+            } else {
+                recipients = reservations.filter(r => r.atelierId == atelierId && r.statut === 'confirmee');
+            }
+            
+            infoDiv.style.display = 'block';
+            countSpan.textContent = recipients.length;
+            
+            if (recipients.length > 0) {
+                listDiv.innerHTML = recipients.map(r => r.parentEmail).join(', ');
+            } else {
+                listDiv.innerHTML = '<em>Aucun inscrit pour cet atelier</em>';
+            }
+        }
+        
+        function sendGroupEmail() {
+            const atelierId = document.getElementById('emailAtelierId').value;
+            const subject = document.getElementById('emailSubject').value;
+            const message = document.getElementById('emailMessage').value;
+            
+            if (!atelierId) {
+                showToast('❌ Sélectionnez un atelier', 'error');
+                return;
+            }
+            
+            if (!subject || !message) {
+                showToast('❌ Remplissez l\'objet et le message', 'error');
+                return;
+            }
+            
+            let recipients = [];
+            let atelier = null;
+            
+            if (atelierId === 'all') {
+                recipients = reservations.filter(r => r.statut === 'confirmee');
+            } else {
+                recipients = reservations.filter(r => r.atelierId == atelierId && r.statut === 'confirmee');
+                atelier = [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo].find(a => a.id == atelierId);
+            }
+            
+            if (recipients.length === 0) {
+                showToast('❌ Aucun destinataire', 'error');
+                return;
+            }
+            
+            // Préparer les emails
+            const emailList = recipients.map(r => r.parentEmail).join(',');
+            
+            // Remplacer les variables par des exemples pour le premier destinataire
+            let finalMessage = message
+                .replace(/{nom}/g, '[Nom du parent]')
+                .replace(/{enfant}/g, '[Prénom enfant]')
+                .replace(/{atelier}/g, atelier ? atelier.titre : '[Atelier]')
+                .replace(/{date}/g, atelier ? atelier.date : '[Date]')
+                .replace(/{heure}/g, atelier ? atelier.heure : '[Horaire]');
+            
+            // Ouvrir le client mail avec tous les destinataires en BCC
+            const mailtoLink = `mailto:?bcc=${encodeURIComponent(emailList)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(finalMessage)}`;
+            window.open(mailtoLink);
+            
+            showToast(`📧 Email groupé préparé pour ${recipients.length} personne(s)`, 'success');
         }
         
         // =============================================
