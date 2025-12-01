@@ -843,6 +843,9 @@ L'équipe Éveil & Vous"></textarea>
                 FirebaseDB.init();
                 firebaseReady = true;
                 console.log('🔥 Firebase Admin prêt');
+                
+                // Activer l'écoute en temps réel
+                setupAdminRealtimeListeners();
             } catch (e) {
                 console.warn('⚠️ Firebase non disponible, utilisation localStorage:', e);
                 firebaseReady = false;
@@ -861,10 +864,61 @@ L'équipe Éveil & Vous"></textarea>
             showFirebaseStatus();
         }
         
+        // =============================================
+        // ÉCOUTE EN TEMPS RÉEL FIREBASE (ADMIN)
+        // =============================================
+        
+        function setupAdminRealtimeListeners() {
+            if (!firebaseReady) return;
+            
+            console.log('👂 Activation écoute temps réel Admin...');
+            
+            // Écouter les changements sur ateliersSolo
+            db.collection('ateliers').doc('ateliersSolo').onSnapshot((doc) => {
+                if (doc.exists && doc.data().items) {
+                    ateliersData.ateliersSolo = doc.data().items;
+                    renderAteliers();
+                    updateStats();
+                    console.log('🔄 Admin: Ateliers Solo mis à jour');
+                }
+            });
+            
+            // Écouter les changements sur ateliersDuo
+            db.collection('ateliers').doc('ateliersDuo').onSnapshot((doc) => {
+                if (doc.exists && doc.data().items) {
+                    ateliersData.ateliersDuo = doc.data().items;
+                    renderAteliers();
+                    updateStats();
+                    console.log('🔄 Admin: Ateliers Duo mis à jour');
+                }
+            });
+            
+            // Écouter les nouvelles réservations
+            db.collection('reservations').onSnapshot((snapshot) => {
+                reservations = [];
+                snapshot.forEach(doc => {
+                    reservations.push({ id: doc.id, ...doc.data() });
+                });
+                renderReservations();
+                updateStats();
+                console.log('🔄 Admin: Réservations mises à jour');
+            });
+            
+            // Écouter la liste d'attente
+            db.collection('waitlist').onSnapshot((snapshot) => {
+                waitlistData = [];
+                snapshot.forEach(doc => {
+                    waitlistData.push({ id: doc.id, ...doc.data() });
+                });
+                renderWaitlist();
+                console.log('🔄 Admin: Liste d\'attente mise à jour');
+            });
+        }
+        
         function showFirebaseStatus() {
             const header = document.querySelector('.header p');
             if (firebaseReady) {
-                header.innerHTML = 'Gérez les ateliers et les réservations <span style="background: #10B981; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;">🔥 Firebase connecté</span>';
+                header.innerHTML = 'Gérez les ateliers et les réservations <span style="background: #10B981; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;">🔥 Firebase connecté - Temps réel</span>';
             } else {
                 header.innerHTML = 'Gérez les ateliers et les réservations <span style="background: #F59E0B; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;">💾 Mode local</span>';
             }

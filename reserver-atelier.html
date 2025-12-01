@@ -1220,6 +1220,9 @@
                 
                 // Vérifier et migrer si nécessaire
                 await FirebaseDB.checkAndMigrate();
+                
+                // Activer l'écoute en temps réel
+                setupRealtimeListeners();
             } catch (e) {
                 console.warn('⚠️ Firebase non disponible, utilisation localStorage:', e);
                 firebaseReady = false;
@@ -1239,6 +1242,57 @@
             
             // Initialiser le formulaire
             initForm();
+        }
+        
+        // =============================================
+        // ÉCOUTE EN TEMPS RÉEL FIREBASE
+        // =============================================
+        
+        function setupRealtimeListeners() {
+            if (!firebaseReady) return;
+            
+            console.log('👂 Activation de l\'écoute temps réel...');
+            
+            // Écouter les changements sur ateliersSolo
+            db.collection('ateliers').doc('ateliersSolo').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.items) {
+                        ateliersData.ateliersSolo = data.items;
+                        console.log('🔄 Ateliers Solo mis à jour en temps réel');
+                        refreshDisplay();
+                    }
+                }
+            }, (error) => {
+                console.warn('Erreur listener Solo:', error);
+            });
+            
+            // Écouter les changements sur ateliersDuo
+            db.collection('ateliers').doc('ateliersDuo').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.items) {
+                        ateliersData.ateliersDuo = data.items;
+                        console.log('🔄 Ateliers Duo mis à jour en temps réel');
+                        refreshDisplay();
+                    }
+                }
+            }, (error) => {
+                console.warn('Erreur listener Duo:', error);
+            });
+        }
+        
+        // Rafraîchir l'affichage sans perdre l'état
+        function refreshDisplay() {
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const currentFilter = activeFilter ? activeFilter.dataset.filter : 'all';
+            renderAteliers(currentFilter);
+            updateStats();
+            
+            // Mettre à jour le calendrier si visible
+            if (document.getElementById('calendarView').style.display !== 'none') {
+                renderCalendar();
+            }
         }
         
         async function loadData() {
