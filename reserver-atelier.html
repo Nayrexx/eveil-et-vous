@@ -1302,8 +1302,12 @@
                     const firebaseAteliers = await FirebaseDB.getAteliers();
                     if (firebaseAteliers && Object.keys(firebaseAteliers).length > 0) {
                         // Convertir le format Firebase au format attendu
+                        // Les données sont stockées comme { ateliersSolo: { items: [...] }, ateliersDuo: { items: [...] } }
                         if (firebaseAteliers.ateliersSolo && firebaseAteliers.ateliersDuo) {
-                            ateliersData = firebaseAteliers;
+                            ateliersData = {
+                                ateliersSolo: firebaseAteliers.ateliersSolo.items || firebaseAteliers.ateliersSolo || [],
+                                ateliersDuo: firebaseAteliers.ateliersDuo.items || firebaseAteliers.ateliersDuo || []
+                            };
                         } else {
                             // Première fois, sauvegarder les données par défaut
                             ateliersData = JSON.parse(JSON.stringify(defaultData));

@@ -1,451 +1,20 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO Meta Tags -->
-    <title>Ateliers d'Éveil Enfants Limoux | E&V Solo, Duo & Mon Moment Magique</title>
-    <meta name="description" content="Ateliers hebdomadaires d'éveil pour enfants 3-11 ans à Limoux : E&V Solo (mercredi), E&V Duo parent-enfant (samedi), Mon Moment Magique. Éveil créatif, sensoriel, yoga, émotions, nature.">
-    <meta name="keywords" content="atelier éveil Limoux, activités enfants Aude, yoga enfant, éveil créatif, atelier parent-enfant, Mon Moment Magique, mercredi enfant, samedi famille">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://eveiletvouss.fr/ateliers.html">
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://eveiletvouss.fr/ateliers.html">
-    <meta property="og:title" content="Ateliers d'Éveil Hebdomadaires pour Enfants à Limoux">
-    <meta property="og:description" content="Réservez votre atelier d'éveil : Solo (mercredi 14h30-16h), Duo parent-enfant (samedi 10h-12h), Mon Moment Magique (mercredi 10h-11h30). 5 thématiques : créatif, sensoriel, yoga, émotions, nature.">
-    <meta property="og:image" content="https://eveiletvouss.fr/images/logo.png">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ateliers d'Éveil Enfants à Limoux">
-    <meta name="twitter:description" content="Ateliers hebdomadaires 3-11 ans : Solo, Duo parent-enfant, Mon Moment Magique. Réservez en ligne !">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Ateliers d'Éveil Hebdomadaires",
-      "description": "Ateliers d'éveil pour enfants de 3 à 11 ans : E&V Solo, E&V Duo parent-enfant, Mon Moment Magique",
-      "location": {
-        "@type": "Place",
-        "name": "Éveil & Vous",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Limoux",
-          "addressRegion": "Aude",
-          "addressCountry": "FR"
-        }
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "18",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock"
-      },
-      "organizer": {
-        "@type": "Organization",
-        "name": "Éveil & Vous",
-        "url": "https://eveiletvouss.fr"
-      }
-    }
-    </script>
+    <meta name="description" content="Ateliers d'éveil hebdomadaires pour enfants et familles - Mercredis et Samedis à Limoux">
+    <title>Ateliers Hebdomadaires | Éveil & Vous</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
-    <link rel="stylesheet" href="https://c                Rejoignez nos ateliers E&V Solo, E&V Duo ou MMM Junior.<br>
-                Places limitées pour garantir un accompagnement personnalisé et bienveillant.
-            </p>
-            <a href="contact.html" style="display: inline-block; background: white; color: var(--rose); padding: 20px 50px; border-radius: 35px; text-decoration: none; font-weight: 700; font-size: 1.2rem; box-shadow: 0 15px 50px rgba(0,0,0,0.25); transition: all 0.3s; border: 3px solid white;">
-                📞 Nous contacter
-            </a>
-        </div>
-    </section>
-
-    <!-- SECTION CARTES D'ATELIERS PROGRAMMÉS -->
-    <section class="workshops-cards" style="padding: 100px 0; background: linear-gradient(180deg, white 0%, rgba(255, 215, 153, 0.08) 100%);">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">
-                    🗓️ Ateliers Programmés
-                </h2>
-                <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.7;">
-                    Réservez votre place pour nos prochains ateliers. Places limitées !
-                </p>
-            </div>
-
-            <!-- ATELIERS E&V SOLO (Mercredi) -->
-            <div style="margin-bottom: 80px;">
-                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 40px; color: #1A1A2E; display: flex; align-items: center; justify-content: center; gap: 15px;">
-                    <span style="display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--corail), #FF9A76); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem;">🌟</span>
-                    Ateliers E&V Solo - Mercredis Après-midi
-                </h3>
-                
-                <div id="ateliers-solo-grid" class="workshops-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-                    <!-- Les ateliers Solo seront chargés ici dynamiquement depuis data/ateliers-data.json -->
-                    <!-- Carte 1: Éveil Créatif -->
-                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--corail); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 15 Janvier</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Arts plastiques et expression artistique pour libérer la créativité.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Éveil Créatif', 'Mercredi 15 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--corail), #FF9A76); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 2: Éveil Sensoriel -->
-                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 22 Janvier</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Découverte des 5 sens à travers des expériences tactiles, olfactives et gustatives.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Éveil Sensoriel', 'Mercredi 22 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), #7ECFC0); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 3: Yoga & Relaxation -->
-                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--lavande); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 29 Janvier</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Postures ludiques et techniques de retour au calme adaptées aux enfants.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Yoga & Relaxation', 'Mercredi 29 Janvier 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--lavande), #B593D6); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 4: Gestion des Émotions -->
-                    <div class="workshop-card" data-theme="emotion" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--rose); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">❤️</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Gestion des Émotions</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 5 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Identifier, nommer et accueillir ses émotions avec des outils concrets.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Gestion des Émotions', 'Mercredi 5 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--rose), #EA8FA3); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 5: Activités Nature -->
-                    <div class="workshop-card" data-theme="nature" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--vert); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🌳</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Activités Nature</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 12 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Jardinage, land art et exploration extérieure pour se reconnecter à la nature.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Activités Nature', 'Mercredi 12 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--vert), #9FD99F); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 6: Éveil Créatif (cycle 2) -->
-                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--corail); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 19 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Nouvelles techniques artistiques et exploration créative approfondie.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">8 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Éveil Créatif', 'Mercredi 19 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--corail), #FF9A76); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 7: Éveil Sensoriel (cycle 2) -->
-                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 26 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Nouvelles explorations sensorielles et expériences enrichissantes.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Éveil Sensoriel', 'Mercredi 26 Février 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), #7ECFC0); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-
-                    <!-- Carte 8: Yoga & Relaxation (cycle 2) -->
-                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--lavande); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Mercredi 5 Mars</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 14h30 - 16h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Approfondissement des postures et nouvelles techniques de relaxation.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 places</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Solo - Yoga & Relaxation', 'Mercredi 5 Mars 2025 - 14h30')" style="width: 100%; background: linear-gradient(135deg, var(--lavande), #B593D6); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver ma place
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ATELIERS E&V DUO (Samedi) -->
-            <div style="margin-bottom: 60px;">
-                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 40px; color: #1A1A2E; display: flex; align-items: center; justify-content: center; gap: 15px;">
-                    <span style="display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem;">👨‍👩‍👧</span>
-                    Ateliers E&V Duo - Samedis Matin
-                </h3>
-                
-                <div id="ateliers-duo-grid" class="workshops-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-                    <!-- Les ateliers Duo seront chargés ici dynamiquement depuis data/ateliers-data.json -->
-                    <!-- Carte 1 Duo: Éveil Créatif -->
-                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 18 Janvier</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Créez ensemble des œuvres artistiques uniques et partagez un moment créatif.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Éveil Créatif', 'Samedi 18 Janvier 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 2 Duo: Éveil Sensoriel -->
-                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 25 Janvier</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Explorez les 5 sens ensemble à travers des expériences ludiques en binôme.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Éveil Sensoriel', 'Samedi 25 Janvier 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 3 Duo: Yoga & Relaxation -->
-                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 1er Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Postures de yoga en binôme et relaxation partagée pour se ressourcer.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Yoga & Relaxation', 'Samedi 1er Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 4 Duo: Gestion des Émotions -->
-                    <div class="workshop-card" data-theme="emotion" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">❤️</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Gestion des Émotions en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 8 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Apprenez à identifier et gérer les émotions ensemble avec bienveillance.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Gestion des Émotions', 'Samedi 8 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 5 Duo: Activités Nature -->
-                    <div class="workshop-card" data-theme="nature" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🌳</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Activités Nature en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 15 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Jardinage et land art pour se reconnecter à la nature en famille.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">7 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Activités Nature', 'Samedi 15 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 6 Duo: Éveil Créatif (cycle 2) -->
-                    <div class="workshop-card" data-theme="creative" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Créatif en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 22 Février</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Nouvelles techniques artistiques à découvrir ensemble en duo.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Éveil Créatif', 'Samedi 22 Février 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 7 Duo: Éveil Sensoriel (cycle 2) -->
-                    <div class="workshop-card" data-theme="sensory" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">👃</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Éveil Sensoriel en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 1er Mars</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Nouvelles explorations sensorielles à vivre en complicité.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Éveil Sensoriel', 'Samedi 1er Mars 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-
-                    <!-- Carte 8 Duo: Yoga & Relaxation (cycle 2) -->
-                    <div class="workshop-card" data-theme="yoga" style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--turquoise); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
-                        <h4 style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 10px;">Yoga & Relaxation en Duo</h4>
-                        <p style="color: #FF8C42; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">📅 Samedi 8 Mars</p>
-                        <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">⏰ 10h00 - 12h00</p>
-                        <p style="color: #555; line-height: 1.6; margin-bottom: 20px; min-height: 60px;">
-                            Approfondissement des postures en duo et relaxation profonde.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <span style="color: #1A1A2E; font-weight: 700; font-size: 1.15rem;">18€ TTC/duo</span>
-                            <span style="background: rgba(107, 207, 127, 0.15); color: #059669; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">6 duos</span>
-                        </div>
-                        <button onclick="openBookingModal('E&V Duo - Yoga & Relaxation', 'Samedi 8 Mars 2025 - 10h00')" style="width: 100%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
-                            Réserver notre place
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL DE RÉSERVATION -->
-    <div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
-        <div style="background: white; border-radius: 30px; padding: 50px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative;">
-            <button onclick="closeBookingModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 2rem; cursor: pointer; color: #999; transition: color 0.3s;">×</button>
-            
-            <h3 id="modalTitle" style="font-size: 2rem; margin-bottom: 10px; color: #1A1A2E; text-align: center;">Réserver</h3>
-            <p id="modalDate" style="text-align: center; color: #FF8C42; font-weight: 600; font-size: 1.2rem; margin-bottom: 30px;"></p>
-            
-            <form id="bookingForm" onsubmit="submitBooking(event)" style="display: flex; flex-direction: column; gap: 20px;">
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Nom complet *</label>
-                    <input type="text" id="bookingName" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Email *</label>
-                    <input type="email" id="bookingEmail" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Téléphone *</label>
-                    <input type="tel" id="bookingPhone" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Âge de l'enfant *</label>
-                    <input type="number" id="bookingAge" min="3" max="11" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Nombre de participants *</label>
-                    <select id="bookingParticipants" required style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem;">
-                        <option value="1">1 enfant (E&V Solo)</option>
-                        <option value="2">1 duo parent-enfant (E&V Duo)</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1A1A2E;">Message ou remarque</label>
-                    <textarea id="bookingMessage" rows="4" style="width: 100%; padding: 15px; border: 2px solid #E5E7EB; border-radius: 15px; font-size: 1rem; resize: vertical;"></textarea>
-                </div>
-                
-                <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--rose), #EA8FA3); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; font-size: 1.15rem; cursor: pointer; transition: transform 0.2s;">
-                    ✓ Confirmer ma réservation
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <footer style="background: #2D3436; color: white; padding: 60px 0 20px;">flare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/decorative-backgrounds.css">
     
     <style>
         :root {
-            --rose: #FF8C42;
+            --rose: #F4A6B8;
             --turquoise: #9DD9CE;
             --peche: #FFD699;
             --lavande: #C5A8E0;
@@ -537,64 +106,31 @@
             position: relative;
             overflow: hidden;
         }
-        
-        /* Slider Responsive */
-        @media (max-width: 768px) {
-            .slider-prev, .slider-next {
-                left: 10px !important;
-                right: auto !important;
-                width: 40px !important;
-                height: 40px !important;
-                font-size: 1.2rem !important;
-            }
-            
-            .slider-next {
-                left: auto !important;
-                right: 10px !important;
-            }
-            
-            .theme-slide {
-                padding: 0 5px !important;
-            }
-            
-            .theme-card {
-                padding: 25px !important;
-            }
-        }
     </style>
 </head>
 <body>
 
     <!-- HEADER -->
-    <header>
+    <header style="background: white; box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 20px 0; position: sticky; top: 0; z-index: 1000;">
         <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="index.html" style="text-decoration: none;">
+                    <img src="images/logo.png" alt="Éveil & Vous" style="height: 50px; width: auto;">
                 </a>
                 
-                <nav>
-                    <ul>
-                        <li><a href="about.html">À Propos</a></li>
-                        <li><a href="activites.html">Activités</a></li>
-                        <li><a href="ateliers.html" style="color: var(--primary);">Ateliers</a></li>
-                        <li><a href="galerie.html">Galerie</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
-                    </ul>
+                <nav style="display: flex; gap: 35px; align-items: center;">
+                    <a href="about.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a>
+                    <a href="activites.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a>
+                    <a href="ateliers.html" style="color: var(--rose); text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--rose);">Ateliers</a>
+                    <a href="contact.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
+                    <a href="reservation.html" style="background: linear-gradient(135deg, var(--rose), var(--turquoise)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(244, 166, 184, 0.3);">Réserver un séjour</a>
                 </nav>
-                
-                <button class="menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </div>
     </header>
 
     <!-- HERO SECTION -->
-    <section class="hero-with-pictos" style="background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 50%, #F5F0FF 100%); padding: 100px 0; text-align: center; position: relative; overflow: hidden;">
+    <section style="background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 50%, #F5F0FF 100%); padding: 100px 0; text-align: center; position: relative; overflow: hidden;">
         <!-- Bulles décoratives -->
         <div class="floating-bubble" style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(244, 166, 184, 0.4), transparent); top: 50px; right: 10%; animation-delay: 0s;"></div>
         <div class="floating-bubble" style="width: 200px; height: 200px; background: radial-gradient(circle, rgba(157, 217, 206, 0.4), transparent); bottom: 80px; left: 5%; animation-delay: 2s;"></div>
@@ -608,71 +144,55 @@
                 Éveillez Vos Enfants<br>
                 <span style="background: linear-gradient(90deg, var(--rose), var(--turquoise)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Chaque Semaine</span>
             </h1>
-            <p style="font-size: 1.35rem; line-height: 1.8; color: #555; max-width: 900px; margin: 0 auto 40px;">
-                Des ateliers créatifs et sensoriels pour les enfants seuls (E&V Solo),<br>
-                des moments privilégiés en duo parent-enfant (E&V Duo),<br>
-                et des rituels de bien-être pour cultiver la sérénité (MMM Junior)
+            <p style="font-size: 1.35rem; line-height: 1.8; color: #555; max-width: 800px; margin: 0 auto 40px;">
+                Des ateliers créatifs et sensoriels pour les enfants seuls le mercredi,<br>
+                et des moments privilégiés en duo parent-enfant le samedi
             </p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <a href="#solo" style="background: linear-gradient(135deg, var(--corail), var(--peche)); color: white; padding: 18px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(255, 187, 153, 0.4); transition: transform 0.3s;">
-                    🎨 E&V Solo
+                <a href="#mercredis" style="background: linear-gradient(135deg, var(--corail), var(--peche)); color: white; padding: 18px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(255, 187, 153, 0.4); transition: transform 0.3s;">
+                    📅 Ateliers du Mercredi
                 </a>
-                <a href="#duo" style="background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; padding: 18px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(157, 217, 206, 0.4); transition: transform 0.3s;">
-                    👨‍👩‍👧 E&V Duo
-                </a>
-                <a href="#mmm" style="background: linear-gradient(135deg, var(--lavande), var(--rose)); color: white; padding: 18px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(197, 168, 224, 0.4); transition: transform 0.3s;">
-                    ✨ MMM Junior
+                <a href="#samedis" style="background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; padding: 18px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(157, 217, 206, 0.4); transition: transform 0.3s;">
+                    👨‍👩‍👧 Ateliers du Samedi
                 </a>
             </div>
         </div>
     </section>
 
 
-    <!-- ATELIERS E&V SOLO -->
-    <section id="solo" class="section-with-experience-picto" style="padding: 100px 0; background: white;">
+    <!-- ATELIERS DU MERCREDI -->
+    <section id="mercredis" style="padding: 100px 0; background: white;">
         <div class="container">
             <div class="workshop-banner" style="background: linear-gradient(135deg, rgba(255, 187, 153, 0.12), rgba(255, 214, 153, 0.12));">
                 <div style="text-align: center; margin-bottom: 40px;">
                     <div class="icon-badge" style="background: linear-gradient(135deg, var(--corail), var(--peche)); margin: 0 auto;">🎨</div>
-                    <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">E&V Solo</h2>
-                    <p style="font-size: 1.2rem; color: #555; max-width: 700px; margin: 0 auto 20px;">
+                    <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">Ateliers du Mercredi</h2>
+                    <p style="font-size: 1.2rem; color: #555; max-width: 600px; margin: 0 auto;">
                         Enfants de 4 à 12 ans | Exploration en autonomie
-                    </p>
-                    <p style="font-size: 1.05rem; color: #666; max-width: 750px; margin: 0 auto; line-height: 1.7;">
-                        Des moments conçus spécialement pour les enfants, où chacun peut explorer, ressentir et grandir à son rythme. Ces ateliers favorisent l'éveil sensoriel, corporel et émotionnel, à travers le jeu, la créativité et la détente. Un espace pour s'exprimer librement, renforcer la confiance en soi et nourrir la curiosité.
                     </p>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">📅</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Jour</h4>
-                        <p style="color: #666; font-size: 0.95rem;">Mercredi</p>
-                    </div>
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">⏰</div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Horaires</h4>
-                        <p style="color: #666; font-size: 0.95rem;">14h30 - 16h30</p>
+                        <p style="color: #666; font-size: 0.95rem;">10h-11h30<br>ou 14h30-16h</p>
                     </div>
                     <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
                         <div style="font-size: 2.5rem; margin-bottom: 10px;">⏱️</div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Durée</h4>
-                        <p style="color: #666; font-size: 0.95rem;">2 heures</p>
+                        <p style="color: #666; font-size: 0.95rem;">1h30<br>par séance</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎫</div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Formule</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Cycle de 6 séances<br>(ou à l'unité)</p>
                     </div>
                 </div>
                 
-                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(255, 140, 66, 0.2);">
-                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
-                        <strong>Tarif : 18€ TTC</strong> par enfant
-                    </p>
-                    <p style="font-size: 0.95rem; color: #666;">
-                        Inscription à la séance
-                    </p>
-                </div>
-                
                 <div style="text-align: center;">
-                    <a href="contact.html" style="display: inline-block; background: linear-gradient(135deg, var(--corail), var(--peche)); color: white; padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 10px 30px rgba(255, 187, 153, 0.4); transition: transform 0.3s;">
-                        📞 Nous contacter pour réserver
+                    <a href="reservation-atelier.html" style="display: inline-block; background: linear-gradient(135deg, var(--corail), var(--peche)); color: white; padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 10px 30px rgba(255, 187, 153, 0.4); transition: transform 0.3s;">
+                        📝 Réserver un atelier du Mercredi
                     </a>
                 </div>
             </div>
@@ -682,369 +202,193 @@
                 5 Thématiques d'Éveil 🌈
             </h3>
             
-            <!-- Slider Container -->
-            <div style="position: relative; max-width: 900px; margin: 0 auto;">
-                <!-- Slider Wrapper -->
-                <div class="themes-slider-wrapper" style="overflow: hidden; border-radius: 30px;">
-                    <div class="themes-slider" style="display: flex; transition: transform 0.5s ease;">
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card creative" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--corail), #FF9A76);">🎨</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Créatif</h4>
-                                <p style="color: #666; line-height: 1.7;">Arts plastiques, musique, expression artistique pour libérer la créativité et l'imagination de votre enfant.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card sensory" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--turquoise), #7ECFC0);">👃</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Sensoriel</h4>
-                                <p style="color: #666; line-height: 1.7;">Découverte des 5 sens à travers des expériences tactiles, olfactives, gustatives, visuelles et auditives.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card yoga" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--lavande), #B593D6);">🧘</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Yoga & Relaxation</h4>
-                                <p style="color: #666; line-height: 1.7;">Postures ludiques, exercices de respiration et techniques de retour au calme adaptées aux enfants.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card emotion" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--rose), #EA8FA3);">❤️</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Gestion des Émotions</h4>
-                                <p style="color: #666; line-height: 1.7;">Identifier, nommer et accueillir ses émotions grâce à des outils concrets et ludiques.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card nature" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--vert), #9FD99F);">🌳</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Activités Nature</h4>
-                                <p style="color: #666; line-height: 1.7;">Jardinage, land art, exploration extérieure pour se reconnecter à la nature et à ses bienfaits.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="theme-card creative">
+                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--corail), #FF9A76);">🎨</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Créatif</h4>
+                    <p style="color: #666; line-height: 1.7;">Arts plastiques, musique, expression artistique pour libérer la créativité et l'imagination de votre enfant.</p>
                 </div>
                 
-                <!-- Navigation Arrows -->
-                <button class="slider-prev" onclick="moveSlider('mercredi', -1)" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.5rem; color: var(--corail); transition: all 0.3s; z-index: 10;">
-                    ‹
-                </button>
-                <button class="slider-next" onclick="moveSlider('mercredi', 1)" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.5rem; color: var(--corail); transition: all 0.3s; z-index: 10;">
-                    ›
-                </button>
+                <div class="theme-card sensory">
+                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--turquoise), #7ECFC0);">👃</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Sensoriel</h4>
+                    <p style="color: #666; line-height: 1.7;">Découverte des 5 sens à travers des expériences tactiles, olfactives, gustatives, visuelles et auditives.</p>
+                </div>
                 
-                <!-- Dots Indicators -->
-                <div class="slider-dots" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
-                    <span class="dot active" onclick="goToSlide('mercredi', 0)" style="width: 12px; height: 12px; border-radius: 50%; background: var(--corail); cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('mercredi', 1)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('mercredi', 2)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('mercredi', 3)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('mercredi', 4)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
+                <div class="theme-card yoga">
+                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--lavande), #B593D6);">🧘</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Yoga & Relaxation</h4>
+                    <p style="color: #666; line-height: 1.7;">Postures ludiques, exercices de respiration et techniques de retour au calme adaptées aux enfants.</p>
+                </div>
+                
+                <div class="theme-card emotion">
+                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--rose), #EA8FA3);">❤️</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Gestion des Émotions</h4>
+                    <p style="color: #666; line-height: 1.7;">Identifier, nommer et accueillir ses émotions grâce à des outils concrets et ludiques.</p>
+                </div>
+                
+                <div class="theme-card nature">
+                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--vert), #9FD99F);">🌳</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Activités Nature</h4>
+                    <p style="color: #666; line-height: 1.7;">Jardinage, land art, exploration extérieure pour se reconnecter à la nature et à ses bienfaits.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- ATELIERS E&V DUO -->
-    <section id="duo" class="ateliers-section-bg" style="padding: 100px 0; background: linear-gradient(180deg, white 0%, rgba(157, 217, 206, 0.05) 100%);">
-        <div class="container">
-            <div style="background: linear-gradient(135deg, rgba(157, 217, 206, 0.12), rgba(168, 213, 232, 0.12)); border-radius: 30px; padding: 50px; margin-bottom: 50px;">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--turquoise), var(--bleu)); margin: 0 auto;">👨‍👩‍👧</div>
-                    <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">E&V Duo</h2>
-                    <p style="font-size: 1.2rem; color: #555; max-width: 700px; margin: 0 auto 20px;">
-                        Duo parent-enfant | Moments partagés et complicité
-                    </p>
-                    <p style="font-size: 1.05rem; color: #666; max-width: 750px; margin: 0 auto; line-height: 1.7;">
-                        Un temps privilégié à partager entre parent et enfant pour se reconnecter, renforcer les liens et vivre ensemble une expérience douce et complice. Ces ateliers invitent à la coopération, à l'écoute mutuelle et à la joie du moment présent, loin du rythme quotidien.
-                    </p>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">📅</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Jour</h4>
-                        <p style="color: #666; font-size: 0.95rem;">Samedi</p>
-                    </div>
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⏰</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Horaires</h4>
-                        <p style="color: #666; font-size: 0.95rem;">10h00 - 12h00</p>
-                    </div>
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⏱️</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Durée</h4>
-                        <p style="color: #666; font-size: 0.95rem;">2 heures</p>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(78, 205, 196, 0.3);">
-                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
-                        <strong>Tarif : 18€ TTC</strong> par duo (parent + enfant)
-                    </p>
-                    <p style="font-size: 0.95rem; color: #666;">
-                        Inscription à la séance
-                    </p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <a href="contact.html" style="display: inline-block; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); color: white; padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 10px 30px rgba(157, 217, 206, 0.4); transition: transform 0.3s;">
-                        📞 Nous contacter pour réserver
-                    </a>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Éveil sensoriel</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Découverte des 5 sens, expériences tactiles</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--accent-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🧘</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Yoga & relaxation</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Postures ludiques, respiration, retour au calme</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--purple); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">❤️</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Gestion des émotions</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Identifier, nommer et accueillir ses émotions</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative;">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--orange); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🌳</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Activités nature</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Jardinage, land art, exploration extérieure</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            
-            <!-- Thématiques Samedi -->
-            <h3 style="text-align: center; font-size: 2.2rem; margin-bottom: 30px; color: #1A1A2E;">
-                Les Mêmes Thématiques, en Duo 💕
-            </h3>
-            <p style="text-align: center; font-size: 1.15rem; color: #666; max-width: 700px; margin: 0 auto 50px; line-height: 1.7;">
-                Partagez des moments privilégiés avec votre enfant autour des mêmes activités, adaptées pour créer du lien et des rituels à reproduire à la maison.
-            </p>
-            
-            <!-- Slider Container -->
-            <div style="position: relative; max-width: 900px; margin: 0 auto;">
-                <!-- Slider Wrapper -->
-                <div class="themes-slider-wrapper" style="overflow: hidden; border-radius: 30px;">
-                    <div class="themes-slider samedi-slider" style="display: flex; transition: transform 0.5s ease;">
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card creative" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--corail), #FF9A76);">🎨</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Créatif</h4>
-                                <p style="color: #666; line-height: 1.7;">Activités artistiques partagées pour stimuler l'imagination et créer ensemble des œuvres uniques.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card sensory" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--turquoise), #7ECFC0);">👃</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Éveil Sensoriel</h4>
-                                <p style="color: #666; line-height: 1.7;">Exploration des 5 sens ensemble à travers des expériences ludiques et enrichissantes en binôme.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card yoga" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--lavande), #B593D6);">🧘</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Yoga & Relaxation</h4>
-                                <p style="color: #666; line-height: 1.7;">Postures en duo, exercices de respiration partagés et rituels de détente à reproduire à la maison.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card emotion" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--rose), #EA8FA3);">❤️</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Gestion des Émotions</h4>
-                                <p style="color: #666; line-height: 1.7;">Communication bienveillante et vocabulaire émotionnel pour mieux se comprendre au quotidien.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="theme-slide" style="min-width: 100%; padding: 0 10px; box-sizing: border-box;">
-                            <div class="theme-card nature" style="margin: 0;">
-                                <div class="icon-badge" style="background: linear-gradient(135deg, var(--vert), #9FD99F);">🌳</div>
-                                <h4 style="font-size: 1.5rem; margin-bottom: 15px; color: #1A1A2E;">Activités Nature</h4>
-                                <p style="color: #666; line-height: 1.7;">Connexion à la nature en duo : jardinage, land art et exploration pour renforcer le lien.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Arrows -->
-                <button class="slider-prev" onclick="moveSlider('samedi', -1)" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.5rem; color: var(--turquoise); transition: all 0.3s; z-index: 10;">
-                    ‹
-                </button>
-                <button class="slider-next" onclick="moveSlider('samedi', 1)" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.5rem; color: var(--turquoise); transition: all 0.3s; z-index: 10;">
-                    ›
-                </button>
-                
-                <!-- Dots Indicators -->
-                <div class="slider-dots samedi-dots" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
-                    <span class="dot active" onclick="goToSlide('samedi', 0)" style="width: 12px; height: 12px; border-radius: 50%; background: var(--turquoise); cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('samedi', 1)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('samedi', 2)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('samedi', 3)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                    <span class="dot" onclick="goToSlide('samedi', 4)" style="width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s;"></span>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ATELIERS MMM JUNIOR -->
-    <section id="mmm" style="padding: 100px 0; background: white;">
-        <div class="container">
-            <div style="background: linear-gradient(135deg, rgba(197, 168, 224, 0.12), rgba(255, 140, 66, 0.08)); border-radius: 30px; padding: 50px; margin-bottom: 50px;">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <div class="icon-badge" style="background: linear-gradient(135deg, var(--lavande), var(--rose)); margin: 0 auto;">✨</div>
-                    <h2 style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 15px; color: #1A1A2E; font-weight: 700;">💫 Ateliers MMM Junior</h2>
-                    <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto 10px; font-weight: 600;">
-                        Mon Moment Magique
-                    </p>
-                    <p style="font-size: 1.05rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8; margin-bottom: 25px;">
-                        Dans ces ateliers à l'approche globale, les enfants apprennent à prendre soin d'eux, à ralentir et à se connecter à l'instant présent — avec leur tête, leur corps et leur cœur.
-                    </p>
-                    <p style="font-size: 1.05rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8; margin-bottom: 25px;">
-                        Ils vivent une parenthèse enchantée, un moment magique de détente et de jeu, dans un cadre bienveillant et sécurisant.
-                    </p>
-                    <p style="font-size: 1.05rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8;">
-                        Ils repartent avec des outils concrets et ludiques pour être bien au quotidien : à la maison, à l'école, seuls ou avec les autres. Des réflexes simples pour se sentir apaisés, confiants et épanouis.
-                    </p>
+            <!-- Ateliers du Samedi -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div style="background: linear-gradient(135deg, rgba(181, 232, 224, 0.08), rgba(213, 181, 232, 0.08)); padding: 45px; border-radius: 30px; border: 2px solid rgba(181, 232, 224, 0.2); order: 1;">
+                    <h4 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 30px; color: var(--text-color);">
+                        Au programme 🎯
+                    </h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🎨</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Éveil créatif</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Activités artistiques partagées parent-enfant</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--secondary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">👃</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Éveil sensoriel</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Exploration des 5 sens ensemble</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--accent-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🧘</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Yoga & relaxation</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Postures en duo, rituels de détente</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--purple); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">❤️</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Gestion des émotions</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Communication bienveillante, vocabulaire émotionnel</span>
+                        </li>
+                        <li style="padding: 18px 0; padding-left: 50px; position: relative;">
+                            <div style="position: absolute; left: 0; top: 18px; background: var(--orange); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">�</div>
+                            <strong style="display: block; margin-bottom: 5px; color: var(--text-color); font-size: 1.1rem;">Activités nature</strong>
+                            <span style="color: #666; font-size: 0.95rem;">Connexion à la nature en duo</span>
+                        </li>
+                    </ul>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 40px;">
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">📅</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Jour</h4>
-                        <p style="color: #666; font-size: 0.95rem;">Mercredi</p>
+                <div style="order: 2;">
+                    <div style="display: inline-block; background: rgba(181, 232, 224, 0.15); padding: 8px 20px; border-radius: 50px; margin-bottom: 20px;">
+                        <span style="color: var(--secondary-color); font-weight: 600; font-size: 0.9rem;">👨‍👩‍👧 SAMEDIS MATIN</span>
                     </div>
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⏰</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Horaires</h4>
-                        <p style="color: #666; font-size: 0.95rem;">10h00 - 11h30</p>
-                    </div>
-                    <div style="background: white; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
-                        <div style="font-size: 2.5rem; margin-bottom: 10px;">👶</div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: #1A1A2E;">Pour qui ?</h4>
-                        <p style="color: #666; font-size: 0.95rem;">Enfants 4-12 ans</p>
-                    </div>
-                </div>
-
-                <div style="background: rgba(255, 255, 255, 0.6); padding: 30px; border-radius: 20px; margin-bottom: 40px;">
-                    <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 25px; color: #1A1A2E;">
-                        🌟 Au programme de chaque séance
-                    </h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                        <div style="text-align: center; padding: 15px;">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">🧘</div>
-                            <h4 style="font-size: 1rem; margin-bottom: 5px; color: #1A1A2E;">Yoga & Mouvement</h4>
-                            <p style="color: #666; font-size: 0.9rem;">Postures ludiques</p>
-                        </div>
-                        <div style="text-align: center; padding: 15px;">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">🌬️</div>
-                            <h4 style="font-size: 1rem; margin-bottom: 5px; color: #1A1A2E;">Respiration</h4>
-                            <p style="color: #666; font-size: 0.9rem;">Techniques apaisantes</p>
-                        </div>
-                        <div style="text-align: center; padding: 15px;">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">🎨</div>
-                            <h4 style="font-size: 1rem; margin-bottom: 5px; color: #1A1A2E;">Créativité</h4>
-                            <p style="color: #666; font-size: 0.9rem;">Expression artistique</p>
-                        </div>
-                        <div style="text-align: center; padding: 15px;">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">💭</div>
-                            <h4 style="font-size: 1rem; margin-bottom: 5px; color: #1A1A2E;">Relaxation</h4>
-                            <p style="color: #666; font-size: 0.9rem;">Retour au calme</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.7); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 30px; border: 2px solid rgba(197, 168, 224, 0.3);">
-                    <p style="font-size: 1.4rem; color: #1A1A2E; margin-bottom: 8px;">
-                        <strong>Tarif : 15€ TTC</strong> par enfant
+                    <h2 style="font-family: var(--font-heading); font-size: 2.8rem; margin-bottom: 20px; color: var(--text-color);">
+                        Ateliers du Samedi
+                    </h2>
+                    <p style="font-size: 1.15rem; line-height: 1.8; color: #666; margin-bottom: 30px;">
+                        Les mêmes thématiques explorées en duo parent-enfant pour créer du lien, partager des rituels et repartir avec des outils concrets à utiliser au quotidien.
                     </p>
-                    <p style="font-size: 0.95rem; color: #666;">
-                        Inscription à la séance
-                    </p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <a href="https://www.monmomentmagique.com/mmm-juniors/" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: linear-gradient(135deg, var(--lavande), var(--rose)); color: white; padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 10px 30px rgba(197, 168, 224, 0.4); transition: transform 0.3s;">
-                        ✨ En savoir plus sur MMM Junior
+                    
+                    <div style="background: white; padding: 35px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); margin-bottom: 30px;">
+                        <h4 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 20px; color: var(--text-color);">
+                            📋 Informations pratiques
+                        </h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                                <strong style="color: var(--secondary-color);">Pour qui :</strong> Duo parent-enfant (4-12 ans)
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                                <strong style="color: var(--secondary-color);">Quand :</strong> Samedis 10h-11h30 ou 14h30-16h
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                                <strong style="color: var(--secondary-color);">Durée :</strong> 1h30 par séance
+                            </li>
+                            <li style="padding: 12px 0;">
+                                <strong style="color: var(--secondary-color);">Formule :</strong> À l'unité ou cycle de 4 séances
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <a href="reservation-atelier.html" style="display: inline-block; background: linear-gradient(135deg, var(--secondary-color), var(--purple)); color: white; padding: 16px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(181, 232, 224, 0.3); transition: all 0.3s;">
+                        Réserver un atelier
                     </a>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- TÉMOIGNAGES -->
-    <section class="with-bubbles" style="background: white; padding: 100px 0; position: relative; overflow: hidden;">
-        <!-- Bulles décoratives -->
-        <div class="bubble-decoration pink bubble-1"></div>
-        <div class="bubble-decoration turquoise bubble-2"></div>
-        <div class="bubble-decoration purple bubble-3"></div>
-        
-        <div class="container" style="position: relative; z-index: 1;">
-            <h2 style="text-align: center; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: #1A1A2E; font-weight: 700;">
-                Ils ont testé nos ateliers 💬
+
+    <section style="background: var(--bg-light); padding: 80px 0;">
+        <div class="container">
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem; text-align: center; margin-bottom: 50px; color: var(--text-color);">
+                Ils ont testé nos ateliers
             </h2>
-            <p style="text-align: center; font-size: 1.15rem; color: #666; margin-bottom: 60px;">
-                Découvrez l'expérience de nos familles
-            </p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
-                <div class="gradient-card">
-                    <div style="color: var(--peche); font-size: 2rem; margin-bottom: 15px;">★★★★★</div>
-                    <p style="font-size: 1.08rem; line-height: 1.8; color: #555; margin-bottom: 25px; font-style: italic;">
-                        "Les ateliers du mercredi sont un vrai moment de bonheur pour mon fils. Il revient toujours avec des idées créatives et tellement de fierté !"
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div style="background: white; padding: 35px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px;">★★★★★</div>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px; font-style: italic;">
+                        "Les ateliers du mercredi sont un vrai moment de bonheur pour mon fils. Il revient toujours avec des idées et de la fierté !"
                     </p>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--rose), var(--peche)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">J</div>
-                        <div>
-                            <div style="font-weight: 700; color: #1A1A2E;">Julie</div>
-                            <div style="font-size: 0.9rem; color: #888;">Maman d'Antoine, 6 ans</div>
-                        </div>
-                    </div>
+                    <div style="font-weight: 600; color: var(--text-color);">— Julie, maman d'Antoine (6 ans)</div>
                 </div>
                 
-                <div class="gradient-card">
-                    <div style="color: var(--peche); font-size: 2rem; margin-bottom: 15px;">★★★★★</div>
-                    <p style="font-size: 1.08rem; line-height: 1.8; color: #555; margin-bottom: 25px; font-style: italic;">
-                        "Le samedi matin est devenu notre rituel père-fille. On apprend ensemble et on crée des souvenirs précieux qui resteront gravés."
+                <div style="background: white; padding: 35px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px;">★★★★★</div>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px; font-style: italic;">
+                        "Le samedi matin est devenu notre rituel père-fille. On apprend ensemble et on crée des souvenirs précieux."
                     </p>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--turquoise), var(--bleu)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">D</div>
-                        <div>
-                            <div style="font-weight: 700; color: #1A1A2E;">David</div>
-                            <div style="font-size: 0.9rem; color: #888;">Papa de Chloé, 8 ans</div>
-                        </div>
-                    </div>
+                    <div style="font-weight: 600; color: var(--text-color);">— David, papa de Chloé (8 ans)</div>
                 </div>
                 
-                <div class="gradient-card">
-                    <div style="color: var(--peche); font-size: 2rem; margin-bottom: 15px;">★★★★★</div>
-                    <p style="font-size: 1.08rem; line-height: 1.8; color: #555; margin-bottom: 25px; font-style: italic;">
-                        "Les outils appris pendant les ateliers nous aident vraiment au quotidien, surtout pour la gestion des émotions. Merci pour cette belle découverte !"
+                <div style="background: white; padding: 35px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px;">★★★★★</div>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px; font-style: italic;">
+                        "Les outils appris pendant les ateliers nous aident vraiment au quotidien. Merci pour cette belle découverte !"
                     </p>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--lavande), var(--rose)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">M</div>
-                        <div>
-                            <div style="font-weight: 700; color: #1A1A2E;">Marine & Julien</div>
-                            <div style="font-size: 0.9rem; color: #888;">Parents de Léa, 5 ans</div>
-                        </div>
-                    </div>
+                    <div style="font-weight: 600; color: var(--text-color);">— Marine & Julien</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section style="background: linear-gradient(135deg, var(--rose) 0%, var(--turquoise) 50%, var(--lavande) 100%); padding: 100px 0; text-align: center; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);"></div>
+    <section style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); padding: 80px 0; text-align: center; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 50%, rgba(255, 229, 181, 0.2) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);"></div>
         <div class="container" style="position: relative; z-index: 1;">
-            <h2 style="font-size: clamp(2.2rem, 5vw, 3.5rem); color: white; margin-bottom: 25px; font-weight: 700;">
-                Prêts à Rejoindre l'Aventure ? 🚀
+            <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); color: white; margin-bottom: 20px;">
+                Prêts à rejoindre nos ateliers ?
             </h2>
-            <p style="font-size: 1.3rem; color: rgba(255,255,255,0.95); margin-bottom: 45px; max-width: 650px; margin-left: auto; margin-right: auto; line-height: 1.7;">
-                Rejoignez nos ateliers E&V Solo, E&V Duo ou MMM Junior.<br>
-                Places limitées pour garantir un accompagnement personnalisé et bienveillant.
+            <p style="font-size: 1.2rem; color: rgba(255,255,255,0.95); margin-bottom: 35px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Places limitées pour garantir un accompagnement personnalisé
             </p>
-            <a href="contact.html" style="display: inline-block; background: white; color: var(--rose); padding: 20px 50px; border-radius: 35px; text-decoration: none; font-weight: 700; font-size: 1.2rem; box-shadow: 0 15px 50px rgba(0,0,0,0.25); transition: all 0.3s; border: 3px solid white;">
-                � Nous contacter
+            <a href="reservation-atelier.html" style="display: inline-block; background: white; color: var(--primary-color); padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 15px 40px rgba(0,0,0,0.2); transition: all 0.3s;">
+                Réserver maintenant
             </a>
         </div>
     </section>
 
-    <footer style="background: #2D3436; color: white; padding: 60px 0 20px;">
+    <footer style="background: var(--footer-bg); color: var(--footer-text); padding: 60px 0 20px;">
         <div class="container">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
                 <div>
-                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 15px; color: white;">Éveil & Vous</h3>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 15px;">Éveil & Vous</h3>
                     <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Éveil en famille au milieu de la nature</p>
                 </div>
                 <div>
-                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px; color: white;">Pages</h3>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px;">Pages</h3>
                     <p><a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">À Propos</a></p>
                     <p><a href="activites.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Activités</a></p>
                     <p><a href="ateliers.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Ateliers</a></p>
@@ -1052,11 +396,11 @@
                     <p><a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Contact</a></p>
                 </div>
                 <div>
-                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px; color: white;">Contact</h3>
-                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Limoux, Aude (11)<br>contact@eveiletvous.org</p>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px;">Contact</h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Limoux, Aude (11)<br>contact@eveil-vous.fr</p>
                 </div>
                 <div>
-                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px; color: white;">Suivez-nous</h3>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px;">Suivez-nous</h3>
                     <div style="display: flex; gap: 15px;">
                         <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.3rem;"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.3rem;"><i class="fab fa-instagram"></i></a>
@@ -1069,210 +413,6 @@
         </div>
     </footer>
 
-    <script>
-        // Slider functionality
-        const sliders = {
-            mercredi: {
-                currentSlide: 0,
-                slider: null,
-                dots: null
-            },
-            samedi: {
-                currentSlide: 0,
-                slider: null,
-                dots: null
-            }
-        };
-
-        // Initialize sliders
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mercredi slider
-            const mercrediSliders = document.querySelectorAll('.themes-slider');
-            sliders.mercredi.slider = mercrediSliders[0];
-            sliders.mercredi.dots = document.querySelectorAll('.slider-dots')[0].querySelectorAll('.dot');
-            
-            // Samedi slider
-            sliders.samedi.slider = document.querySelector('.samedi-slider');
-            sliders.samedi.dots = document.querySelector('.samedi-dots').querySelectorAll('.dot');
-        });
-
-        function moveSlider(type, direction) {
-            const totalSlides = 5;
-            sliders[type].currentSlide += direction;
-            
-            // Loop around
-            if (sliders[type].currentSlide < 0) {
-                sliders[type].currentSlide = totalSlides - 1;
-            } else if (sliders[type].currentSlide >= totalSlides) {
-                sliders[type].currentSlide = 0;
-            }
-            
-            updateSlider(type);
-        }
-
-        function goToSlide(type, index) {
-            sliders[type].currentSlide = index;
-            updateSlider(type);
-        }
-
-        function updateSlider(type) {
-            const offset = -sliders[type].currentSlide * 100;
-            sliders[type].slider.style.transform = `translateX(${offset}%)`;
-            
-            // Update dots
-            sliders[type].dots.forEach((dot, index) => {
-                if (index === sliders[type].currentSlide) {
-                    dot.classList.add('active');
-                    dot.style.background = type === 'mercredi' ? 'var(--corail)' : 'var(--turquoise)';
-                } else {
-                    dot.classList.remove('active');
-                    dot.style.background = '#ddd';
-                }
-            });
-        }
-
-        // Auto-slide every 5 seconds
-        setInterval(() => {
-            moveSlider('mercredi', 1);
-            moveSlider('samedi', 1);
-        }, 5000);
-
-        // Add hover effects to buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.slider-prev, .slider-next');
-            buttons.forEach(btn => {
-                btn.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-50%) scale(1.1)';
-                    this.style.boxShadow = '0 8px 30px rgba(0,0,0,0.25)';
-                });
-                btn.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(-50%) scale(1)';
-                    this.style.boxShadow = '0 5px 20px rgba(0,0,0,0.15)';
-                });
-            });
-        });
-
-        // ===== GESTION DES CARTES D'ATELIERS ET RÉSERVATIONS =====
-        let currentWorkshop = { name: '', date: '' };
-
-        // Animation au hover des cartes
-        document.querySelectorAll('.workshop-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-                this.style.boxShadow = '0 20px 60px rgba(0,0,0,0.15)';
-            });
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-            });
-        });
-
-        // Ouvrir le modal de réservation
-        function openBookingModal(workshopName, workshopDate) {
-            currentWorkshop = { name: workshopName, date: workshopDate };
-            document.getElementById('modalTitle').textContent = workshopName;
-            document.getElementById('modalDate').textContent = workshopDate;
-            
-            const modal = document.getElementById('bookingModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            // Animation d'entrée
-            setTimeout(() => {
-                modal.querySelector('div').style.animation = 'modalSlideIn 0.4s ease-out';
-            }, 10);
-        }
-
-        // Fermer le modal
-        function closeBookingModal() {
-            const modal = document.getElementById('bookingModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            document.getElementById('bookingForm').reset();
-        }
-
-        // Fermer en cliquant à l'extérieur
-        document.getElementById('bookingModal').addEventListener('click', function(e) {
-            if (e.target.id === 'bookingModal') {
-                closeBookingModal();
-            }
-        });
-
-        // Soumettre le formulaire
-        function submitBooking(event) {
-            event.preventDefault();
-            
-            const formData = {
-                workshop: currentWorkshop.name,
-                date: currentWorkshop.date,
-                name: document.getElementById('bookingName').value,
-                email: document.getElementById('bookingEmail').value,
-                phone: document.getElementById('bookingPhone').value,
-                age: document.getElementById('bookingAge').value,
-                participants: document.getElementById('bookingParticipants').value,
-                message: document.getElementById('bookingMessage').value
-            };
-            
-            // Simuler l'envoi (en production, envoyer à un serveur/email service)
-            console.log('Réservation:', formData);
-            
-            // Afficher un message de confirmation
-            alert(`✅ Votre réservation pour "${currentWorkshop.name}" a été enregistrée !\n\nNous vous contacterons rapidement au ${formData.phone} pour confirmer votre place.\n\nÀ bientôt ! 🌟`);
-            
-            // Fermer le modal
-            closeBookingModal();
-            
-            // En production, vous pourriez envoyer les données via fetch/axios vers un backend
-            // ou utiliser un service comme Formspree, EmailJS, etc.
-            /*
-            fetch('/api/booking', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            }).then(response => {
-                if (response.ok) {
-                    alert('Réservation confirmée !');
-                    closeBookingModal();
-                }
-            });
-            */
-        }
-
-        // Animation CSS pour le modal
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes modalSlideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            .workshop-card button:hover {
-                transform: scale(1.05);
-                box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-            }
-            
-            @media (max-width: 768px) {
-                .workshops-grid {
-                    grid-template-columns: 1fr !important;
-                }
-                
-                #bookingModal > div {
-                    padding: 30px !important;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-
-    <!-- Chargement dynamique des ateliers -->
-    <script src="js/ateliers-loader.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/cookies.js"></script>
 </body>
 </html>
