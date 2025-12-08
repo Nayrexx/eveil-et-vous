@@ -1119,7 +1119,7 @@
                     // Testimonial
                     if (data.testimonialText) {
                         const testimonialText = document.querySelector('.testimonial-text');
-                        if (testimonialText) testimonialText.textContent = data.testimonialText;
+                        if (testimonialText) testimonialText.textContent = '"' + data.testimonialText + '"';
                     }
                     
                     if (data.testimonialAuthor) {
@@ -1141,9 +1141,175 @@
                         }
                     }
                 }
-            }).catch(err => {
-                console.log('Contenu par défaut utilisé');
-            });
+            }).catch(err => console.log('Contenu homepage par défaut'));
+            
+            // Charger la bannière
+            db.collection('content').doc('banniere').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const banniereSection = document.querySelector('[style*="linear-gradient(135deg, #FF8C42"]');
+                    if (banniereSection) {
+                        const annivSpan = banniereSection.querySelectorAll('span[style*="font-size: 1.8rem"]');
+                        const textSpans = banniereSection.querySelectorAll('span[style*="font-weight: 600"]');
+                        const btn = banniereSection.querySelector('a');
+                        
+                        if (annivSpan[0] && data.annivEmoji) annivSpan[0].textContent = data.annivEmoji;
+                        if (annivSpan[1] && data.privatEmoji) annivSpan[1].textContent = data.privatEmoji;
+                        if (textSpans[0] && data.annivText) textSpans[0].textContent = data.annivText;
+                        if (textSpans[1] && data.privatText) textSpans[1].textContent = data.privatText;
+                        if (btn && data.btnText) btn.textContent = data.btnText;
+                        if (btn && data.btnLink) btn.href = data.btnLink;
+                    }
+                }
+            }).catch(err => console.log('Bannière par défaut'));
+            
+            // Charger les piliers
+            db.collection('content').doc('piliers').get().then(doc => {
+                if (doc.exists && doc.data().items) {
+                    const piliers = doc.data().items;
+                    const pillarCards = document.querySelectorAll('.pillar-card');
+                    
+                    piliers.forEach((pilier, i) => {
+                        if (pillarCards[i]) {
+                            const icon = pillarCards[i].querySelector('.pillar-icon');
+                            const title = pillarCards[i].querySelector('h3');
+                            const desc = pillarCards[i].querySelector('p');
+                            const examples = pillarCards[i].querySelector('.pillar-examples');
+                            
+                            if (icon && pilier.emoji) icon.textContent = pilier.emoji;
+                            if (title && pilier.title) title.textContent = pilier.title;
+                            if (desc && pilier.description) desc.textContent = pilier.description;
+                            if (examples && pilier.activitesLabel && pilier.activites) {
+                                examples.innerHTML = `<strong>${pilier.activitesLabel}</strong><p>${pilier.activites}</p>`;
+                            }
+                        }
+                    });
+                }
+            }).catch(err => console.log('Piliers par défaut'));
+            
+            // Charger le lieu
+            db.collection('content').doc('lieu').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const lieuSection = document.querySelector('#lieu');
+                    
+                    if (lieuSection) {
+                        const title = lieuSection.querySelector('.section-title-center');
+                        const subtitle = lieuSection.querySelector('.section-subtitle');
+                        
+                        if (title && data.title) title.textContent = data.title;
+                        if (subtitle && data.subtitle) subtitle.textContent = data.subtitle;
+                        
+                        if (data.images) {
+                            const galleryCards = lieuSection.querySelectorAll('.gallery-card');
+                            data.images.forEach((img, i) => {
+                                if (galleryCards[i]) {
+                                    const h4 = galleryCards[i].querySelector('h4');
+                                    const p = galleryCards[i].querySelector('p');
+                                    if (h4 && img.title) h4.textContent = img.title;
+                                    if (p && img.desc) p.textContent = img.desc;
+                                }
+                            });
+                        }
+                    }
+                }
+            }).catch(err => console.log('Lieu par défaut'));
+            
+            // Charger les étapes
+            db.collection('content').doc('etapes').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const etapesSection = document.querySelector('section[style*="rgba(78, 205, 196, 0.08)"]');
+                    
+                    if (etapesSection) {
+                        const title = etapesSection.querySelector('h2');
+                        const subtitle = etapesSection.querySelector('p[style*="font-size: 1.3rem"]');
+                        
+                        if (title && data.title) title.textContent = data.title;
+                        if (subtitle && data.subtitle) subtitle.textContent = data.subtitle;
+                        
+                        if (data.items) {
+                            const etapeCards = etapesSection.querySelectorAll('[style*="min-width: 280px"]');
+                            data.items.forEach((etape, i) => {
+                                if (etapeCards[i]) {
+                                    const h3 = etapeCards[i].querySelector('h3');
+                                    const p = etapeCards[i].querySelector('p[style*="font-size: 1.05rem"]');
+                                    if (h3 && etape.title) h3.textContent = etape.title;
+                                    if (p && etape.description) p.innerHTML = etape.description;
+                                }
+                            });
+                        }
+                    }
+                }
+            }).catch(err => console.log('Étapes par défaut'));
+            
+            // Charger la FAQ
+            db.collection('content').doc('faq').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const faqSection = document.querySelector('.faq-container');
+                    
+                    if (faqSection && data.items) {
+                        const titleSection = faqSection.parentElement.querySelector('.section-title-center');
+                        if (titleSection && data.title) titleSection.textContent = data.title;
+                        
+                        faqSection.innerHTML = data.items.map(faq => `
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>${faq.question}</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="faq-answer">${faq.answer}</div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            }).catch(err => console.log('FAQ par défaut'));
+            
+            // Charger le footer
+            db.collection('content').doc('footer').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const footer = document.querySelector('footer');
+                    
+                    if (footer) {
+                        const widgets = footer.querySelectorAll('.footer-widget');
+                        
+                        // Premier widget - Marque
+                        if (widgets[0]) {
+                            const h3 = widgets[0].querySelector('h3');
+                            const p = widgets[0].querySelector('p');
+                            if (h3 && data.brand) h3.textContent = data.brand;
+                            if (p && data.tagline) p.textContent = data.tagline;
+                        }
+                        
+                        // Troisième widget - Contact
+                        if (widgets[2]) {
+                            const p = widgets[2].querySelector('p');
+                            if (p && (data.location || data.email)) {
+                                p.innerHTML = `${data.location || 'Limoux, Aude (11)'}<br>${data.email || 'contact@eveiletvous.org'}`;
+                            }
+                        }
+                        
+                        // Quatrième widget - Réseaux sociaux
+                        if (widgets[3]) {
+                            const socialLinks = widgets[3].querySelector('.social-links');
+                            if (socialLinks) {
+                                const fbLink = socialLinks.querySelector('a:first-child');
+                                const igLink = socialLinks.querySelector('a:last-child');
+                                if (fbLink && data.facebook) fbLink.href = data.facebook;
+                                if (igLink && data.instagram) igLink.href = data.instagram;
+                            }
+                        }
+                        
+                        // Copyright
+                        const copyright = footer.querySelector('.footer-bottom p');
+                        if (copyright && data.copyright) {
+                            copyright.innerHTML = `${data.copyright} | <a href="cgv.html" style="color: inherit; text-decoration: none;">CGV</a> | <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions légales</a>`;
+                        }
+                    }
+                }
+            }).catch(err => console.log('Footer par défaut'));
         })();
     </script>
 </body>

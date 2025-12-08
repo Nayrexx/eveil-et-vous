@@ -327,6 +327,12 @@
         <!-- Navigation par page -->
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="homepage">🏠 Accueil</button>
+            <button class="nav-tab" data-page="banniere">📢 Bannière</button>
+            <button class="nav-tab" data-page="piliers">🌈 Piliers</button>
+            <button class="nav-tab" data-page="lieu">📍 Lieu</button>
+            <button class="nav-tab" data-page="etapes">📋 Étapes</button>
+            <button class="nav-tab" data-page="faq">❓ FAQ</button>
+            <button class="nav-tab" data-page="footer">🦶 Footer</button>
             <button class="nav-tab" data-page="about">👥 À Propos</button>
             <button class="nav-tab" data-page="sejours">🏕️ Séjours</button>
             <button class="nav-tab" data-page="contact">📧 Contact</button>
@@ -448,6 +454,220 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- ===== PANEL BANNIÈRE ===== -->
+        <div id="panel-banniere" class="content-panel">
+            <div class="editor-panel">
+                <h2>📢 Bannière d'Annonce</h2>
+                <p style="color: #666; margin-bottom: 30px;">La bannière colorée affichée sous le menu avec les infos Anniversaires et Privatisation.</p>
+                
+                <div class="form-section">
+                    <h3>🎂 Anniversaires</h3>
+                    
+                    <div class="form-group">
+                        <label for="banniere-anniv-emoji">Emoji</label>
+                        <input type="text" id="banniere-anniv-emoji" placeholder="🎂" style="width: 80px;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="banniere-anniv-text">Texte</label>
+                        <input type="text" id="banniere-anniv-text" placeholder="Anniversaires E&V - Fêtez en famille !">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🏢 Privatisation</h3>
+                    
+                    <div class="form-group">
+                        <label for="banniere-privat-emoji">Emoji</label>
+                        <input type="text" id="banniere-privat-emoji" placeholder="🏢" style="width: 80px;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="banniere-privat-text">Texte</label>
+                        <input type="text" id="banniere-privat-text" placeholder="Privatisation pour vos événements">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🔘 Bouton</h3>
+                    
+                    <div class="form-group">
+                        <label for="banniere-btn-text">Texte du bouton</label>
+                        <input type="text" id="banniere-btn-text" placeholder="📧 Nous contacter">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="banniere-btn-link">Lien du bouton</label>
+                        <input type="text" id="banniere-btn-link" placeholder="contact.html">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL PILIERS ===== -->
+        <div id="panel-piliers" class="content-panel">
+            <div class="editor-panel">
+                <h2>🌈 Les 3 Piliers</h2>
+                <p style="color: #666; margin-bottom: 30px;">Les 3 cartes présentant les piliers de votre approche : Éveil global, Accompagnement parental, Cadre nature.</p>
+                
+                <div id="piliers-editor">
+                    <!-- Piliers générés dynamiquement -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL LIEU ===== -->
+        <div id="panel-lieu" class="content-panel">
+            <div class="editor-panel">
+                <h2>📍 Section Lieu</h2>
+                <p style="color: #666; margin-bottom: 30px;">La section présentant les dômes géodésiques et le cadre naturel.</p>
+                
+                <div class="form-section">
+                    <h3>📝 Titre et description</h3>
+                    
+                    <div class="form-group">
+                        <label for="lieu-title">Titre de la section</label>
+                        <input type="text" id="lieu-title" placeholder="Notre Lieu Magique">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lieu-subtitle">Description</label>
+                        <textarea id="lieu-subtitle" placeholder="Un cadre naturel et apaisant à Limoux..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🖼️ Les 3 images (titres et descriptions)</h3>
+                    
+                    <div class="form-group">
+                        <label>Image 1</label>
+                        <input type="text" id="lieu-img1-title" placeholder="Dômes Géodésiques" style="margin-bottom: 8px;">
+                        <input type="text" id="lieu-img1-desc" placeholder="Architecture en harmonie avec la nature">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Image 2</label>
+                        <input type="text" id="lieu-img2-title" placeholder="Espace Intérieur" style="margin-bottom: 8px;">
+                        <input type="text" id="lieu-img2-desc" placeholder="Un cocon de bien-être baigné de lumière">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Image 3</label>
+                        <input type="text" id="lieu-img3-title" placeholder="Vue d'Ensemble" style="margin-bottom: 8px;">
+                        <input type="text" id="lieu-img3-desc" placeholder="Un village d'éveil dans la verdure">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL ÉTAPES ===== -->
+        <div id="panel-etapes" class="content-panel">
+            <div class="editor-panel">
+                <h2>📋 Comment ça marche ?</h2>
+                <p style="color: #666; margin-bottom: 30px;">Les 4 étapes du processus de réservation.</p>
+                
+                <div class="form-section">
+                    <h3>📝 Titre de la section</h3>
+                    
+                    <div class="form-group">
+                        <label for="etapes-title">Titre</label>
+                        <input type="text" id="etapes-title" placeholder="Comment ça marche ?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="etapes-subtitle">Sous-titre</label>
+                        <input type="text" id="etapes-subtitle" placeholder="Réserver votre séjour en famille est simple et rapide">
+                    </div>
+                </div>
+                
+                <div id="etapes-editor">
+                    <!-- Étapes générées dynamiquement -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL FAQ ===== -->
+        <div id="panel-faq" class="content-panel">
+            <div class="editor-panel">
+                <h2>❓ Questions Fréquentes</h2>
+                <p style="color: #666; margin-bottom: 30px;">La section FAQ avec les questions/réponses les plus courantes.</p>
+                
+                <div class="form-section">
+                    <h3>📝 Titre de la section</h3>
+                    
+                    <div class="form-group">
+                        <label for="faq-title">Titre</label>
+                        <input type="text" id="faq-title" placeholder="Questions Fréquentes">
+                    </div>
+                </div>
+                
+                <div id="faq-editor">
+                    <!-- FAQ générées dynamiquement -->
+                </div>
+                <button class="add-item-btn" onclick="addFaq()">+ Ajouter une question</button>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL FOOTER ===== -->
+        <div id="panel-footer" class="content-panel">
+            <div class="editor-panel">
+                <h2>🦶 Footer (Pied de page)</h2>
+                <p style="color: #666; margin-bottom: 30px;">Les informations affichées en bas de chaque page du site.</p>
+                
+                <div class="form-section">
+                    <h3>📝 Présentation</h3>
+                    
+                    <div class="form-group">
+                        <label for="footer-brand">Nom de marque</label>
+                        <input type="text" id="footer-brand" placeholder="Éveil & Vous">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="footer-tagline">Slogan</label>
+                        <input type="text" id="footer-tagline" placeholder="Éveil en famille au milieu de la nature">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>📍 Contact</h3>
+                    
+                    <div class="form-group">
+                        <label for="footer-location">Localisation</label>
+                        <input type="text" id="footer-location" placeholder="Limoux, Aude (11)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="footer-email">Email</label>
+                        <input type="email" id="footer-email" placeholder="contact@eveiletvous.org">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🔗 Réseaux sociaux</h3>
+                    
+                    <div class="form-group">
+                        <label for="footer-facebook">Lien Facebook</label>
+                        <input type="url" id="footer-facebook" placeholder="https://facebook.com/eveilet vous">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="footer-instagram">Lien Instagram</label>
+                        <input type="url" id="footer-instagram" placeholder="https://instagram.com/eveilet vous">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>©️ Copyright</h3>
+                    
+                    <div class="form-group">
+                        <label for="footer-copyright">Texte de copyright</label>
+                        <input type="text" id="footer-copyright" placeholder="© 2025 Éveil & Vous">
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         
         <!-- ===== PANEL SÉJOURS ===== -->
@@ -619,6 +839,77 @@
                     }
                 ]
             },
+            banniere: {
+                annivEmoji: "🎂",
+                annivText: "Anniversaires E&V - Fêtez en famille !",
+                privatEmoji: "🏢",
+                privatText: "Privatisation pour vos événements",
+                btnText: "📧 Nous contacter",
+                btnLink: "contact.html"
+            },
+            piliers: {
+                items: [
+                    {
+                        emoji: "🌈",
+                        title: "Éveil global",
+                        description: "Stimuler sans surcharger, apprendre à se recentrer.",
+                        activitesLabel: "Activités :",
+                        activites: "Lecture, jeux coopératifs, danse, yoga, cuisine."
+                    },
+                    {
+                        emoji: "👨‍👩‍👧",
+                        title: "Accompagnement parental",
+                        description: "Renforcer le lien, retrouver des moments simples et efficaces.",
+                        activitesLabel: "Activités :",
+                        activites: "Ateliers de gestion des émotions, cercle de parole, clés pour un quotidien apaisé."
+                    },
+                    {
+                        emoji: "🌳",
+                        title: "Cadre nature & bienveillance",
+                        description: "Apaiser, sécuriser, favoriser l'autonomie.",
+                        activitesLabel: "Activités :",
+                        activites: "Balade sensorielle en forêt, culture du potager, repas sains et équilibrés, groupe 7-12 enfants."
+                    }
+                ]
+            },
+            lieu: {
+                title: "Notre Lieu Magique",
+                subtitle: "Un cadre naturel et apaisant à Limoux, dans l'Aude. Nos dômes géodésiques offrent un espace unique pour se ressourcer en famille.",
+                images: [
+                    { title: "Dômes Géodésiques", desc: "Architecture en harmonie avec la nature" },
+                    { title: "Espace Intérieur", desc: "Un cocon de bien-être baigné de lumière" },
+                    { title: "Vue d'Ensemble", desc: "Un village d'éveil dans la verdure" }
+                ]
+            },
+            etapes: {
+                title: "Comment ça marche ?",
+                subtitle: "Réserver votre séjour en famille est simple et rapide",
+                items: [
+                    { title: "Choisissez vos dates", description: "Consultez le calendrier et sélectionnez la semaine qui vous convient. Séjours du lundi au vendredi (arrivée dimanche 16h, départ vendredi 16h)." },
+                    { title: "Remplissez le formulaire", description: "Indiquez les informations sur votre famille (nombre d'enfants, âges, besoins particuliers)." },
+                    { title: "Recevez la confirmation", description: "Nous vous contactons sous 48h pour confirmer votre réservation et répondre à vos questions." },
+                    { title: "Profitez de l'expérience", description: "Arrivez et laissez-vous guider pour une semaine d'éveil inoubliable en famille !" }
+                ]
+            },
+            faq: {
+                title: "Questions Fréquentes",
+                items: [
+                    { question: "À partir de quel âge peut-on venir ?", answer: "Nos séjours sont adaptés aux enfants de 4 à 12 ans. Chaque activité est pensée pour respecter le développement de chaque tranche d'âge." },
+                    { question: "Faut-il rester avec mon enfant pendant les activités ?", answer: "Certaines activités sont en duo parent-enfant, d'autres sont réservées aux enfants seuls. Nous proposons les deux formules pour favoriser l'autonomie et renforcer le lien." },
+                    { question: "Que comprend le tarif du séjour ?", answer: "Le tarif inclut l'hébergement en dôme privatif, tous les repas bio, toutes les activités guidées, le matériel et les fiches-rituels à ramener chez vous." },
+                    { question: "Combien de familles par séjour ?", answer: "Nous limitons à 8-12 enfants maximum par séjour (soit 4-6 familles) pour garantir un accompagnement personnalisé et créer une ambiance chaleureuse." },
+                    { question: "Que se passe-t-il en cas de mauvais temps ?", answer: "Nous disposons de salles d'activités couvertes et adaptons le programme. La nature reste accessible avec un équipement adapté (fourni sur place)." }
+                ]
+            },
+            footer: {
+                brand: "Éveil & Vous",
+                tagline: "Éveil en famille au milieu de la nature",
+                location: "Limoux, Aude (11)",
+                email: "contact@eveiletvous.org",
+                facebook: "",
+                instagram: "",
+                copyright: "© 2025 Éveil & Vous"
+            },
             about: {
                 title: "Notre Histoire",
                 intro: "",
@@ -677,7 +968,7 @@
             showStatus('⏳ Chargement du contenu...', 'loading');
             
             try {
-                const pages = ['homepage', 'about', 'sejours', 'contact'];
+                const pages = ['homepage', 'banniere', 'piliers', 'lieu', 'etapes', 'faq', 'footer', 'about', 'sejours', 'contact'];
                 
                 for (const page of pages) {
                     const doc = await db.collection('content').doc(page).get();
@@ -710,6 +1001,46 @@
             
             // Reviews
             renderReviews();
+            
+            // Bannière
+            document.getElementById('banniere-anniv-emoji').value = currentContent.banniere.annivEmoji || '🎂';
+            document.getElementById('banniere-anniv-text').value = currentContent.banniere.annivText || '';
+            document.getElementById('banniere-privat-emoji').value = currentContent.banniere.privatEmoji || '🏢';
+            document.getElementById('banniere-privat-text').value = currentContent.banniere.privatText || '';
+            document.getElementById('banniere-btn-text').value = currentContent.banniere.btnText || '';
+            document.getElementById('banniere-btn-link').value = currentContent.banniere.btnLink || '';
+            
+            // Piliers
+            renderPiliers();
+            
+            // Lieu
+            document.getElementById('lieu-title').value = currentContent.lieu.title || '';
+            document.getElementById('lieu-subtitle').value = currentContent.lieu.subtitle || '';
+            const images = currentContent.lieu.images || [];
+            document.getElementById('lieu-img1-title').value = images[0]?.title || '';
+            document.getElementById('lieu-img1-desc').value = images[0]?.desc || '';
+            document.getElementById('lieu-img2-title').value = images[1]?.title || '';
+            document.getElementById('lieu-img2-desc').value = images[1]?.desc || '';
+            document.getElementById('lieu-img3-title').value = images[2]?.title || '';
+            document.getElementById('lieu-img3-desc').value = images[2]?.desc || '';
+            
+            // Étapes
+            document.getElementById('etapes-title').value = currentContent.etapes.title || '';
+            document.getElementById('etapes-subtitle').value = currentContent.etapes.subtitle || '';
+            renderEtapes();
+            
+            // FAQ
+            document.getElementById('faq-title').value = currentContent.faq.title || '';
+            renderFaq();
+            
+            // Footer
+            document.getElementById('footer-brand').value = currentContent.footer.brand || '';
+            document.getElementById('footer-tagline').value = currentContent.footer.tagline || '';
+            document.getElementById('footer-location').value = currentContent.footer.location || '';
+            document.getElementById('footer-email').value = currentContent.footer.email || '';
+            document.getElementById('footer-facebook').value = currentContent.footer.facebook || '';
+            document.getElementById('footer-instagram').value = currentContent.footer.instagram || '';
+            document.getElementById('footer-copyright').value = currentContent.footer.copyright || '';
             
             // About
             document.getElementById('about-title').value = currentContent.about.title || '';
@@ -806,6 +1137,112 @@
             renderReviews();
         }
         
+        // Render Piliers
+        function renderPiliers() {
+            const editor = document.getElementById('piliers-editor');
+            const piliers = currentContent.piliers.items || [];
+            
+            editor.innerHTML = piliers.map((pilier, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Pilier #${i + 1}</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Emoji</label>
+                        <input type="text" value="${pilier.emoji}" onchange="updatePilier(${i}, 'emoji', this.value)" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" value="${pilier.title}" onchange="updatePilier(${i}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updatePilier(${i}, 'description', this.value)">${pilier.description}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Label activités</label>
+                        <input type="text" value="${pilier.activitesLabel}" onchange="updatePilier(${i}, 'activitesLabel', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Liste des activités</label>
+                        <textarea onchange="updatePilier(${i}, 'activites', this.value)">${pilier.activites}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updatePilier(index, field, value) {
+            currentContent.piliers.items[index][field] = value;
+        }
+        
+        // Render Étapes
+        function renderEtapes() {
+            const editor = document.getElementById('etapes-editor');
+            const etapes = currentContent.etapes.items || [];
+            
+            editor.innerHTML = etapes.map((etape, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Étape #${i + 1}</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" value="${etape.title}" onchange="updateEtape(${i}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updateEtape(${i}, 'description', this.value)">${etape.description}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateEtape(index, field, value) {
+            currentContent.etapes.items[index][field] = value;
+        }
+        
+        // Render FAQ
+        function renderFaq() {
+            const editor = document.getElementById('faq-editor');
+            const faqs = currentContent.faq.items || [];
+            
+            editor.innerHTML = faqs.map((faq, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Question #${i + 1}</strong>
+                        <button onclick="removeFaq(${i})" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Question</label>
+                        <input type="text" value="${faq.question}" onchange="updateFaq(${i}, 'question', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Réponse</label>
+                        <textarea onchange="updateFaq(${i}, 'answer', this.value)">${faq.answer}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function addFaq() {
+            currentContent.faq.items.push({
+                question: "Nouvelle question ?",
+                answer: "Réponse à la question..."
+            });
+            renderFaq();
+        }
+        
+        function updateFaq(index, field, value) {
+            currentContent.faq.items[index][field] = value;
+        }
+        
+        function removeFaq(index) {
+            currentContent.faq.items.splice(index, 1);
+            renderFaq();
+        }
+        
         // Collecter les données du formulaire
         function collectFormData() {
             return {
@@ -819,6 +1256,44 @@
                     testimonialText: document.getElementById('testimonial-text').value,
                     testimonialAuthor: document.getElementById('testimonial-author').value,
                     reviews: currentContent.homepage.reviews
+                },
+                banniere: {
+                    annivEmoji: document.getElementById('banniere-anniv-emoji').value,
+                    annivText: document.getElementById('banniere-anniv-text').value,
+                    privatEmoji: document.getElementById('banniere-privat-emoji').value,
+                    privatText: document.getElementById('banniere-privat-text').value,
+                    btnText: document.getElementById('banniere-btn-text').value,
+                    btnLink: document.getElementById('banniere-btn-link').value
+                },
+                piliers: {
+                    items: currentContent.piliers.items
+                },
+                lieu: {
+                    title: document.getElementById('lieu-title').value,
+                    subtitle: document.getElementById('lieu-subtitle').value,
+                    images: [
+                        { title: document.getElementById('lieu-img1-title').value, desc: document.getElementById('lieu-img1-desc').value },
+                        { title: document.getElementById('lieu-img2-title').value, desc: document.getElementById('lieu-img2-desc').value },
+                        { title: document.getElementById('lieu-img3-title').value, desc: document.getElementById('lieu-img3-desc').value }
+                    ]
+                },
+                etapes: {
+                    title: document.getElementById('etapes-title').value,
+                    subtitle: document.getElementById('etapes-subtitle').value,
+                    items: currentContent.etapes.items
+                },
+                faq: {
+                    title: document.getElementById('faq-title').value,
+                    items: currentContent.faq.items
+                },
+                footer: {
+                    brand: document.getElementById('footer-brand').value,
+                    tagline: document.getElementById('footer-tagline').value,
+                    location: document.getElementById('footer-location').value,
+                    email: document.getElementById('footer-email').value,
+                    facebook: document.getElementById('footer-facebook').value,
+                    instagram: document.getElementById('footer-instagram').value,
+                    copyright: document.getElementById('footer-copyright').value
                 },
                 about: {
                     title: document.getElementById('about-title').value,
