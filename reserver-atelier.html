@@ -373,6 +373,30 @@
             border-color: transparent;
         }
 
+        /* Bouton MMM spécial */
+        .filter-btn.mmm-btn {
+            background: linear-gradient(135deg, #A78BFA, #B565D8);
+            color: white;
+            border-color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-btn.mmm-btn img {
+            height: 24px;
+            width: auto;
+            border-radius: 50%;
+            background: white;
+            padding: 2px;
+        }
+        
+        .filter-btn.mmm-btn:hover {
+            background: linear-gradient(135deg, #9171E8, #A34FC6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(167, 139, 250, 0.3);
+        }
+
         /* Grille des ateliers */
         .ateliers-grid {
             display: grid;
@@ -927,7 +951,7 @@
                 <button class="filter-btn active" data-filter="all">✨ Tous les ateliers</button>
                 <button class="filter-btn" data-filter="solo">🌟 E&V Solo (Mercredis)</button>
                 <button class="filter-btn" data-filter="duo">👨‍👩‍👧 E&V Duo (Samedis)</button>
-                <button class="filter-btn" data-filter="disponible">✅ Places disponibles</button>
+                <button class="filter-btn mmm-btn" onclick="openMMMPopup()"><img src="images/Logo MMM.png" alt="MMM">Ateliers MMM</button>
             </div>
 
             <!-- Grille des ateliers -->
@@ -1333,12 +1357,15 @@
                 allAteliers = allAteliers.filter(a => a.type === 'solo');
             } else if (filter === 'duo') {
                 allAteliers = allAteliers.filter(a => a.type === 'duo');
-            } else if (filter === 'disponible') {
-                allAteliers = allAteliers.filter(a => !a.complet && a.placesRestantes > 0);
             }
             
             // Générer les cartes
             grid.innerHTML = allAteliers.map(atelier => createCard(atelier)).join('');
+        }
+        
+        // Fonction pour ouvrir la popup MMM
+        function openMMMPopup() {
+            window.open('https://www.monmomentmagique.com/les-ateliers/', 'MMM_Ateliers', 'width=1000,height=700,scrollbars=yes,resizable=yes');
         }
         
         function createCard(atelier) {
@@ -1393,9 +1420,8 @@
             const disponibles = allAteliers.filter(a => !a.complet);
             const totalPlaces = allAteliers.reduce((sum, a) => sum + a.placesRestantes, 0);
             
-            document.getElementById('statTotal').textContent = allAteliers.length;
-            document.getElementById('statDisponibles').textContent = disponibles.length;
-            document.getElementById('statPlaces').textContent = totalPlaces;
+            // Stats supprimées côté public - uniquement pour debug console
+            console.log('📊 Stats:', allAteliers.length, 'ateliers,', disponibles.length, 'disponibles,', totalPlaces, 'places');
         }
         
         // =============================================
@@ -1403,13 +1429,17 @@
         // =============================================
         
         function initFilters() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
+            console.log('🔧 Initialisation des filtres...');
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+                console.log('  → Filtre trouvé:', btn.dataset.filter);
                 btn.addEventListener('click', () => {
+                    console.log('🖱️ Clic sur filtre:', btn.dataset.filter);
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     renderAteliers(btn.dataset.filter);
                 });
             });
+            console.log('✅ Filtres initialisés');
         }
         
         // =============================================
