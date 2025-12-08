@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Contenu du Site | Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #FF8C42;
+            --secondary: #4ECDC4;
+            --accent: #A78BFA;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', sans-serif;
+            background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 100%);
+            min-height: 100vh;
+            padding: 30px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-tab {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+        }
+        
+        .editor-panel {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .editor-panel h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-group small {
+            display: block;
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-section {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .form-section h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-reset {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .btn-reset:hover {
+            background: #eee;
+        }
+        
+        .btn-back {
+            background: white;
+            color: var(--dark);
+            border: 2px solid #ddd;
+        }
+        
+        .btn-back:hover {
+            border-color: var(--dark);
+        }
+        
+        .status-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+        
+        .status-bar.success {
+            background: #4CAF50;
+            color: white;
+            display: block;
+        }
+        
+        .status-bar.error {
+            background: #f44336;
+            color: white;
+            display: block;
+        }
+        
+        .status-bar.loading {
+            background: var(--secondary);
+            color: white;
+            display: block;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        .content-panel {
+            display: none;
+        }
+        
+        .content-panel.active {
+            display: block;
+        }
+        
+        .preview-box {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(167, 139, 250, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .preview-box h4 {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .preview-box p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .list-editor {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .list-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .list-item input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .list-item button {
+            padding: 10px 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .add-item-btn {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .editor-panel {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✏️ Éditeur de Contenu</h1>
+            <p>Modifiez les textes de votre site en temps réel</p>
+        </div>
+        
+        <!-- Navigation par page -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-page="homepage">🏠 Accueil</button>
+            <button class="nav-tab" data-page="about">👥 À Propos</button>
+            <button class="nav-tab" data-page="sejours">🏕️ Séjours</button>
+            <button class="nav-tab" data-page="contact">📧 Contact</button>
+        </div>
+        
+        <!-- ===== PANEL ACCUEIL ===== -->
+        <div id="panel-homepage" class="content-panel active">
+            <div class="editor-panel">
+                <h2>🏠 Page d'Accueil</h2>
+                
+                <div class="form-section">
+                    <h3>🦸 Section Hero (En-tête)</h3>
+                    
+                    <div class="form-group">
+                        <label for="hero-title">Titre principal</label>
+                        <small>Le grand titre accrocheur en haut de page</small>
+                        <input type="text" id="hero-title" placeholder="Des séjours pensés pour eux, des moments précieux pour vous.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hero-subtitle">Sous-titre</label>
+                        <small>La description sous le titre principal</small>
+                        <textarea id="hero-subtitle" placeholder="Dans un cadre sain et préservé..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Points clés (bullets)</label>
+                        <small>Les 4 points forts affichés sous le sous-titre</small>
+                        <div class="list-editor" id="hero-bullets-editor">
+                            <!-- Items générés dynamiquement -->
+                        </div>
+                        <button class="add-item-btn" onclick="addBullet('hero-bullets')">+ Ajouter un point</button>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🌈 Section Concept</h3>
+                    
+                    <div class="form-group">
+                        <label for="concept-title">Titre de la section</label>
+                        <input type="text" id="concept-title" placeholder="Grandir ensemble, naturellement.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="concept-subtitle">Description</label>
+                        <textarea id="concept-subtitle" placeholder="Une approche globale de l'éveil..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="concept-slogan">Slogan "En deux mots"</label>
+                        <input type="text" id="concept-slogan" placeholder="Moins d'agitation, plus de connexion.">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>💬 Témoignage Principal</h3>
+                    
+                    <div class="form-group">
+                        <label for="testimonial-text">Texte du témoignage</label>
+                        <textarea id="testimonial-text" placeholder="On a enfin trouvé un rythme serein..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testimonial-author">Auteur</label>
+                        <input type="text" id="testimonial-author" placeholder="— Leïla, maman de Lina (7 ans)">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>⭐ Avis Clients</h3>
+                    <div id="reviews-editor">
+                        <!-- Avis générés dynamiquement -->
+                    </div>
+                    <button class="add-item-btn" onclick="addReview()">+ Ajouter un avis</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL À PROPOS ===== -->
+        <div id="panel-about" class="content-panel">
+            <div class="editor-panel">
+                <h2>👥 Page À Propos</h2>
+                
+                <div class="form-section">
+                    <h3>📝 Présentation</h3>
+                    
+                    <div class="form-group">
+                        <label for="about-title">Titre de la page</label>
+                        <input type="text" id="about-title" placeholder="Notre Histoire">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="about-intro">Introduction</label>
+                        <textarea id="about-intro" placeholder="Éveil & Vous est né d'une envie..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="about-philosophy">Notre Philosophie</label>
+                        <textarea id="about-philosophy" placeholder="Nous croyons que..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>👩 L'équipe</h3>
+                    
+                    <div class="form-group">
+                        <label for="team-name">Nom du fondateur/trice</label>
+                        <input type="text" id="team-name" placeholder="Marie">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="team-role">Rôle</label>
+                        <input type="text" id="team-role" placeholder="Fondatrice & Animatrice">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="team-bio">Biographie</label>
+                        <textarea id="team-bio" placeholder="Passionnée par l'accompagnement des familles..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL SÉJOURS ===== -->
+        <div id="panel-sejours" class="content-panel">
+            <div class="editor-panel">
+                <h2>🏕️ Page Séjours</h2>
+                
+                <div class="form-section">
+                    <h3>📋 Informations Générales</h3>
+                    
+                    <div class="form-group">
+                        <label for="sejours-title">Titre de la page</label>
+                        <input type="text" id="sejours-title" placeholder="Nos Séjours en Famille">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sejours-intro">Introduction</label>
+                        <textarea id="sejours-intro" placeholder="Des semaines inoubliables pour se reconnecter..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>💰 Tarifs</h3>
+                    
+                    <div class="form-group">
+                        <label for="tarif-adulte">Tarif Adulte</label>
+                        <input type="text" id="tarif-adulte" placeholder="850€">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tarif-enfant">Tarif Enfant</label>
+                        <input type="text" id="tarif-enfant" placeholder="650€">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tarifs-inclus">Ce qui est inclus</label>
+                        <textarea id="tarifs-inclus" placeholder="Hébergement, repas, activités..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>📅 Horaires</h3>
+                    
+                    <div class="form-group">
+                        <label for="horaires-arrivee">Horaire d'arrivée</label>
+                        <input type="text" id="horaires-arrivee" placeholder="Dimanche à partir de 16h">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="horaires-depart">Horaire de départ</label>
+                        <input type="text" id="horaires-depart" placeholder="Vendredi à 16h après le goûter">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL CONTACT ===== -->
+        <div id="panel-contact" class="content-panel">
+            <div class="editor-panel">
+                <h2>📧 Page Contact</h2>
+                
+                <div class="form-section">
+                    <h3>📍 Coordonnées</h3>
+                    
+                    <div class="form-group">
+                        <label for="contact-address">Adresse</label>
+                        <textarea id="contact-address" placeholder="123 Chemin des Dômes, 11300 Limoux"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-phone">Téléphone</label>
+                        <input type="text" id="contact-phone" placeholder="06 00 00 00 00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" placeholder="contact@eveil-et-vous.fr">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🕐 Horaires d'ouverture</h3>
+                    
+                    <div class="form-group">
+                        <label for="contact-hours">Horaires</label>
+                        <textarea id="contact-hours" placeholder="Du lundi au vendredi : 9h - 18h&#10;Samedi : 10h - 16h"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>🔗 Réseaux Sociaux</h3>
+                    
+                    <div class="form-group">
+                        <label for="social-facebook">Facebook</label>
+                        <input type="url" id="social-facebook" placeholder="https://facebook.com/eveilet vous">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="social-instagram">Instagram</label>
+                        <input type="url" id="social-instagram" placeholder="https://instagram.com/eveilet vous">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Boutons d'action -->
+        <div class="btn-group" style="justify-content: center;">
+            <button class="btn btn-save" onclick="saveContent()">
+                <i class="fas fa-save"></i> Sauvegarder les modifications
+            </button>
+            <button class="btn btn-reset" onclick="resetContent()">
+                <i class="fas fa-undo"></i> Réinitialiser
+            </button>
+            <a href="admin.html" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Retour à l'admin
+            </a>
+        </div>
+    </div>
+    
+    <!-- Status Bar -->
+    <div id="status-bar" class="status-bar"></div>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
+            authDomain: "eveil-et-vous.firebaseapp.com",
+            projectId: "eveil-et-vous",
+            storageBucket: "eveil-et-vous.firebasestorage.app",
+            messagingSenderId: "1059815739498",
+            appId: "1:1059815739498:web:0ad0c624266a46521c33f9"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Structure des données par défaut
+        const defaultContent = {
+            homepage: {
+                heroTitle: "Des séjours pensés pour eux, des moments précieux pour vous.",
+                heroSubtitle: "Dans un cadre sain et préservé, des ateliers d'éveil sous des formes ludiques et variées pour renforcer le lien parent-enfant et installer des rituels apaisants.",
+                heroBullets: [
+                    "Âges : 4–12 ans",
+                    "Formule : Séjours à la semaine (pendant les vacances scolaires)",
+                    "Encadrement bienveillant par pros certifiés",
+                    "Repas sains / activités outdoor"
+                ],
+                conceptTitle: "Grandir ensemble, naturellement.",
+                conceptSubtitle: "Une approche globale de l'éveil : chaque enfant explore ses sens, bouge, s'exprime, pense et ressent—sans pression, avec bienveillance.",
+                conceptSlogan: "Moins d'agitation, plus de connexion.",
+                testimonialText: "On a enfin trouvé un rythme serein. Ma fille met en mots ce qu'elle ressent et s'apaise plus vite.",
+                testimonialAuthor: "— Leïla, maman de Lina (7 ans)",
+                reviews: [
+                    {
+                        text: "Une expérience magnifique ! Les enfants ont adoré les activités et nous avons appris des techniques que nous utilisons tous les jours maintenant.",
+                        author: "— Sophie, maman de 2 enfants"
+                    },
+                    {
+                        text: "Le cadre est exceptionnel et l'équipe vraiment bienveillante. Mon fils de 6 ans parle encore des ateliers émotionnels. Merci !",
+                        author: "— Marc, papa de Lucas"
+                    },
+                    {
+                        text: "Nous avons passé un week-end ressourçant. Les rituels appris nous aident énormément pour les couchers. On recommande à 100% !",
+                        author: "— Amélie & Thomas"
+                    }
+                ]
+            },
+            about: {
+                title: "Notre Histoire",
+                intro: "",
+                philosophy: "",
+                teamName: "",
+                teamRole: "",
+                teamBio: ""
+            },
+            sejours: {
+                title: "Nos Séjours en Famille",
+                intro: "",
+                tarifAdulte: "850€",
+                tarifEnfant: "650€",
+                tarifsInclus: "",
+                horairesArrivee: "Dimanche à partir de 16h",
+                horairesDepart: "Vendredi à 16h après le goûter"
+            },
+            contact: {
+                address: "",
+                phone: "",
+                email: "",
+                hours: "",
+                facebook: "",
+                instagram: ""
+            }
+        };
+        
+        let currentContent = JSON.parse(JSON.stringify(defaultContent));
+        
+        // Navigation entre les panels
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(`panel-${tab.dataset.page}`).classList.add('active');
+            });
+        });
+        
+        // Afficher le status
+        function showStatus(message, type) {
+            const bar = document.getElementById('status-bar');
+            bar.textContent = message;
+            bar.className = `status-bar ${type}`;
+            
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    bar.className = 'status-bar';
+                }, 3000);
+            }
+        }
+        
+        // Charger le contenu depuis Firebase
+        async function loadContent() {
+            showStatus('⏳ Chargement du contenu...', 'loading');
+            
+            try {
+                const pages = ['homepage', 'about', 'sejours', 'contact'];
+                
+                for (const page of pages) {
+                    const doc = await db.collection('content').doc(page).get();
+                    if (doc.exists) {
+                        currentContent[page] = { ...defaultContent[page], ...doc.data() };
+                    }
+                }
+                
+                populateForm();
+                showStatus('✅ Contenu chargé !', 'success');
+            } catch (error) {
+                console.error('Erreur chargement:', error);
+                showStatus('❌ Erreur de chargement', 'error');
+            }
+        }
+        
+        // Remplir le formulaire avec les données
+        function populateForm() {
+            // Homepage
+            document.getElementById('hero-title').value = currentContent.homepage.heroTitle || '';
+            document.getElementById('hero-subtitle').value = currentContent.homepage.heroSubtitle || '';
+            document.getElementById('concept-title').value = currentContent.homepage.conceptTitle || '';
+            document.getElementById('concept-subtitle').value = currentContent.homepage.conceptSubtitle || '';
+            document.getElementById('concept-slogan').value = currentContent.homepage.conceptSlogan || '';
+            document.getElementById('testimonial-text').value = currentContent.homepage.testimonialText || '';
+            document.getElementById('testimonial-author').value = currentContent.homepage.testimonialAuthor || '';
+            
+            // Bullets
+            renderBullets();
+            
+            // Reviews
+            renderReviews();
+            
+            // About
+            document.getElementById('about-title').value = currentContent.about.title || '';
+            document.getElementById('about-intro').value = currentContent.about.intro || '';
+            document.getElementById('about-philosophy').value = currentContent.about.philosophy || '';
+            document.getElementById('team-name').value = currentContent.about.teamName || '';
+            document.getElementById('team-role').value = currentContent.about.teamRole || '';
+            document.getElementById('team-bio').value = currentContent.about.teamBio || '';
+            
+            // Séjours
+            document.getElementById('sejours-title').value = currentContent.sejours.title || '';
+            document.getElementById('sejours-intro').value = currentContent.sejours.intro || '';
+            document.getElementById('tarif-adulte').value = currentContent.sejours.tarifAdulte || '';
+            document.getElementById('tarif-enfant').value = currentContent.sejours.tarifEnfant || '';
+            document.getElementById('tarifs-inclus').value = currentContent.sejours.tarifsInclus || '';
+            document.getElementById('horaires-arrivee').value = currentContent.sejours.horairesArrivee || '';
+            document.getElementById('horaires-depart').value = currentContent.sejours.horairesDepart || '';
+            
+            // Contact
+            document.getElementById('contact-address').value = currentContent.contact.address || '';
+            document.getElementById('contact-phone').value = currentContent.contact.phone || '';
+            document.getElementById('contact-email').value = currentContent.contact.email || '';
+            document.getElementById('contact-hours').value = currentContent.contact.hours || '';
+            document.getElementById('social-facebook').value = currentContent.contact.facebook || '';
+            document.getElementById('social-instagram').value = currentContent.contact.instagram || '';
+        }
+        
+        // Render bullets
+        function renderBullets() {
+            const editor = document.getElementById('hero-bullets-editor');
+            const bullets = currentContent.homepage.heroBullets || [];
+            
+            editor.innerHTML = bullets.map((bullet, i) => `
+                <div class="list-item">
+                    <input type="text" value="${bullet}" onchange="updateBullet(${i}, this.value)">
+                    <button onclick="removeBullet(${i})"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+        
+        function addBullet() {
+            currentContent.homepage.heroBullets.push('Nouveau point');
+            renderBullets();
+        }
+        
+        function updateBullet(index, value) {
+            currentContent.homepage.heroBullets[index] = value;
+        }
+        
+        function removeBullet(index) {
+            currentContent.homepage.heroBullets.splice(index, 1);
+            renderBullets();
+        }
+        
+        // Render reviews
+        function renderReviews() {
+            const editor = document.getElementById('reviews-editor');
+            const reviews = currentContent.homepage.reviews || [];
+            
+            editor.innerHTML = reviews.map((review, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Avis #${i + 1}</strong>
+                        <button onclick="removeReview(${i})" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Texte de l'avis</label>
+                        <textarea onchange="updateReview(${i}, 'text', this.value)">${review.text}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Auteur</label>
+                        <input type="text" value="${review.author}" onchange="updateReview(${i}, 'author', this.value)">
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function addReview() {
+            currentContent.homepage.reviews.push({
+                text: "Nouvel avis...",
+                author: "— Prénom"
+            });
+            renderReviews();
+        }
+        
+        function updateReview(index, field, value) {
+            currentContent.homepage.reviews[index][field] = value;
+        }
+        
+        function removeReview(index) {
+            currentContent.homepage.reviews.splice(index, 1);
+            renderReviews();
+        }
+        
+        // Collecter les données du formulaire
+        function collectFormData() {
+            return {
+                homepage: {
+                    heroTitle: document.getElementById('hero-title').value,
+                    heroSubtitle: document.getElementById('hero-subtitle').value,
+                    heroBullets: currentContent.homepage.heroBullets,
+                    conceptTitle: document.getElementById('concept-title').value,
+                    conceptSubtitle: document.getElementById('concept-subtitle').value,
+                    conceptSlogan: document.getElementById('concept-slogan').value,
+                    testimonialText: document.getElementById('testimonial-text').value,
+                    testimonialAuthor: document.getElementById('testimonial-author').value,
+                    reviews: currentContent.homepage.reviews
+                },
+                about: {
+                    title: document.getElementById('about-title').value,
+                    intro: document.getElementById('about-intro').value,
+                    philosophy: document.getElementById('about-philosophy').value,
+                    teamName: document.getElementById('team-name').value,
+                    teamRole: document.getElementById('team-role').value,
+                    teamBio: document.getElementById('team-bio').value
+                },
+                sejours: {
+                    title: document.getElementById('sejours-title').value,
+                    intro: document.getElementById('sejours-intro').value,
+                    tarifAdulte: document.getElementById('tarif-adulte').value,
+                    tarifEnfant: document.getElementById('tarif-enfant').value,
+                    tarifsInclus: document.getElementById('tarifs-inclus').value,
+                    horairesArrivee: document.getElementById('horaires-arrivee').value,
+                    horairesDepart: document.getElementById('horaires-depart').value
+                },
+                contact: {
+                    address: document.getElementById('contact-address').value,
+                    phone: document.getElementById('contact-phone').value,
+                    email: document.getElementById('contact-email').value,
+                    hours: document.getElementById('contact-hours').value,
+                    facebook: document.getElementById('social-facebook').value,
+                    instagram: document.getElementById('social-instagram').value
+                }
+            };
+        }
+        
+        // Sauvegarder le contenu
+        async function saveContent() {
+            showStatus('⏳ Sauvegarde en cours...', 'loading');
+            
+            try {
+                const data = collectFormData();
+                
+                // Sauvegarder chaque page
+                for (const [page, content] of Object.entries(data)) {
+                    await db.collection('content').doc(page).set(content);
+                }
+                
+                currentContent = data;
+                showStatus('✅ Contenu sauvegardé avec succès !', 'success');
+            } catch (error) {
+                console.error('Erreur sauvegarde:', error);
+                showStatus('❌ Erreur lors de la sauvegarde', 'error');
+            }
+        }
+        
+        // Réinitialiser
+        function resetContent() {
+            if (confirm('⚠️ Voulez-vous vraiment réinitialiser tous les textes aux valeurs par défaut ?')) {
+                currentContent = JSON.parse(JSON.stringify(defaultContent));
+                populateForm();
+                showStatus('🔄 Contenu réinitialisé', 'success');
+            }
+        }
+        
+        // Vérifier la connexion admin
+        if (!sessionStorage.getItem('adminLoggedIn')) {
+            window.location.href = 'admin-login.html';
+        }
+        
+        // Charger au démarrage
+        loadContent();
+    </script>
+</body>
+</html>

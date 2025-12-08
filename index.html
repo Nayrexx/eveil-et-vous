@@ -1047,5 +1047,104 @@
 
     <script src="js/app.js"></script>
     <script src="js/cookies.js"></script>
+    
+    <!-- Firebase pour contenu dynamique -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Charger le contenu dynamique depuis Firebase
+        (function() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
+                authDomain: "eveil-et-vous.firebaseapp.com",
+                projectId: "eveil-et-vous",
+                storageBucket: "eveil-et-vous.firebasestorage.app",
+                messagingSenderId: "1059815739498",
+                appId: "1:1059815739498:web:0ad0c624266a46521c33f9"
+            };
+            
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            
+            // Charger le contenu de la page d'accueil
+            db.collection('content').doc('homepage').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    
+                    // Hero Title
+                    if (data.heroTitle) {
+                        const heroTitle = document.querySelector('.hero-text h1');
+                        if (heroTitle) heroTitle.textContent = data.heroTitle;
+                    }
+                    
+                    // Hero Subtitle
+                    if (data.heroSubtitle) {
+                        const heroSubtitle = document.querySelector('.hero-text .subtitle');
+                        if (heroSubtitle) heroSubtitle.textContent = data.heroSubtitle;
+                    }
+                    
+                    // Hero Bullets
+                    if (data.heroBullets && data.heroBullets.length > 0) {
+                        const bulletsList = document.querySelector('.hero-bullets');
+                        if (bulletsList) {
+                            bulletsList.innerHTML = data.heroBullets.map(bullet => {
+                                // Séparer le texte en gras et normal si contient ":"
+                                const parts = bullet.split(':');
+                                if (parts.length > 1) {
+                                    return `<li><strong>${parts[0]}:</strong>${parts.slice(1).join(':')}</li>`;
+                                }
+                                return `<li>${bullet}</li>`;
+                            }).join('');
+                        }
+                    }
+                    
+                    // Concept Title
+                    if (data.conceptTitle) {
+                        const conceptTitle = document.querySelector('#concept .section-title-center');
+                        if (conceptTitle) conceptTitle.textContent = data.conceptTitle;
+                    }
+                    
+                    // Concept Subtitle
+                    if (data.conceptSubtitle) {
+                        const conceptSubtitle = document.querySelector('#concept .section-subtitle');
+                        if (conceptSubtitle) conceptSubtitle.textContent = data.conceptSubtitle;
+                    }
+                    
+                    // Concept Slogan
+                    if (data.conceptSlogan) {
+                        const slogan = document.querySelector('#concept p[style*="font-size: 1.5rem"]');
+                        if (slogan) slogan.textContent = data.conceptSlogan;
+                    }
+                    
+                    // Testimonial
+                    if (data.testimonialText) {
+                        const testimonialText = document.querySelector('.testimonial-text');
+                        if (testimonialText) testimonialText.textContent = data.testimonialText;
+                    }
+                    
+                    if (data.testimonialAuthor) {
+                        const testimonialAuthor = document.querySelector('.testimonial-author');
+                        if (testimonialAuthor) testimonialAuthor.textContent = data.testimonialAuthor;
+                    }
+                    
+                    // Reviews
+                    if (data.reviews && data.reviews.length > 0) {
+                        const reviewsGrid = document.querySelector('.reviews-grid');
+                        if (reviewsGrid) {
+                            reviewsGrid.innerHTML = data.reviews.map(review => `
+                                <div class="review-card">
+                                    <div class="review-stars">★★★★★</div>
+                                    <p class="review-text">"${review.text}"</p>
+                                    <div class="review-author">${review.author}</div>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                }
+            }).catch(err => {
+                console.log('Contenu par défaut utilisé');
+            });
+        })();
+    </script>
 </body>
 </html>
