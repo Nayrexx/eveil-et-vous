@@ -5,15 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - Contenu du Site | Éveil & Vous</title>
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #FF8C42;
+            --primary-light: #FFB38A;
             --secondary: #4ECDC4;
+            --secondary-light: #A8E6E2;
             --accent: #A78BFA;
+            --accent-light: #DDD6FE;
             --dark: #1A1A2E;
-            --light: #F8F9FA;
+            --gray-900: #111827;
+            --gray-700: #374151;
+            --gray-500: #6B7280;
+            --gray-400: #9CA3AF;
+            --gray-300: #D1D5DB;
+            --gray-200: #E5E7EB;
+            --gray-100: #F3F4F6;
+            --gray-50: #F9FAFB;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         
         * {
@@ -23,390 +43,799 @@
         }
         
         body {
-            font-family: 'Myriad Pro', sans-serif;
-            background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 100%);
+            font-family: 'Inter', 'Myriad Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
             min-height: 100vh;
-            padding: 30px;
+            color: var(--gray-700);
+            line-height: 1.6;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            padding: 25px 0;
+            overflow-y: auto;
+            z-index: 100;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
+        .sidebar-header {
+            padding: 0 25px 25px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 20px;
         }
         
-        .header h1 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-        
-        .nav-tabs {
+        .sidebar-logo {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .sidebar-logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .sidebar-logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .sidebar-logo-text span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+        
+        .sidebar-nav {
+            padding: 0 15px;
+        }
+        
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-400);
+            padding: 15px 10px 8px;
         }
         
         .nav-tab {
-            padding: 12px 25px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
+            font-weight: 500;
             font-size: 0.95rem;
+            color: var(--gray-600);
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            font-family: inherit;
         }
         
         .nav-tab:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            background: var(--gray-100);
+            color: var(--gray-900);
         }
         
         .nav-tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-color: transparent;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1));
+            color: var(--primary);
+            font-weight: 600;
         }
         
+        .nav-tab.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .nav-tab i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 25px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+        
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .sidebar-footer a:hover {
+            color: var(--gray-700);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        
+        .page-header p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+        
+        /* Cards */
         .editor-panel {
-            background: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
         }
         
-        .editor-panel h2 {
-            font-size: 1.8rem;
-            color: var(--dark);
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--light);
+        .editor-panel-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .editor-panel-header-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        .editor-panel-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0;
+        }
+        
+        .editor-panel-header p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin: 3px 0 0;
+        }
+        
+        .editor-panel-body {
+            padding: 25px;
+        }
+        
+        /* Form Elements */
+        .form-section {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .form-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-section h3 i {
+            color: var(--primary);
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 18px;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
         }
         
         .form-group label {
             display: block;
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 1rem;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+            font-size: 0.875rem;
         }
         
         .form-group small {
             display: block;
-            color: #999;
-            font-size: 0.85rem;
+            color: var(--gray-400);
+            font-size: 0.8rem;
             margin-bottom: 8px;
         }
         
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 12px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 0.95rem;
             font-family: inherit;
-            transition: border-color 0.3s;
+            transition: all 0.2s ease;
+            background: var(--white);
+            color: var(--gray-800);
+        }
+        
+        .form-group input:hover,
+        .form-group textarea:hover {
+            border-color: var(--gray-400);
         }
         
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.15);
         }
         
         .form-group textarea {
-            min-height: 120px;
+            min-height: 100px;
             resize: vertical;
         }
         
-        .form-section {
-            background: var(--light);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--gray-400);
         }
         
-        .form-section h3 {
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-bottom: 20px;
+        /* List Items (Bullets, Reviews, etc.) */
+        .list-editor {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
         }
         
+        .list-item {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-100);
+            align-items: center;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .list-item input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .list-item button {
+            padding: 8px 12px;
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .list-item button:hover {
+            background: #DC2626;
+            transform: scale(1.05);
+        }
+        
+        .add-item-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .add-item-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+        
+        /* Buttons */
         .btn-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-top: 30px;
+            padding: 25px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
         
         .btn {
-            padding: 15px 35px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
             font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-save {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
         }
         
         .btn-save:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
         }
         
         .btn-reset {
-            background: #f5f5f5;
-            color: #666;
+            background: var(--white);
+            color: var(--gray-600);
+            border: 1px solid var(--gray-300);
         }
         
         .btn-reset:hover {
-            background: #eee;
+            background: var(--gray-100);
+            border-color: var(--gray-400);
         }
         
         .btn-back {
-            background: white;
-            color: var(--dark);
-            border: 2px solid #ddd;
+            background: transparent;
+            color: var(--gray-500);
+            text-decoration: none;
         }
         
         .btn-back:hover {
-            border-color: var(--dark);
+            color: var(--gray-700);
         }
         
-        .status-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            z-index: 1000;
-            display: none;
-            animation: slideUp 0.3s ease;
-        }
-        
-        .status-bar.success {
-            background: #4CAF50;
-            color: white;
-            display: block;
-        }
-        
-        .status-bar.error {
-            background: #f44336;
-            color: white;
-            display: block;
-        }
-        
-        .status-bar.loading {
-            background: var(--secondary);
-            color: white;
-            display: block;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-            to { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-        
+        /* Content Panels */
         .content-panel {
             display: none;
         }
         
         .content-panel.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
         
-        .preview-box {
-            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(167, 139, 250, 0.1));
-            padding: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 14px 28px;
             border-radius: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .status-bar.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .status-bar.success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-bar.error {
+            background: var(--error);
+            color: white;
+        }
+        
+        .status-bar.loading {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Review/Item Cards */
+        .item-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        
+        .item-card:hover {
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .item-card-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .item-card-title span {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: var(--error);
+            color: white;
+        }
+        
+        /* Preview Box */
+        .preview-box {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.08), rgba(167, 139, 250, 0.08));
+            padding: 16px;
+            border-radius: 10px;
             margin-top: 10px;
-            border-left: 4px solid var(--secondary);
+            border-left: 3px solid var(--secondary);
         }
         
         .preview-box h4 {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: var(--secondary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
         
         .preview-box p {
-            color: #666;
-            font-size: 0.95rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
             line-height: 1.6;
         }
         
-        .list-editor {
-            background: white;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            padding: 15px;
-        }
-        
-        .list-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .list-item input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        
-        .list-item button {
-            padding: 10px 15px;
-            background: #f44336;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        
-        .add-item-btn {
-            padding: 10px 20px;
-            background: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
             }
             
-            .editor-panel {
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
                 padding: 20px;
             }
             
-            .header h1 {
-                font-size: 1.8rem;
+            .mobile-menu-btn {
+                display: flex;
             }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .editor-panel-body {
+                padding: 15px;
+            }
+            
+            .btn-group {
+                padding: 15px;
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        /* Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 90;
+        }
+        
+        .sidebar-overlay.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>✏️ Éditeur de Contenu</h1>
-            <p>Modifiez les textes de votre site en temps réel</p>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="admin.html" class="sidebar-logo">
+                <div class="sidebar-logo-icon">✏️</div>
+                <div class="sidebar-logo-text">
+                    Éditeur de Contenu
+                    <span>Éveil & Vous</span>
+                </div>
+            </a>
         </div>
         
-        <!-- Navigation par page -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" data-page="homepage">🏠 Accueil</button>
-            <button class="nav-tab" data-page="banniere">📢 Bannière</button>
-            <button class="nav-tab" data-page="piliers">🌈 Piliers</button>
-            <button class="nav-tab" data-page="lieu">📍 Lieu</button>
-            <button class="nav-tab" data-page="etapes">📋 Étapes</button>
-            <button class="nav-tab" data-page="faq">❓ FAQ</button>
-            <button class="nav-tab" data-page="footer">🦶 Footer</button>
-            <button class="nav-tab" data-page="about">👥 À Propos</button>
-            <button class="nav-tab" data-page="sejours">🏕️ Séjours</button>
-            <button class="nav-tab" data-page="contact">📧 Contact</button>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Page d'accueil</div>
+            <button class="nav-tab active" data-page="homepage">
+                <i class="fas fa-home"></i> Accueil (Hero)
+            </button>
+            <button class="nav-tab" data-page="banniere">
+                <i class="fas fa-bullhorn"></i> Bannière
+            </button>
+            <button class="nav-tab" data-page="piliers">
+                <i class="fas fa-columns"></i> Piliers
+            </button>
+            <button class="nav-tab" data-page="lieu">
+                <i class="fas fa-map-marker-alt"></i> Lieu
+            </button>
+            <button class="nav-tab" data-page="etapes">
+                <i class="fas fa-list-ol"></i> Étapes
+            </button>
+            <button class="nav-tab" data-page="faq">
+                <i class="fas fa-question-circle"></i> FAQ
+            </button>
+            
+            <div class="nav-section-title">Autres pages</div>
+            <button class="nav-tab" data-page="about">
+                <i class="fas fa-users"></i> À Propos
+            </button>
+            <button class="nav-tab" data-page="sejours">
+                <i class="fas fa-campground"></i> Séjours
+            </button>
+            <button class="nav-tab" data-page="contact">
+                <i class="fas fa-envelope"></i> Contact
+            </button>
+            
+            <div class="nav-section-title">Global</div>
+            <button class="nav-tab" data-page="footer">
+                <i class="fas fa-shoe-prints"></i> Footer
+            </button>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin.html">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Éditeur de Contenu</h1>
+            <p>Modifiez les textes de votre site en temps réel</p>
         </div>
         
         <!-- ===== PANEL ACCUEIL ===== -->
         <div id="panel-homepage" class="content-panel active">
             <div class="editor-panel">
-                <h2>🏠 Page d'Accueil</h2>
-                
-                <div class="form-section">
-                    <h3>🦸 Section Hero (En-tête)</h3>
-                    
-                    <div class="form-group">
-                        <label for="hero-title">Titre principal</label>
-                        <small>Le grand titre accrocheur en haut de page</small>
-                        <input type="text" id="hero-title" placeholder="Des séjours pensés pour eux, des moments précieux pour vous.">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🏠</div>
+                    <div>
+                        <h2>Page d'Accueil</h2>
+                        <p>Section Hero et présentation principale</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="hero-subtitle">Sous-titre</label>
-                        <small>La description sous le titre principal</small>
-                        <textarea id="hero-subtitle" placeholder="Dans un cadre sain et préservé..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Points clés (bullets)</label>
-                        <small>Les 4 points forts affichés sous le sous-titre</small>
-                        <div class="list-editor" id="hero-bullets-editor">
-                            <!-- Items générés dynamiquement -->
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-star"></i> Section Hero (En-tête)</h3>
+                        
+                        <div class="form-group">
+                            <label for="hero-title">Titre principal</label>
+                            <small>Le grand titre accrocheur en haut de page</small>
+                            <input type="text" id="hero-title" placeholder="Des séjours pensés pour eux, des moments précieux pour vous.">
                         </div>
-                        <button class="add-item-btn" onclick="addBullet('hero-bullets')">+ Ajouter un point</button>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>🌈 Section Concept</h3>
-                    
-                    <div class="form-group">
-                        <label for="concept-title">Titre de la section</label>
-                        <input type="text" id="concept-title" placeholder="Grandir ensemble, naturellement.">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="concept-subtitle">Description</label>
-                        <textarea id="concept-subtitle" placeholder="Une approche globale de l'éveil..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="concept-slogan">Slogan "En deux mots"</label>
-                        <input type="text" id="concept-slogan" placeholder="Moins d'agitation, plus de connexion.">
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>💬 Témoignage Principal</h3>
-                    
-                    <div class="form-group">
-                        <label for="testimonial-text">Texte du témoignage</label>
-                        <textarea id="testimonial-text" placeholder="On a enfin trouvé un rythme serein..."></textarea>
+                        
+                        <div class="form-group">
+                            <label for="hero-subtitle">Sous-titre</label>
+                            <small>La description sous le titre principal</small>
+                            <textarea id="hero-subtitle" placeholder="Dans un cadre sain et préservé..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Points clés (bullets)</label>
+                            <small>Les points forts affichés sous le sous-titre</small>
+                            <div class="list-editor" id="hero-bullets-editor">
+                                <!-- Items générés dynamiquement -->
+                            </div>
+                            <button class="add-item-btn" onclick="addBullet('hero-bullets')"><i class="fas fa-plus"></i> Ajouter un point</button>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="testimonial-author">Auteur</label>
-                        <input type="text" id="testimonial-author" placeholder="— Leïla, maman de Lina (7 ans)">
+                    <div class="form-section">
+                        <h3><i class="fas fa-lightbulb"></i> Section Concept</h3>
+                        
+                        <div class="form-group">
+                            <label for="concept-title">Titre de la section</label>
+                            <input type="text" id="concept-title" placeholder="Grandir ensemble, naturellement.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="concept-subtitle">Description</label>
+                            <textarea id="concept-subtitle" placeholder="Une approche globale de l'éveil..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="concept-slogan">Slogan "En deux mots"</label>
+                            <input type="text" id="concept-slogan" placeholder="Moins d'agitation, plus de connexion.">
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>⭐ Avis Clients</h3>
-                    <div id="reviews-editor">
-                        <!-- Avis générés dynamiquement -->
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-quote-left"></i> Témoignage Principal</h3>
+                        
+                        <div class="form-group">
+                            <label for="testimonial-text">Texte du témoignage</label>
+                            <textarea id="testimonial-text" placeholder="On a enfin trouvé un rythme serein..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="testimonial-author">Auteur</label>
+                            <input type="text" id="testimonial-author" placeholder="— Leïla, maman de Lina (7 ans)">
+                        </div>
                     </div>
-                    <button class="add-item-btn" onclick="addReview()">+ Ajouter un avis</button>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-star"></i> Avis Clients</h3>
+                        <div id="reviews-editor">
+                            <!-- Avis générés dynamiquement -->
+                        </div>
+                        <button class="add-item-btn" onclick="addReview()"><i class="fas fa-plus"></i> Ajouter un avis</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -414,43 +843,50 @@
         <!-- ===== PANEL À PROPOS ===== -->
         <div id="panel-about" class="content-panel">
             <div class="editor-panel">
-                <h2>👥 Page À Propos</h2>
-                
-                <div class="form-section">
-                    <h3>📝 Présentation</h3>
-                    
-                    <div class="form-group">
-                        <label for="about-title">Titre de la page</label>
-                        <input type="text" id="about-title" placeholder="Notre Histoire">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="about-intro">Introduction</label>
-                        <textarea id="about-intro" placeholder="Éveil & Vous est né d'une envie..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="about-philosophy">Notre Philosophie</label>
-                        <textarea id="about-philosophy" placeholder="Nous croyons que..."></textarea>
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">👥</div>
+                    <div>
+                        <h2>Page À Propos</h2>
+                        <p>Présentation de l'équipe et de la philosophie</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>👩 L'équipe</h3>
-                    
-                    <div class="form-group">
-                        <label for="team-name">Nom du fondateur/trice</label>
-                        <input type="text" id="team-name" placeholder="Marie">
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Présentation</h3>
+                        
+                        <div class="form-group">
+                            <label for="about-title">Titre de la page</label>
+                            <input type="text" id="about-title" placeholder="Notre Histoire">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="about-intro">Introduction</label>
+                            <textarea id="about-intro" placeholder="Éveil & Vous est né d'une envie..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="about-philosophy">Notre Philosophie</label>
+                            <textarea id="about-philosophy" placeholder="Nous croyons que..."></textarea>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="team-role">Rôle</label>
-                        <input type="text" id="team-role" placeholder="Fondatrice & Animatrice">
-                    </div>
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> L'équipe</h3>
+                        
+                        <div class="form-group">
+                            <label for="team-name">Nom du fondateur/trice</label>
+                            <input type="text" id="team-name" placeholder="Marie">
+                        </div>
                     
-                    <div class="form-group">
-                        <label for="team-bio">Biographie</label>
-                        <textarea id="team-bio" placeholder="Passionnée par l'accompagnement des familles..."></textarea>
+                        <div class="form-group">
+                            <label for="team-role">Rôle</label>
+                            <input type="text" id="team-role" placeholder="Fondatrice & Animatrice">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="team-bio">Biographie</label>
+                            <textarea id="team-bio" placeholder="Passionnée par l'accompagnement des familles..."></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -459,48 +895,54 @@
         <!-- ===== PANEL BANNIÈRE ===== -->
         <div id="panel-banniere" class="content-panel">
             <div class="editor-panel">
-                <h2>📢 Bannière d'Annonce</h2>
-                <p style="color: #666; margin-bottom: 30px;">La bannière colorée affichée sous le menu avec les infos Anniversaires et Privatisation.</p>
-                
-                <div class="form-section">
-                    <h3>🎂 Anniversaires</h3>
-                    
-                    <div class="form-group">
-                        <label for="banniere-anniv-emoji">Emoji</label>
-                        <input type="text" id="banniere-anniv-emoji" placeholder="🎂" style="width: 80px;">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="banniere-anniv-text">Texte</label>
-                        <input type="text" id="banniere-anniv-text" placeholder="Anniversaires E&V - Fêtez en famille !">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📢</div>
+                    <div>
+                        <h2>Bannière d'Annonce</h2>
+                        <p>La bannière colorée sous le menu (Anniversaires & Privatisation)</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>🏢 Privatisation</h3>
-                    
-                    <div class="form-group">
-                        <label for="banniere-privat-emoji">Emoji</label>
-                        <input type="text" id="banniere-privat-emoji" placeholder="🏢" style="width: 80px;">
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-birthday-cake"></i> Anniversaires</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-anniv-emoji">Emoji</label>
+                            <input type="text" id="banniere-anniv-emoji" placeholder="🎂" style="width: 100px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-anniv-text">Texte</label>
+                            <input type="text" id="banniere-anniv-text" placeholder="Anniversaires E&V - Fêtez en famille !">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="banniere-privat-text">Texte</label>
-                        <input type="text" id="banniere-privat-text" placeholder="Privatisation pour vos événements">
+                    <div class="form-section">
+                        <h3><i class="fas fa-building"></i> Privatisation</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-privat-emoji">Emoji</label>
+                            <input type="text" id="banniere-privat-emoji" placeholder="🏢" style="width: 100px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-privat-text">Texte</label>
+                            <input type="text" id="banniere-privat-text" placeholder="Privatisation pour vos événements">
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>🔘 Bouton</h3>
                     
-                    <div class="form-group">
-                        <label for="banniere-btn-text">Texte du bouton</label>
-                        <input type="text" id="banniere-btn-text" placeholder="📧 Nous contacter">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="banniere-btn-link">Lien du bouton</label>
-                        <input type="text" id="banniere-btn-link" placeholder="contact.html">
+                    <div class="form-section">
+                        <h3><i class="fas fa-mouse-pointer"></i> Bouton CTA</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-btn-text">Texte du bouton</label>
+                            <input type="text" id="banniere-btn-text" placeholder="📧 Nous contacter">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-btn-link">Lien du bouton</label>
+                            <input type="text" id="banniere-btn-link" placeholder="contact.html">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -509,11 +951,17 @@
         <!-- ===== PANEL PILIERS ===== -->
         <div id="panel-piliers" class="content-panel">
             <div class="editor-panel">
-                <h2>🌈 Les 3 Piliers</h2>
-                <p style="color: #666; margin-bottom: 30px;">Les 3 cartes présentant les piliers de votre approche : Éveil global, Accompagnement parental, Cadre nature.</p>
-                
-                <div id="piliers-editor">
-                    <!-- Piliers générés dynamiquement -->
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🌈</div>
+                    <div>
+                        <h2>Les 3 Piliers</h2>
+                        <p>Éveil global, Accompagnement parental, Cadre nature</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div id="piliers-editor">
+                        <!-- Piliers générés dynamiquement -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -521,42 +969,48 @@
         <!-- ===== PANEL LIEU ===== -->
         <div id="panel-lieu" class="content-panel">
             <div class="editor-panel">
-                <h2>📍 Section Lieu</h2>
-                <p style="color: #666; margin-bottom: 30px;">La section présentant les dômes géodésiques et le cadre naturel.</p>
-                
-                <div class="form-section">
-                    <h3>📝 Titre et description</h3>
-                    
-                    <div class="form-group">
-                        <label for="lieu-title">Titre de la section</label>
-                        <input type="text" id="lieu-title" placeholder="Notre Lieu Magique">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="lieu-subtitle">Description</label>
-                        <textarea id="lieu-subtitle" placeholder="Un cadre naturel et apaisant à Limoux..."></textarea>
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📍</div>
+                    <div>
+                        <h2>Section Lieu</h2>
+                        <p>Les dômes géodésiques et le cadre naturel</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>🖼️ Les 3 images (titres et descriptions)</h3>
-                    
-                    <div class="form-group">
-                        <label>Image 1</label>
-                        <input type="text" id="lieu-img1-title" placeholder="Dômes Géodésiques" style="margin-bottom: 8px;">
-                        <input type="text" id="lieu-img1-desc" placeholder="Architecture en harmonie avec la nature">
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre et description</h3>
+                        
+                        <div class="form-group">
+                            <label for="lieu-title">Titre de la section</label>
+                            <input type="text" id="lieu-title" placeholder="Notre Lieu Magique">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lieu-subtitle">Description</label>
+                            <textarea id="lieu-subtitle" placeholder="Un cadre naturel et apaisant à Limoux..."></textarea>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Image 2</label>
-                        <input type="text" id="lieu-img2-title" placeholder="Espace Intérieur" style="margin-bottom: 8px;">
-                        <input type="text" id="lieu-img2-desc" placeholder="Un cocon de bien-être baigné de lumière">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Image 3</label>
-                        <input type="text" id="lieu-img3-title" placeholder="Vue d'Ensemble" style="margin-bottom: 8px;">
-                        <input type="text" id="lieu-img3-desc" placeholder="Un village d'éveil dans la verdure">
+                    <div class="form-section">
+                        <h3><i class="fas fa-images"></i> Les 3 images</h3>
+                        
+                        <div class="form-group">
+                            <label>Image 1</label>
+                            <input type="text" id="lieu-img1-title" placeholder="Dômes Géodésiques" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img1-desc" placeholder="Architecture en harmonie avec la nature">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Image 2</label>
+                            <input type="text" id="lieu-img2-title" placeholder="Espace Intérieur" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img2-desc" placeholder="Un cocon de bien-être baigné de lumière">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Image 3</label>
+                            <input type="text" id="lieu-img3-title" placeholder="Vue d'Ensemble" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img3-desc" placeholder="Un village d'éveil dans la verdure">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -565,25 +1019,31 @@
         <!-- ===== PANEL ÉTAPES ===== -->
         <div id="panel-etapes" class="content-panel">
             <div class="editor-panel">
-                <h2>📋 Comment ça marche ?</h2>
-                <p style="color: #666; margin-bottom: 30px;">Les 4 étapes du processus de réservation.</p>
-                
-                <div class="form-section">
-                    <h3>📝 Titre de la section</h3>
-                    
-                    <div class="form-group">
-                        <label for="etapes-title">Titre</label>
-                        <input type="text" id="etapes-title" placeholder="Comment ça marche ?">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="etapes-subtitle">Sous-titre</label>
-                        <input type="text" id="etapes-subtitle" placeholder="Réserver votre séjour en famille est simple et rapide">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📋</div>
+                    <div>
+                        <h2>Comment ça marche ?</h2>
+                        <p>Les 4 étapes du processus de réservation</p>
                     </div>
                 </div>
-                
-                <div id="etapes-editor">
-                    <!-- Étapes générées dynamiquement -->
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre de la section</h3>
+                        
+                        <div class="form-group">
+                            <label for="etapes-title">Titre</label>
+                            <input type="text" id="etapes-title" placeholder="Comment ça marche ?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="etapes-subtitle">Sous-titre</label>
+                            <input type="text" id="etapes-subtitle" placeholder="Réserver votre séjour en famille est simple et rapide">
+                        </div>
+                    </div>
+                    
+                    <div id="etapes-editor">
+                        <!-- Étapes générées dynamiquement -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -591,134 +1051,138 @@
         <!-- ===== PANEL FAQ ===== -->
         <div id="panel-faq" class="content-panel">
             <div class="editor-panel">
-                <h2>❓ Questions Fréquentes</h2>
-                <p style="color: #666; margin-bottom: 30px;">La section FAQ avec les questions/réponses les plus courantes.</p>
-                
-                <div class="form-section">
-                    <h3>📝 Titre de la section</h3>
-                    
-                    <div class="form-group">
-                        <label for="faq-title">Titre</label>
-                        <input type="text" id="faq-title" placeholder="Questions Fréquentes">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">❓</div>
+                    <div>
+                        <h2>Questions Fréquentes</h2>
+                        <p>FAQ avec questions/réponses courantes</p>
                     </div>
                 </div>
-                
-                <div id="faq-editor">
-                    <!-- FAQ générées dynamiquement -->
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre de la section</h3>
+                        
+                        <div class="form-group">
+                            <label for="faq-title">Titre</label>
+                            <input type="text" id="faq-title" placeholder="Questions Fréquentes">
+                        </div>
+                    </div>
+                    
+                    <div id="faq-editor">
+                        <!-- FAQ générées dynamiquement -->
+                    </div>
+                    <button class="add-item-btn" onclick="addFaq()"><i class="fas fa-plus"></i> Ajouter une question</button>
                 </div>
-                <button class="add-item-btn" onclick="addFaq()">+ Ajouter une question</button>
             </div>
         </div>
         
         <!-- ===== PANEL FOOTER ===== -->
         <div id="panel-footer" class="content-panel">
             <div class="editor-panel">
-                <h2>🦶 Footer (Pied de page)</h2>
-                <p style="color: #666; margin-bottom: 30px;">Les informations affichées en bas de chaque page du site.</p>
-                
-                <div class="form-section">
-                    <h3>📝 Présentation</h3>
-                    
-                    <div class="form-group">
-                        <label for="footer-brand">Nom de marque</label>
-                        <input type="text" id="footer-brand" placeholder="Éveil & Vous">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="footer-tagline">Slogan</label>
-                        <input type="text" id="footer-tagline" placeholder="Éveil en famille au milieu de la nature">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🦶</div>
+                    <div>
+                        <h2>Footer (Pied de page)</h2>
+                        <p>Informations affichées en bas de chaque page</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>📍 Contact</h3>
-                    
-                    <div class="form-group">
-                        <label for="footer-location">Localisation</label>
-                        <input type="text" id="footer-location" placeholder="Limoux, Aude (11)">
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-tag"></i> Présentation</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-brand">Nom de marque</label>
+                            <input type="text" id="footer-brand" placeholder="Éveil & Vous">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="footer-tagline">Slogan</label>
+                            <input type="text" id="footer-tagline" placeholder="Éveil en famille au milieu de la nature">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="footer-email">Email</label>
-                        <input type="email" id="footer-email" placeholder="contact@eveiletvous.org">
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Contact</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-location">Localisation</label>
+                            <input type="text" id="footer-location" placeholder="Limoux, Aude (11)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="footer-instagram">Lien Instagram</label>
+                            <input type="url" id="footer-instagram" placeholder="https://instagram.com/eveilet vous">
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>🔗 Réseaux sociaux</h3>
                     
-                    <div class="form-group">
-                        <label for="footer-facebook">Lien Facebook</label>
-                        <input type="url" id="footer-facebook" placeholder="https://facebook.com/eveilet vous">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="footer-instagram">Lien Instagram</label>
-                        <input type="url" id="footer-instagram" placeholder="https://instagram.com/eveilet vous">
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>©️ Copyright</h3>
-                    
-                    <div class="form-group">
-                        <label for="footer-copyright">Texte de copyright</label>
-                        <input type="text" id="footer-copyright" placeholder="© 2025 Éveil & Vous">
+                    <div class="form-section">
+                        <h3><i class="fas fa-copyright"></i> Copyright</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-copyright">Texte de copyright</label>
+                            <input type="text" id="footer-copyright" placeholder="© 2025 Éveil & Vous">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         
         <!-- ===== PANEL SÉJOURS ===== -->
         <div id="panel-sejours" class="content-panel">
             <div class="editor-panel">
-                <h2>🏕️ Page Séjours</h2>
-                
-                <div class="form-section">
-                    <h3>📋 Informations Générales</h3>
-                    
-                    <div class="form-group">
-                        <label for="sejours-title">Titre de la page</label>
-                        <input type="text" id="sejours-title" placeholder="Nos Séjours en Famille">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sejours-intro">Introduction</label>
-                        <textarea id="sejours-intro" placeholder="Des semaines inoubliables pour se reconnecter..."></textarea>
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🏕️</div>
+                    <div>
+                        <h2>Page Séjours</h2>
+                        <p>Informations, tarifs et horaires des séjours</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>💰 Tarifs</h3>
-                    
-                    <div class="form-group">
-                        <label for="tarif-adulte">Tarif Adulte</label>
-                        <input type="text" id="tarif-adulte" placeholder="850€">
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Informations Générales</h3>
+                        
+                        <div class="form-group">
+                            <label for="sejours-title">Titre de la page</label>
+                            <input type="text" id="sejours-title" placeholder="Nos Séjours en Famille">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sejours-intro">Introduction</label>
+                            <textarea id="sejours-intro" placeholder="Des semaines inoubliables pour se reconnecter..."></textarea>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="tarif-enfant">Tarif Enfant</label>
-                        <input type="text" id="tarif-enfant" placeholder="650€">
+                    <div class="form-section">
+                        <h3><i class="fas fa-euro-sign"></i> Tarifs</h3>
+                        
+                        <div class="form-group">
+                            <label for="tarif-adulte">Tarif Adulte</label>
+                            <input type="text" id="tarif-adulte" placeholder="850€">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tarif-enfant">Tarif Enfant</label>
+                            <input type="text" id="tarif-enfant" placeholder="650€">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tarifs-inclus">Ce qui est inclus</label>
+                            <textarea id="tarifs-inclus" placeholder="Hébergement, repas, activités..."></textarea>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="tarifs-inclus">Ce qui est inclus</label>
-                        <textarea id="tarifs-inclus" placeholder="Hébergement, repas, activités..."></textarea>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>📅 Horaires</h3>
-                    
-                    <div class="form-group">
-                        <label for="horaires-arrivee">Horaire d'arrivée</label>
-                        <input type="text" id="horaires-arrivee" placeholder="Dimanche à partir de 16h">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="horaires-depart">Horaire de départ</label>
-                        <input type="text" id="horaires-depart" placeholder="Vendredi à 16h après le goûter">
+                    <div class="form-section">
+                        <h3><i class="fas fa-clock"></i> Horaires</h3>
+                        
+                        <div class="form-group">
+                            <label for="horaires-arrivee">Horaire d'arrivée</label>
+                            <input type="text" id="horaires-arrivee" placeholder="Dimanche à partir de 16h">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="horaires-depart">Horaire de départ</label>
+                            <input type="text" id="horaires-depart" placeholder="Vendredi à 16h après le goûter">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -727,65 +1191,69 @@
         <!-- ===== PANEL CONTACT ===== -->
         <div id="panel-contact" class="content-panel">
             <div class="editor-panel">
-                <h2>📧 Page Contact</h2>
-                
-                <div class="form-section">
-                    <h3>📍 Coordonnées</h3>
-                    
-                    <div class="form-group">
-                        <label for="contact-address">Adresse</label>
-                        <textarea id="contact-address" placeholder="123 Chemin des Dômes, 11300 Limoux"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact-phone">Téléphone</label>
-                        <input type="text" id="contact-phone" placeholder="06 00 00 00 00">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact-email">Email</label>
-                        <input type="email" id="contact-email" placeholder="contact@eveil-et-vous.fr">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📧</div>
+                    <div>
+                        <h2>Page Contact</h2>
+                        <p>Coordonnées et informations de contact</p>
                     </div>
                 </div>
-                
-                <div class="form-section">
-                    <h3>🕐 Horaires d'ouverture</h3>
-                    
-                    <div class="form-group">
-                        <label for="contact-hours">Horaires</label>
-                        <textarea id="contact-hours" placeholder="Du lundi au vendredi : 9h - 18h&#10;Samedi : 10h - 16h"></textarea>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Coordonnées</h3>
+                        
+                        <div class="form-group">
+                            <label for="contact-address">Adresse</label>
+                            <textarea id="contact-address" placeholder="123 Chemin des Dômes, 11300 Limoux"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Téléphone</label>
+                            <input type="text" id="contact-phone" placeholder="06 00 00 00 00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" placeholder="contact@eveil-et-vous.fr">
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-section">
-                    <h3>🔗 Réseaux Sociaux</h3>
                     
-                    <div class="form-group">
-                        <label for="social-facebook">Facebook</label>
-                        <input type="url" id="social-facebook" placeholder="https://facebook.com/eveilet vous">
+                    <div class="form-section">
+                        <h3><i class="fas fa-clock"></i> Horaires d'ouverture</h3>
+                        
+                        <div class="form-group">
+                            <label for="contact-hours">Horaires</label>
+                            <textarea id="contact-hours" placeholder="Du lundi au vendredi : 9h - 18h&#10;Samedi : 10h - 16h"></textarea>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="social-instagram">Instagram</label>
-                        <input type="url" id="social-instagram" placeholder="https://instagram.com/eveilet vous">
+                    <div class="form-section">
+                        <h3><i class="fas fa-share-alt"></i> Réseaux Sociaux</h3>
+                        
+                        <div class="form-group">
+                            <label for="social-facebook">Facebook</label>
+                            <input type="url" id="social-facebook" placeholder="https://facebook.com/eveilet vous">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="social-instagram">Instagram</label>
+                            <input type="url" id="social-instagram" placeholder="https://instagram.com/eveilet vous">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Boutons d'action -->
-        <div class="btn-group" style="justify-content: center;">
+        <!-- Boutons d'action sticky -->
+        <div class="btn-group">
             <button class="btn btn-save" onclick="saveContent()">
                 <i class="fas fa-save"></i> Sauvegarder les modifications
             </button>
             <button class="btn btn-reset" onclick="resetContent()">
                 <i class="fas fa-undo"></i> Réinitialiser
             </button>
-            <a href="admin.html" class="btn btn-back">
-                <i class="fas fa-arrow-left"></i> Retour à l'admin
-            </a>
         </div>
-    </div>
+    </main>
     
     <!-- Status Bar -->
     <div id="status-bar" class="status-bar"></div>
@@ -795,6 +1263,12 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script>
+        // Toggle sidebar pour mobile
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('show');
+        }
+        
         // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
@@ -954,11 +1428,11 @@
         function showStatus(message, type) {
             const bar = document.getElementById('status-bar');
             bar.textContent = message;
-            bar.className = `status-bar ${type}`;
+            bar.className = `status-bar ${type} show`;
             
             if (type !== 'loading') {
                 setTimeout(() => {
-                    bar.className = 'status-bar';
+                    bar.classList.remove('show');
                 }, 3000);
             }
         }
