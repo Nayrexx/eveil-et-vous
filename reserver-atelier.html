@@ -764,37 +764,6 @@
             color: #1A1A2E;
         }
 
-        /* Statistiques */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            background: white;
-            padding: 25px 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 50px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--orange), var(--turquoise));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
         /* Toast notification */
         .toast {
             position: fixed;
@@ -909,28 +878,8 @@
                 Réservez Votre Atelier
             </h1>
             <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto 30px;">
-                16 ateliers disponibles • Places limitées • Paiement sur place
+                Ateliers disponibles • Places limitées • Paiement sur place
             </p>
-        </div>
-    </section>
-
-    <!-- STATISTIQUES -->
-    <section style="padding: 0; margin-top: -30px; position: relative; z-index: 10;">
-        <div class="container">
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-number" id="statTotal">16</div>
-                    <div class="stat-label">Ateliers programmés</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="statDisponibles">16</div>
-                    <div class="stat-label">Encore disponibles</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="statPlaces">--</div>
-                    <div class="stat-label">Places restantes</div>
-                </div>
-            </div>
         </div>
     </section>
 
