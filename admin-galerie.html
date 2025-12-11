@@ -713,6 +713,7 @@
                 });
                 
                 const result = await response.json();
+                console.log('Réponse ImgBB:', result);
                 
                 if (result.success) {
                     currentImageUrl = result.data.url;
