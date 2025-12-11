@@ -1442,12 +1442,22 @@
             showStatus('⏳ Chargement du contenu...', 'loading');
             
             try {
+                // Vérifier Firebase
+                if (typeof db === 'undefined') {
+                    throw new Error('Firebase non initialisé');
+                }
+                
                 const pages = ['homepage', 'banniere', 'piliers', 'lieu', 'etapes', 'faq', 'footer', 'about', 'sejours', 'contact'];
                 
                 for (const page of pages) {
-                    const doc = await db.collection('content').doc(page).get();
-                    if (doc.exists) {
-                        currentContent[page] = { ...defaultContent[page], ...doc.data() };
+                    try {
+                        const doc = await db.collection('content').doc(page).get();
+                        if (doc.exists) {
+                            currentContent[page] = { ...defaultContent[page], ...doc.data() };
+                        }
+                    } catch (pageError) {
+                        console.warn(`⚠️ Erreur chargement page ${page}:`, pageError);
+                        // Continuer avec les valeurs par défaut
                     }
                 }
                 
@@ -1455,7 +1465,9 @@
                 showStatus('✅ Contenu chargé !', 'success');
             } catch (error) {
                 console.error('Erreur chargement:', error);
-                showStatus('❌ Erreur de chargement', 'error');
+                showStatus('❌ Erreur de chargement: ' + error.message, 'error');
+                // Charger quand même avec les valeurs par défaut
+                populateForm();
             }
         }
         
@@ -1802,18 +1814,28 @@
             showStatus('⏳ Sauvegarde en cours...', 'loading');
             
             try {
+                // Vérifier Firebase
+                if (typeof db === 'undefined') {
+                    throw new Error('Firebase non connecté');
+                }
+                
                 const data = collectFormData();
                 
                 // Sauvegarder chaque page
                 for (const [page, content] of Object.entries(data)) {
-                    await db.collection('content').doc(page).set(content);
+                    try {
+                        await db.collection('content').doc(page).set(content);
+                    } catch (pageError) {
+                        console.error(`Erreur sauvegarde page ${page}:`, pageError);
+                        throw new Error(`Erreur sur la page ${page}`);
+                    }
                 }
                 
                 currentContent = data;
                 showStatus('✅ Contenu sauvegardé avec succès !', 'success');
             } catch (error) {
                 console.error('Erreur sauvegarde:', error);
-                showStatus('❌ Erreur lors de la sauvegarde', 'error');
+                showStatus('❌ Erreur: ' + error.message, 'error');
             }
         }
         
