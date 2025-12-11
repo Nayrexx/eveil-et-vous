@@ -1083,6 +1083,27 @@
                             <input type="text" id="lieu-img3-desc" placeholder="Un village d'éveil dans la verdure">
                         </div>
                     </div>
+                    
+                    <div class="form-section" style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(78, 205, 196, 0.1)); border: 2px dashed rgba(167, 139, 250, 0.3);">
+                        <h3><i class="fas fa-paint-brush"></i> Note "Construction en cours"</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Ce badge s'affiche au-dessus des images des dômes. Masquez-le quand la construction sera terminée.</p>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="note3d-visible" checked style="width: 20px; height: 20px; cursor: pointer;">
+                                <span>Afficher la note</span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-group" id="note3d-text-group">
+                            <label for="note3d-text">Texte de la note</label>
+                            <input type="text" id="note3d-text" placeholder="🎨 Visualisations 3D du projet - Construction en cours" value="🎨 <em>Visualisations 3D du projet - Construction en cours</em>">
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="saveNote3D()" style="margin-top: 10px;">
+                            <i class="fas fa-save"></i> Enregistrer la note
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1948,6 +1969,47 @@
             }
         }
         
+        // Sauvegarder la note 3D
+        async function saveNote3D() {
+            try {
+                const visible = document.getElementById('note3d-visible').checked;
+                const text = document.getElementById('note3d-text').value;
+                
+                await db.collection('settings').doc('note-3d').set({
+                    visible: visible,
+                    text: text
+                });
+                
+                showStatus('✅ Note 3D sauvegardée !', 'success');
+            } catch (error) {
+                console.error('Erreur sauvegarde note 3D:', error);
+                showStatus('❌ Erreur: ' + error.message, 'error');
+            }
+        }
+        
+        // Charger la note 3D au démarrage
+        async function loadNote3D() {
+            try {
+                const doc = await db.collection('settings').doc('note-3d').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('note3d-visible').checked = data.visible !== false;
+                    if (data.text) {
+                        document.getElementById('note3d-text').value = data.text;
+                    }
+                    // Masquer/afficher le champ texte selon la checkbox
+                    document.getElementById('note3d-text-group').style.display = data.visible !== false ? 'block' : 'none';
+                }
+            } catch (error) {
+                console.log('Note 3D par défaut');
+            }
+        }
+        
+        // Toggle affichage du champ texte
+        document.getElementById('note3d-visible')?.addEventListener('change', function() {
+            document.getElementById('note3d-text-group').style.display = this.checked ? 'block' : 'none';
+        });
+        
         // Réinitialiser
         function resetContent() {
             if (confirm('⚠️ Voulez-vous vraiment réinitialiser tous les textes aux valeurs par défaut ?')) {
@@ -1964,6 +2026,7 @@
         
         // Charger au démarrage
         loadContent();
+        loadNote3D();
     </script>
 </body>
 </html>

@@ -322,32 +322,66 @@
         
         .faq-item {
             background: white;
-            padding: 30px;
+            padding: 0;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: all 0.3s ease;
+            overflow: hidden;
+            border-left: 4px solid transparent;
         }
         
+        .faq-item:nth-child(1) { border-left-color: #FF8C42; }
+        .faq-item:nth-child(2) { border-left-color: #4ECDC4; }
+        .faq-item:nth-child(3) { border-left-color: #A78BFA; }
+        .faq-item:nth-child(4) { border-left-color: #6BCF7F; }
+        .faq-item:nth-child(5) { border-left-color: #FF6B9D; }
+        
         .faq-item:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
         }
         
         .faq-question {
             font-family: var(--font-heading);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--dark);
-            margin-bottom: 15px;
+            padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
+        }
+        
+        .faq-question span {
+            flex: 1;
+        }
+        
+        .faq-question i {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(45deg);
         }
         
         .faq-answer {
             font-size: 1rem;
-            line-height: 1.7;
+            line-height: 1.8;
             color: #666;
+            padding: 0 30px 25px;
+            background: linear-gradient(to bottom, rgba(255,140,66,0.03), rgba(78,205,196,0.03));
         }
         
         /* CTA Banner */
@@ -718,8 +752,8 @@
             </p>
             
             <!-- Note modèles 3D -->
-            <div style="text-align: center; margin-bottom: 30px;">
-                <span style="display: inline-block; background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(78, 205, 196, 0.15)); padding: 12px 25px; border-radius: 50px; font-size: 0.95rem; color: #666; border: 1px dashed rgba(167, 139, 250, 0.4);">
+            <div id="note-3d-container" style="text-align: center; margin-bottom: 30px;">
+                <span id="note-3d" style="display: inline-block; background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(78, 205, 196, 0.15)); padding: 12px 25px; border-radius: 50px; font-size: 0.95rem; color: #666; border: 1px dashed rgba(167, 139, 250, 0.4);">
                     🎨 <em>Visualisations 3D du projet - Construction en cours</em>
                 </span>
             </div>
@@ -799,57 +833,65 @@
     </section>
 
     <!-- ===== FAQ ===== -->
-    <section class="section">
+    <section class="section" style="background: linear-gradient(180deg, #fff 0%, rgba(255,140,66,0.05) 50%, rgba(78,205,196,0.05) 100%);">
         <div class="container">
-            <h2 class="section-title-center">Questions Fréquentes</h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="display: inline-block; background: linear-gradient(135deg, rgba(255,140,66,0.15), rgba(78,205,196,0.15)); padding: 10px 25px; border-radius: 50px; font-size: 0.95rem; color: #FF8C42; font-weight: 600;">
+                    ❓ FAQ
+                </span>
+            </div>
+            <h2 class="section-title-center" style="margin-bottom: 15px;">Questions Fréquentes</h2>
+            <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Tout ce que vous devez savoir avant de réserver votre séjour
+            </p>
             
             <div class="faq-container">
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-question">
                         <span>À partir de quel âge peut-on venir ?</span>
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="faq-answer">
+                    <div class="faq-answer" style="display: none;">
                         Nos séjours sont adaptés aux enfants de 4 à 12 ans. Chaque activité est pensée pour respecter le développement de chaque tranche d'âge.
                     </div>
                 </div>
                 
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-question">
                         <span>Faut-il rester avec mon enfant pendant les activités ?</span>
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="faq-answer">
+                    <div class="faq-answer" style="display: none;">
                         Certaines activités sont en duo parent-enfant, d'autres sont réservées aux enfants seuls. Nous proposons les deux formules pour favoriser l'autonomie et renforcer le lien.
                     </div>
                 </div>
                 
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-question">
                         <span>Que comprend le tarif du séjour ?</span>
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="faq-answer">
+                    <div class="faq-answer" style="display: none;">
                         Tous nos séjours sont en formule tout inclus. Le tarif de réservation comprend l'hébergement, les ateliers quotidiens et l'encadrement. Les repas sont à régler directement sur place au moment de l'enregistrement.
                     </div>
                 </div>
                 
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-question">
                         <span>Comment se rendre sur le site Éveil & Vous ?</span>
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="faq-answer">
+                    <div class="faq-answer" style="display: none;">
                         Le lieu se situe dans la ville de Limoux, à 20 minutes de Carcassonne et à 1 heure de Toulouse. Un accès par le train est possible en gare de Limoux. En revanche, il est nécessaire d'être véhiculé pour rejoindre le site et y séjourner.
                     </div>
                 </div>
                 
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-question">
                         <span>Combien de familles par séjour ?</span>
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="faq-answer">
+                    <div class="faq-answer" style="display: none;">
                         De 4 à 7 familles et de 4 à 14 enfants.
                     </div>
                 </div>
@@ -1159,6 +1201,23 @@
                 }
             }).catch(err => console.log('Lieu par défaut'));
             
+            // Charger la note 3D (peut être masquée)
+            db.collection('settings').doc('note-3d').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const noteContainer = document.getElementById('note-3d-container');
+                    const noteSpan = document.getElementById('note-3d');
+                    
+                    if (data.visible === false) {
+                        // Masquer complètement
+                        if (noteContainer) noteContainer.style.display = 'none';
+                    } else if (data.text && noteSpan) {
+                        // Afficher avec texte personnalisé
+                        noteSpan.innerHTML = data.text;
+                    }
+                }
+            }).catch(err => console.log('Note 3D par défaut'));
+            
             // Charger les étapes
             db.collection('content').doc('etapes').get().then(doc => {
                 if (doc.exists) {
@@ -1282,6 +1341,27 @@
                 }
             }).catch(err => console.log('Images accueil par défaut'));
         })();
+        
+        // =============================================
+        // FAQ ACCORDÉON
+        // =============================================
+        
+        function toggleFaq(item) {
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+            
+            // Fermer tous les autres
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+                faq.querySelector('.faq-answer').style.display = 'none';
+            });
+            
+            // Ouvrir celui-ci si il était fermé
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.display = 'block';
+            }
+        }
         
         // =============================================
         // LIGHTBOX DÔMES
