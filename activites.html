@@ -22,6 +22,86 @@
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
+    
+    <style>
+        /* ===== SLIDER MOBILE FIX ===== */
+        @media (max-width: 768px) {
+            #sliderContainer {
+                padding: 0 15px !important;
+            }
+            
+            #activitiesSlider > div {
+                padding: 25px 20px !important;
+                border-radius: 20px !important;
+            }
+            
+            #activitiesSlider > div h3 {
+                font-size: 1.5rem !important;
+            }
+            
+            #activitiesSlider > div p {
+                font-size: 1rem !important;
+            }
+            
+            /* Icônes */
+            #activitiesSlider > div > div:first-child > div:first-child {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 2rem !important;
+            }
+            
+            /* Boutons de navigation */
+            #prevBtn, #nextBtn {
+                width: 45px !important;
+                height: 45px !important;
+                top: auto !important;
+                bottom: -60px !important;
+                transform: none !important;
+            }
+            
+            #prevBtn {
+                left: calc(50% - 55px) !important;
+            }
+            
+            #nextBtn {
+                right: calc(50% - 55px) !important;
+            }
+            
+            #prevBtn:hover, #nextBtn:hover {
+                transform: scale(1.1) !important;
+            }
+            
+            /* Pagination dots */
+            #pagination {
+                margin-top: 80px !important;
+            }
+            
+            /* Grille d'activités dans les cards */
+            #activitiesSlider div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #sliderContainer {
+                padding: 0 10px !important;
+            }
+            
+            #activitiesSlider > div {
+                padding: 20px 15px !important;
+            }
+            
+            #activitiesSlider > div h3 {
+                font-size: 1.3rem !important;
+            }
+            
+            /* Flex header des cartes */
+            #activitiesSlider > div > div:first-child {
+                flex-direction: column !important;
+                text-align: center !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -72,10 +152,10 @@
             </div>
             
             <!-- Slider Container -->
-            <div style="position: relative; max-width: 1100px; margin: 0 auto; padding: 0 80px; overflow: hidden;">
+            <div id="sliderContainer" style="position: relative; max-width: 1100px; margin: 0 auto; padding: 0 80px; overflow: hidden;">
                 
                 <!-- Slider Wrapper -->
-                <div id="activitiesSlider" style="display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
+                <div id="activitiesSlider" style="display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); touch-action: pan-y;">
                 
                 <!-- Éveil Corporel -->
                 <div style="min-width: 100%; padding: 50px; background: white; border-radius: 35px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 140, 66, 0.1); position: relative; overflow: hidden;">
@@ -604,8 +684,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-widget">
-                    <h3>Éveil & Vous</h3>
-                    <p>Éveil en famille au milieu de la nature</p>
+                    <h3 class="footer-brand">Éveil & Vous</h3>
+                    <p class="footer-tagline">Éveil en famille au milieu de la nature</p>
                 </div>
                 <div class="footer-widget">
                     <h3>Pages</h3>
@@ -617,17 +697,17 @@
                 </div>
                 <div class="footer-widget">
                     <h3>Contact</h3>
-                    <p>Limoux, Aude (11)<br>contact@eveiletvous.org</p>
+                    <p class="footer-contact-info">Limoux, Aude (11)<br>contact@eveiletvous.org</p>
                 </div>
                 <div class="footer-widget">
                     <h3>Suivez-nous</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100090154845987" class="footer-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/eveiletvous.11300/" class="footer-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 Éveil & Vous</p></div>
+            <div class="footer-bottom"><p class="footer-copyright">&copy; 2025 Éveil & Vous</p></div>
         </div>
     </footer>
 
@@ -714,32 +794,64 @@
             }
         });
 
-        // Touch/swipe support for mobile
+        // Touch/swipe support for mobile - AMÉLORÉ
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
 
         slider.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
-        });
+            touchStartY = e.changedTouches[0].screenY;
+            isSwiping = true;
+        }, { passive: true });
+
+        slider.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            
+            // Calculer la distance horizontale vs verticale
+            const diffX = Math.abs(touchEndX - touchStartX);
+            const diffY = Math.abs(touchEndY - touchStartY);
+            
+            // Si le mouvement est plus horizontal que vertical, empêcher le scroll
+            if (diffX > diffY && diffX > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         slider.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
-        });
+            isSwiping = false;
+        }, { passive: true });
 
         function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                // Swipe left
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlider();
-            }
-            if (touchEndX > touchStartX + 50) {
-                // Swipe right
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlider();
+            const diffX = touchEndX - touchStartX;
+            const diffY = Math.abs(touchEndY - touchStartY);
+            
+            // S'assurer que c'est un swipe horizontal (pas un scroll vertical)
+            if (Math.abs(diffX) > diffY && Math.abs(diffX) > 30) {
+                if (diffX < -30) {
+                    // Swipe left
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateSlider();
+                }
+                if (diffX > 30) {
+                    // Swipe right
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    updateSlider();
+                }
             }
         }
     </script>
     <script src="js/cookies.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-content.js"></script>
 </body>
 </html>

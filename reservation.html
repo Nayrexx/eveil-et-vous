@@ -130,6 +130,7 @@
                         <li><a href="about.html">À Propos</a></li>
                         <li><a href="activites.html">Activités</a></li>
                         <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="reservation.html" class="btn btn-primary" style="background: var(--primary);">Réserver mon séjour</a></li>
                     </ul>
@@ -147,7 +148,6 @@
     <div class="reservation-container">
         <div class="reservation-header">
             <h1>Réservez votre séjour</h1>
-            <p>Remplissez le formulaire ci-dessous pour réserver votre semaine d'éveil en famille</p>
         </div>
         
         <!-- ===== COMMENT ÇA MARCHE ===== -->
@@ -260,8 +260,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-widget">
-                    <h3>Éveil & Vous</h3>
-                    <p>Éveil en famille au milieu de la nature</p>
+                    <h3 class="footer-brand">Éveil & Vous</h3>
+                    <p class="footer-tagline">Éveil en famille au milieu de la nature</p>
                 </div>
                 <div class="footer-widget">
                     <h3>Pages</h3>
@@ -273,21 +273,25 @@
                 </div>
                 <div class="footer-widget">
                     <h3>Contact</h3>
-                    <p>Limoux, Aude (11)<br>contact@eveiletvous.org</p>
+                    <p class="footer-contact-info">Limoux, Aude (11)<br>contact@eveiletvous.org</p>
                 </div>
                 <div class="footer-widget">
                     <h3>Suivez-nous</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100090154845987" class="footer-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/eveiletvous.11300/" class="footer-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 Éveil & Vous</p></div>
+            <div class="footer-bottom"><p class="footer-copyright">&copy; 2025 Éveil & Vous</p></div>
         </div>
     </footer>
 
     <script src="js/app.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-content.js"></script>
     
     <script>
         // Script pour ajuster dynamiquement la hauteur de l'iframe

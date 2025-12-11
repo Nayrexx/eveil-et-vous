@@ -731,6 +731,9 @@
             <button class="nav-tab" data-page="faq">
                 <i class="fas fa-question-circle"></i> FAQ
             </button>
+            <button class="nav-tab" data-page="ateliers">
+                <i class="fas fa-calendar-alt"></i> Ateliers (Dates)
+            </button>
             
             <div class="nav-section-title">Autres pages</div>
             <button class="nav-tab" data-page="about">
@@ -838,6 +841,54 @@
                             <!-- Avis générés dynamiquement -->
                         </div>
                         <button class="add-item-btn" onclick="addReview()"><i class="fas fa-plus"></i> Ajouter un avis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL ATELIERS (DATES) ===== -->
+        <div id="panel-ateliers" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📅</div>
+                    <div>
+                        <h2>Ateliers - Dates & Horaires</h2>
+                        <p>Modifiez les jours et horaires des ateliers E&V Solo et E&V Duo</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-child"></i> E&V Solo</h3>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 20px;">Ateliers pour les enfants seuls</p>
+                        
+                        <div class="form-group">
+                            <label for="atelier-solo-jour">Jour</label>
+                            <small>Ex: Mercredi</small>
+                            <input type="text" id="atelier-solo-jour" placeholder="Mercredi">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="atelier-solo-horaire">Horaire</label>
+                            <small>Ex: 14h30 - 16h30</small>
+                            <input type="text" id="atelier-solo-horaire" placeholder="14h30 - 16h30">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-users"></i> E&V Duo</h3>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 20px;">Ateliers parent-enfant</p>
+                        
+                        <div class="form-group">
+                            <label for="atelier-duo-jour">Jour</label>
+                            <small>Ex: Samedi</small>
+                            <input type="text" id="atelier-duo-jour" placeholder="Samedi">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="atelier-duo-horaire">Horaire</label>
+                            <small>Ex: 14h30 - 16h30</small>
+                            <input type="text" id="atelier-duo-horaire" placeholder="14h30 - 16h30">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1378,6 +1429,12 @@
                     { question: "Combien de familles par séjour ?", answer: "De 4 à 7 familles et de 4 à 14 enfants." }
                 ]
             },
+            ateliers: {
+                soloJour: "Mercredi",
+                soloHoraire: "14h30 - 16h30",
+                duoJour: "Samedi",
+                duoHoraire: "14h30 - 16h30"
+            },
             footer: {
                 brand: "Éveil & Vous",
                 tagline: "Éveil en famille au milieu de la nature",
@@ -1527,6 +1584,14 @@
             // FAQ
             setValue('faq-title', currentContent.faq.title);
             renderFaq();
+            
+            // Ateliers (Dates)
+            if (currentContent.ateliers) {
+                setValue('atelier-solo-jour', currentContent.ateliers.soloJour);
+                setValue('atelier-solo-horaire', currentContent.ateliers.soloHoraire);
+                setValue('atelier-duo-jour', currentContent.ateliers.duoJour);
+                setValue('atelier-duo-horaire', currentContent.ateliers.duoHoraire);
+            }
             
             // Footer
             setValue('footer-brand', currentContent.footer.brand);
@@ -1786,6 +1851,12 @@
                 faq: {
                     title: getValue('faq-title'),
                     items: currentContent.faq.items
+                },
+                ateliers: {
+                    soloJour: getValue('atelier-solo-jour'),
+                    soloHoraire: getValue('atelier-solo-horaire'),
+                    duoJour: getValue('atelier-duo-jour'),
+                    duoHoraire: getValue('atelier-duo-horaire')
                 },
                 footer: {
                     brand: getValue('footer-brand'),
