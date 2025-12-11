@@ -856,21 +856,32 @@
         }
         
         // Charger les avis depuis Firebase
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             try {
-                FirebaseDB.init();
-                db.collection('content').doc('homepage').get().then(doc => {
-                    if (doc.exists && doc.data().reviews && doc.data().reviews.length > 0) {
-                        renderReviews(doc.data().reviews);
-                    } else {
-                        renderReviews(defaultReviews);
-                    }
-                }).catch(err => {
-                    console.log('Avis par défaut');
+                // Configuration Firebase
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDkMJzVnkhDYBqqPB_3uxsr4bvp8NaKJK0",
+                    authDomain: "eveil-et-vous.firebaseapp.com",
+                    projectId: "eveil-et-vous",
+                    storageBucket: "eveil-et-vous.firebasestorage.app",
+                    messagingSenderId: "640390073498",
+                    appId: "1:640390073498:web:515dd6c12e947b96bde720"
+                };
+                
+                // Initialiser Firebase si pas déjà fait
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const db = firebase.firestore();
+                
+                const doc = await db.collection('content').doc('homepage').get();
+                if (doc.exists && doc.data().reviews && doc.data().reviews.length > 0) {
+                    renderReviews(doc.data().reviews);
+                } else {
                     renderReviews(defaultReviews);
-                });
+                }
             } catch (e) {
-                console.log('Firebase non disponible, avis par défaut');
+                console.log('Firebase non disponible, avis par défaut', e);
                 renderReviews(defaultReviews);
             }
         });
