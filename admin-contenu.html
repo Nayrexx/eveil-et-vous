@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Administration - Contenu du Site | Éveil & Vous</title>
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1473,14 +1476,20 @@
         
         // Remplir le formulaire avec les données
         function populateForm() {
+            // Fonction helper pour éviter les erreurs
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) el.value = value || '';
+            }
+            
             // Homepage
-            document.getElementById('hero-title').value = currentContent.homepage.heroTitle || '';
-            document.getElementById('hero-subtitle').value = currentContent.homepage.heroSubtitle || '';
-            document.getElementById('concept-title').value = currentContent.homepage.conceptTitle || '';
-            document.getElementById('concept-subtitle').value = currentContent.homepage.conceptSubtitle || '';
-            document.getElementById('concept-slogan').value = currentContent.homepage.conceptSlogan || '';
-            document.getElementById('testimonial-text').value = currentContent.homepage.testimonialText || '';
-            document.getElementById('testimonial-author').value = currentContent.homepage.testimonialAuthor || '';
+            setValue('hero-title', currentContent.homepage.heroTitle);
+            setValue('hero-subtitle', currentContent.homepage.heroSubtitle);
+            setValue('concept-title', currentContent.homepage.conceptTitle);
+            setValue('concept-subtitle', currentContent.homepage.conceptSubtitle);
+            setValue('concept-slogan', currentContent.homepage.conceptSlogan);
+            setValue('testimonial-text', currentContent.homepage.testimonialText);
+            setValue('testimonial-author', currentContent.homepage.testimonialAuthor);
             
             // Bullets
             renderBullets();
@@ -1489,69 +1498,69 @@
             renderReviews();
             
             // Bannière
-            document.getElementById('banniere-anniv-emoji').value = currentContent.banniere.annivEmoji || '🎂';
-            document.getElementById('banniere-anniv-text').value = currentContent.banniere.annivText || '';
-            document.getElementById('banniere-privat-emoji').value = currentContent.banniere.privatEmoji || '🏢';
-            document.getElementById('banniere-privat-text').value = currentContent.banniere.privatText || '';
-            document.getElementById('banniere-btn-text').value = currentContent.banniere.btnText || '';
-            document.getElementById('banniere-btn-link').value = currentContent.banniere.btnLink || '';
+            setValue('banniere-anniv-emoji', currentContent.banniere.annivEmoji || '🎂');
+            setValue('banniere-anniv-text', currentContent.banniere.annivText);
+            setValue('banniere-privat-emoji', currentContent.banniere.privatEmoji || '🏢');
+            setValue('banniere-privat-text', currentContent.banniere.privatText);
+            setValue('banniere-btn-text', currentContent.banniere.btnText);
+            setValue('banniere-btn-link', currentContent.banniere.btnLink);
             
             // Piliers
             renderPiliers();
             
             // Lieu
-            document.getElementById('lieu-title').value = currentContent.lieu.title || '';
-            document.getElementById('lieu-subtitle').value = currentContent.lieu.subtitle || '';
+            setValue('lieu-title', currentContent.lieu.title);
+            setValue('lieu-subtitle', currentContent.lieu.subtitle);
             const images = currentContent.lieu.images || [];
-            document.getElementById('lieu-img1-title').value = images[0]?.title || '';
-            document.getElementById('lieu-img1-desc').value = images[0]?.desc || '';
-            document.getElementById('lieu-img2-title').value = images[1]?.title || '';
-            document.getElementById('lieu-img2-desc').value = images[1]?.desc || '';
-            document.getElementById('lieu-img3-title').value = images[2]?.title || '';
-            document.getElementById('lieu-img3-desc').value = images[2]?.desc || '';
+            setValue('lieu-img1-title', images[0]?.title);
+            setValue('lieu-img1-desc', images[0]?.desc);
+            setValue('lieu-img2-title', images[1]?.title);
+            setValue('lieu-img2-desc', images[1]?.desc);
+            setValue('lieu-img3-title', images[2]?.title);
+            setValue('lieu-img3-desc', images[2]?.desc);
             
             // Étapes
-            document.getElementById('etapes-title').value = currentContent.etapes.title || '';
-            document.getElementById('etapes-subtitle').value = currentContent.etapes.subtitle || '';
+            setValue('etapes-title', currentContent.etapes.title);
+            setValue('etapes-subtitle', currentContent.etapes.subtitle);
             renderEtapes();
             
             // FAQ
-            document.getElementById('faq-title').value = currentContent.faq.title || '';
+            setValue('faq-title', currentContent.faq.title);
             renderFaq();
             
             // Footer
-            document.getElementById('footer-brand').value = currentContent.footer.brand || '';
-            document.getElementById('footer-tagline').value = currentContent.footer.tagline || '';
-            document.getElementById('footer-location').value = currentContent.footer.location || '';
-            document.getElementById('footer-email').value = currentContent.footer.email || '';
-            document.getElementById('footer-facebook').value = currentContent.footer.facebook || '';
-            document.getElementById('footer-instagram').value = currentContent.footer.instagram || '';
-            document.getElementById('footer-copyright').value = currentContent.footer.copyright || '';
+            setValue('footer-brand', currentContent.footer.brand);
+            setValue('footer-tagline', currentContent.footer.tagline);
+            setValue('footer-location', currentContent.footer.location);
+            setValue('footer-email', currentContent.footer.email);
+            setValue('footer-facebook', currentContent.footer.facebook);
+            setValue('footer-instagram', currentContent.footer.instagram);
+            setValue('footer-copyright', currentContent.footer.copyright);
             
             // About
-            document.getElementById('about-title').value = currentContent.about.title || '';
-            document.getElementById('about-intro').value = currentContent.about.intro || '';
-            document.getElementById('about-philosophy').value = currentContent.about.philosophy || '';
-            document.getElementById('team-name').value = currentContent.about.teamName || '';
-            document.getElementById('team-role').value = currentContent.about.teamRole || '';
-            document.getElementById('team-bio').value = currentContent.about.teamBio || '';
+            setValue('about-title', currentContent.about.title);
+            setValue('about-intro', currentContent.about.intro);
+            setValue('about-philosophy', currentContent.about.philosophy);
+            setValue('team-name', currentContent.about.teamName);
+            setValue('team-role', currentContent.about.teamRole);
+            setValue('team-bio', currentContent.about.teamBio);
             
             // Séjours
-            document.getElementById('sejours-title').value = currentContent.sejours.title || '';
-            document.getElementById('sejours-intro').value = currentContent.sejours.intro || '';
-            document.getElementById('tarif-adulte').value = currentContent.sejours.tarifAdulte || '';
-            document.getElementById('tarif-enfant').value = currentContent.sejours.tarifEnfant || '';
-            document.getElementById('tarifs-inclus').value = currentContent.sejours.tarifsInclus || '';
-            document.getElementById('horaires-arrivee').value = currentContent.sejours.horairesArrivee || '';
-            document.getElementById('horaires-depart').value = currentContent.sejours.horairesDepart || '';
+            setValue('sejours-title', currentContent.sejours.title);
+            setValue('sejours-intro', currentContent.sejours.intro);
+            setValue('tarif-adulte', currentContent.sejours.tarifAdulte);
+            setValue('tarif-enfant', currentContent.sejours.tarifEnfant);
+            setValue('tarifs-inclus', currentContent.sejours.tarifsInclus);
+            setValue('horaires-arrivee', currentContent.sejours.horairesArrivee);
+            setValue('horaires-depart', currentContent.sejours.horairesDepart);
             
             // Contact
-            document.getElementById('contact-address').value = currentContent.contact.address || '';
-            document.getElementById('contact-phone').value = currentContent.contact.phone || '';
-            document.getElementById('contact-email').value = currentContent.contact.email || '';
-            document.getElementById('contact-hours').value = currentContent.contact.hours || '';
-            document.getElementById('social-facebook').value = currentContent.contact.facebook || '';
-            document.getElementById('social-instagram').value = currentContent.contact.instagram || '';
+            setValue('contact-address', currentContent.contact.address);
+            setValue('contact-phone', currentContent.contact.phone);
+            setValue('contact-email', currentContent.contact.email);
+            setValue('contact-hours', currentContent.contact.hours);
+            setValue('social-facebook', currentContent.contact.facebook);
+            setValue('social-instagram', currentContent.contact.instagram);
         }
         
         // Render bullets
