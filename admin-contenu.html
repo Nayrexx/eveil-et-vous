@@ -1740,80 +1740,86 @@
         
         // Collecter les données du formulaire
         function collectFormData() {
+            // Fonction helper pour récupérer les valeurs en toute sécurité
+            function getValue(id) {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            }
+            
             return {
                 homepage: {
-                    heroTitle: document.getElementById('hero-title').value,
-                    heroSubtitle: document.getElementById('hero-subtitle').value,
+                    heroTitle: getValue('hero-title'),
+                    heroSubtitle: getValue('hero-subtitle'),
                     heroBullets: currentContent.homepage.heroBullets,
-                    conceptTitle: document.getElementById('concept-title').value,
-                    conceptSubtitle: document.getElementById('concept-subtitle').value,
-                    conceptSlogan: document.getElementById('concept-slogan').value,
-                    testimonialText: document.getElementById('testimonial-text').value,
-                    testimonialAuthor: document.getElementById('testimonial-author').value,
+                    conceptTitle: getValue('concept-title'),
+                    conceptSubtitle: getValue('concept-subtitle'),
+                    conceptSlogan: getValue('concept-slogan'),
+                    testimonialText: getValue('testimonial-text'),
+                    testimonialAuthor: getValue('testimonial-author'),
                     reviews: currentContent.homepage.reviews
                 },
                 banniere: {
-                    annivEmoji: document.getElementById('banniere-anniv-emoji').value,
-                    annivText: document.getElementById('banniere-anniv-text').value,
-                    privatEmoji: document.getElementById('banniere-privat-emoji').value,
-                    privatText: document.getElementById('banniere-privat-text').value,
-                    btnText: document.getElementById('banniere-btn-text').value,
-                    btnLink: document.getElementById('banniere-btn-link').value
+                    annivEmoji: getValue('banniere-anniv-emoji'),
+                    annivText: getValue('banniere-anniv-text'),
+                    privatEmoji: getValue('banniere-privat-emoji'),
+                    privatText: getValue('banniere-privat-text'),
+                    btnText: getValue('banniere-btn-text'),
+                    btnLink: getValue('banniere-btn-link')
                 },
                 piliers: {
                     items: currentContent.piliers.items
                 },
                 lieu: {
-                    title: document.getElementById('lieu-title').value,
-                    subtitle: document.getElementById('lieu-subtitle').value,
+                    title: getValue('lieu-title'),
+                    subtitle: getValue('lieu-subtitle'),
                     images: [
-                        { title: document.getElementById('lieu-img1-title').value, desc: document.getElementById('lieu-img1-desc').value },
-                        { title: document.getElementById('lieu-img2-title').value, desc: document.getElementById('lieu-img2-desc').value },
-                        { title: document.getElementById('lieu-img3-title').value, desc: document.getElementById('lieu-img3-desc').value }
+                        { title: getValue('lieu-img1-title'), desc: getValue('lieu-img1-desc') },
+                        { title: getValue('lieu-img2-title'), desc: getValue('lieu-img2-desc') },
+                        { title: getValue('lieu-img3-title'), desc: getValue('lieu-img3-desc') }
                     ]
                 },
                 etapes: {
-                    title: document.getElementById('etapes-title').value,
-                    subtitle: document.getElementById('etapes-subtitle').value,
+                    title: getValue('etapes-title'),
+                    subtitle: getValue('etapes-subtitle'),
                     items: currentContent.etapes.items
                 },
                 faq: {
-                    title: document.getElementById('faq-title').value,
+                    title: getValue('faq-title'),
                     items: currentContent.faq.items
                 },
                 footer: {
-                    brand: document.getElementById('footer-brand').value,
-                    tagline: document.getElementById('footer-tagline').value,
-                    location: document.getElementById('footer-location').value,
-                    email: document.getElementById('footer-email').value,
-                    facebook: document.getElementById('footer-facebook').value,
-                    instagram: document.getElementById('footer-instagram').value,
-                    copyright: document.getElementById('footer-copyright').value
+                    brand: getValue('footer-brand'),
+                    tagline: getValue('footer-tagline'),
+                    location: getValue('footer-location'),
+                    email: getValue('footer-email'),
+                    facebook: getValue('footer-facebook'),
+                    instagram: getValue('footer-instagram'),
+                    copyright: getValue('footer-copyright')
                 },
                 about: {
-                    title: document.getElementById('about-title').value,
-                    intro: document.getElementById('about-intro').value,
-                    philosophy: document.getElementById('about-philosophy').value,
-                    teamName: document.getElementById('team-name').value,
-                    teamRole: document.getElementById('team-role').value,
-                    teamBio: document.getElementById('team-bio').value
+                    title: getValue('about-title'),
+                    intro: getValue('about-intro'),
+                    philosophy: getValue('about-philosophy'),
+                    teamName: getValue('team-name'),
+                    teamRole: getValue('team-role'),
+                    teamBio: getValue('team-bio')
                 },
                 sejours: {
-                    title: document.getElementById('sejours-title').value,
-                    intro: document.getElementById('sejours-intro').value,
-                    tarifAdulte: document.getElementById('tarif-adulte').value,
-                    tarifEnfant: document.getElementById('tarif-enfant').value,
-                    tarifsInclus: document.getElementById('tarifs-inclus').value,
-                    horairesArrivee: document.getElementById('horaires-arrivee').value,
-                    horairesDepart: document.getElementById('horaires-depart').value
+                    title: getValue('sejours-title'),
+                    intro: getValue('sejours-intro'),
+                    tarifAdulte: getValue('tarif-adulte'),
+                    tarifEnfant: getValue('tarif-enfant'),
+                    tarifsInclus: getValue('tarifs-inclus'),
+                    horairesArrivee: getValue('horaires-arrivee'),
+                    horairesDepart: getValue('horaires-depart')
                 },
                 contact: {
-                    address: document.getElementById('contact-address').value,
-                    phone: document.getElementById('contact-phone').value,
-                    email: document.getElementById('contact-email').value,
-                    hours: document.getElementById('contact-hours').value,
-                    facebook: document.getElementById('social-facebook').value,
-                    instagram: document.getElementById('social-instagram').value
+                    address: getValue('contact-address'),
+                    phone: getValue('contact-phone'),
+                    email: getValue('contact-email'),
+                    hours: getValue('contact-hours'),
+                    facebook: getValue('social-facebook'),
+                    instagram: getValue('social-instagram')
                 }
             };
         }
