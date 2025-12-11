@@ -49,6 +49,8 @@
             line-height: 1.2;
             margin-bottom: 20px;
             color: var(--dark);
+            font-family: var(--font-body);
+            font-weight: 600;
         }
         
         .hero-text .subtitle {
@@ -502,7 +504,7 @@
                 </div>
                 
                 <div class="hero-image-container">
-                    <img src="images/hero.jpg" alt="Enfants heureux pendant une activité" onerror="this.src='https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800'">
+                    <img src="images/image accueil.jpg" alt="Enfants heureux pendant une activité" onerror="this.src='https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800'">
                 </div>
             </div>
         </div>
@@ -715,33 +717,53 @@
                 Un cadre naturel et apaisant à Limoux, dans l'Aude. Nos dômes géodésiques offrent un espace unique pour se ressourcer en famille.
             </p>
             
+            <!-- Note modèles 3D -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span style="display: inline-block; background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(78, 205, 196, 0.15)); padding: 12px 25px; border-radius: 50px; font-size: 0.95rem; color: #666; border: 1px dashed rgba(167, 139, 250, 0.4);">
+                    🎨 <em>Visualisations 3D du projet - Construction en cours</em>
+                </span>
+            </div>
+            
             <div class="lieu-gallery">
-                <div class="gallery-card">
+                <div class="gallery-card" onclick="openDomeLightbox('images/domes.png', 'Dômes Géodésiques')" style="cursor: pointer;">
                     <img src="images/domes.png" alt="Dômes Géodésiques" onerror="this.src='https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=600'">
                     <div class="gallery-overlay">
                         <h4>Dômes Géodésiques</h4>
                         <p>Architecture en harmonie avec la nature</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
                     </div>
                 </div>
                 
-                <div class="gallery-card">
+                <div class="gallery-card" onclick="openDomeLightbox('images/domes2.png', 'Espace Intérieur')" style="cursor: pointer;">
                     <img src="images/domes2.png" alt="Espace Intérieur" onerror="this.src='https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600'">
                     <div class="gallery-overlay">
                         <h4>Espace Intérieur</h4>
                         <p>Un cocon de bien-être baigné de lumière</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
                     </div>
                 </div>
                 
-                <div class="gallery-card">
+                <div class="gallery-card" onclick="openDomeLightbox('images/domes3.png', 'Vue d\'Ensemble')" style="cursor: pointer;">
                     <img src="images/domes3.png" alt="Vue d'Ensemble" onerror="this.src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'">
                     <div class="gallery-overlay">
                         <h4>Vue d'Ensemble</h4>
                         <p>Un village d'éveil dans la verdure</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    
+    <!-- Lightbox pour les dômes -->
+    <div id="domeLightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; padding: 20px;">
+        <button onclick="closeDomeLightbox()" style="position: absolute; top: 20px; right: 30px; background: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; z-index: 10001; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">✕</button>
+        <div style="max-width: 95%; max-height: 90%; text-align: center;">
+            <img id="domeLightboxImg" src="" alt="" style="max-width: 100%; max-height: 80vh; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <p id="domeLightboxCaption" style="color: white; font-size: 1.2rem; margin-top: 20px; font-weight: 500;"></p>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 10px;">🎨 Modèle 3D - Projet en cours de construction</p>
+        </div>
+    </div>
 
     <!-- ===== AVIS CLIENTS ===== -->
     <section id="avis" class="section" style="background: var(--light);">
@@ -1233,6 +1255,36 @@
                 }
             }).catch(err => console.log('Footer par défaut'));
         })();
+        
+        // =============================================
+        // LIGHTBOX DÔMES
+        // =============================================
+        
+        function openDomeLightbox(imgSrc, caption) {
+            const lightbox = document.getElementById('domeLightbox');
+            const img = document.getElementById('domeLightboxImg');
+            const captionEl = document.getElementById('domeLightboxCaption');
+            
+            img.src = imgSrc;
+            captionEl.textContent = caption;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDomeLightbox() {
+            const lightbox = document.getElementById('domeLightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Fermer avec Escape ou clic en dehors
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDomeLightbox();
+        });
+        
+        document.getElementById('domeLightbox')?.addEventListener('click', (e) => {
+            if (e.target.id === 'domeLightbox') closeDomeLightbox();
+        });
     </script>
 </body>
 </html>

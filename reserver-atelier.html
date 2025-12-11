@@ -1263,7 +1263,8 @@
             updateStats();
             
             // Mettre à jour le calendrier si visible
-            if (document.getElementById('calendarView').style.display !== 'none') {
+            const calendarView = document.getElementById('calendarView');
+            if (calendarView && calendarView.style.display !== 'none') {
                 renderCalendar();
             }
         }
