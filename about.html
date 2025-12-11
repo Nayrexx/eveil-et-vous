@@ -10,6 +10,11 @@
     <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
 </head>
 <body>
     <header>
@@ -22,7 +27,7 @@
                     <ul>
                         <li><a href="about.html" style="color: var(--primary);">À Propos</a></li>
                         <li><a href="activites.html">Activités</a></li>
-                        <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
                         <li><a href="galerie.html">Galerie</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
@@ -419,7 +424,7 @@
                                     <strong style="color: var(--dark); font-size: 1.05rem;">E&V Solo</strong>
                                 </div>
                                 <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
-                                    Mercredi 14h30-16h30 (2h)<br>
+                                    Mercredi et/ou Samedi (2h)<br>
                                     Moments d'éveil pour les enfants
                                 </p>
                             </div>
@@ -432,7 +437,7 @@
                                     <strong style="color: var(--dark); font-size: 1.05rem;">E&V Duo</strong>
                                 </div>
                                 <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
-                                    Samedi 14h30-16h30 (2h)<br>
+                                    Mercredi et/ou Samedi (2h)<br>
                                     Instant complice parent-enfant
                                 </p>
                             </div>
@@ -445,14 +450,14 @@
                                     <strong style="color: var(--dark); font-size: 1.05rem;">Mon Moment Magique Junior</strong>
                                 </div>
                                 <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
-                                    Mercredi 10h-11h30 (1h30)<br>
+                                    Jusqu'à 2x par semaine (1h30)<br>
                                     Rituels pour cultiver la sérénité
                                 </p>
                             </div>
                         </div>
 
                         <div style="text-align: center;">
-                            <a href="ateliers.html" style="background: linear-gradient(135deg, #4ECDC4, #A78BFA); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.05rem; box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3); display: inline-block; transition: transform 0.3s;">
+                            <a href="reserver-atelier.html" style="background: linear-gradient(135deg, #4ECDC4, #A78BFA); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.05rem; box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3); display: inline-block; transition: transform 0.3s;">
                                 Découvrir les ateliers
                             </a>
                         </div>
@@ -476,83 +481,8 @@
                     </p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
-                    
-                    <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); position: relative;">
-                        <div style="position: absolute; top: 30px; right: 30px; font-size: 4rem; opacity: 0.1; color: var(--primary);">"</div>
-                        <div style="margin-bottom: 25px;">
-                            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                            </div>
-                            <p style="font-size: 1.1rem; line-height: 1.8; color: #666; font-style: italic;">
-                                "Une semaine magique ! Nos enfants sont revenus transformés, plus sereins et épanouis. Les ateliers sont parfaitement adaptés et l'accompagnement est exceptionnel."
-                            </p>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #FF8C42, #FFB366); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
-                                S
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark); font-size: 1.1rem; display: block;">Sophie M.</strong>
-                                <span style="color: #999; font-size: 0.95rem;">Maman de 2 enfants</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); position: relative;">
-                        <div style="position: absolute; top: 30px; right: 30px; font-size: 4rem; opacity: 0.1; color: var(--secondary);">"</div>
-                        <div style="margin-bottom: 25px;">
-                            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                            </div>
-                            <p style="font-size: 1.1rem; line-height: 1.8; color: #666; font-style: italic;">
-                                "Le cadre est apaisant, les activités sont riches et variées. Notre fils a découvert tellement de choses ! Nous avons adoré participer aux ateliers avec lui."
-                            </p>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #4ECDC4, #5DD9D1); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
-                                J
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark); font-size: 1.1rem; display: block;">Julien & Claire D.</strong>
-                                <span style="color: #999; font-size: 0.95rem;">Parents de Lucas, 6 ans</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); position: relative;">
-                        <div style="position: absolute; top: 30px; right: 30px; font-size: 4rem; opacity: 0.1; color: var(--accent);">"</div>
-                        <div style="margin-bottom: 25px;">
-                            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.3rem;">★</span>
-                            </div>
-                            <p style="font-size: 1.1rem; line-height: 1.8; color: #666; font-style: italic;">
-                                "Un vrai moment de reconnexion en famille. L'approche Montessori et la bienveillance se ressentent partout. Nos filles parlent encore de leur séjour !"
-                            </p>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #FFE66D, #FFA07A); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
-                                M
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark); font-size: 1.1rem; display: block;">Marie P.</strong>
-                                <span style="color: #999; font-size: 0.95rem;">Maman de Léa et Emma</span>
-                            </div>
-                        </div>
-                    </div>
-
+                <div id="reviews-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
+                    <!-- Avis chargés dynamiquement depuis Firebase -->
                 </div>
             </div>
         </div>
@@ -631,5 +561,79 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="js/firebase-content.js"></script>
+    
+    <!-- Chargement des avis depuis Firebase -->
+    <script>
+        // Couleurs pour les cartes d'avis
+        const reviewColors = [
+            { gradient: '#FF8C42, #FFB366', color: 'var(--primary)' },
+            { gradient: '#4ECDC4, #5DD9D1', color: 'var(--secondary)' },
+            { gradient: '#FFE66D, #FFA07A', color: 'var(--accent)' },
+            { gradient: '#A78BFA, #C8A2FF', color: '#A78BFA' }
+        ];
+        
+        // Avis par défaut si Firebase non disponible
+        const defaultReviews = [
+            { text: "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier.", author: "Mariona, maman de Chloé (4 ans) et Sophie (5 ans)" },
+            { text: "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive.", author: "Carine, maman de Charlotte (5 ans)" },
+            { text: "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles.", author: "Agathe, maman de Charlie (8 ans) et Marceau (5 ans)" }
+        ];
+        
+        function renderReviews(reviews) {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            
+            container.innerHTML = reviews.map((review, index) => {
+                const color = reviewColors[index % reviewColors.length];
+                const initial = review.author ? review.author.charAt(0).toUpperCase() : '?';
+                const authorParts = review.author ? review.author.split(',') : ['Anonyme', ''];
+                const name = authorParts[0].trim();
+                const details = authorParts[1] ? authorParts[1].trim() : '';
+                
+                return `
+                    <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); position: relative;">
+                        <div style="position: absolute; top: 30px; right: 30px; font-size: 4rem; opacity: 0.1; color: ${color.color};">"</div>
+                        <div style="margin-bottom: 25px;">
+                            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
+                                <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
+                            </div>
+                            <p style="font-size: 1.1rem; line-height: 1.8; color: #666; font-style: italic;">
+                                "${review.text}"
+                            </p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, ${color.gradient}); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
+                                ${initial}
+                            </div>
+                            <div>
+                                <strong style="color: var(--dark); font-size: 1.1rem; display: block;">${name}</strong>
+                                <span style="color: #999; font-size: 0.95rem;">${details}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Charger les avis depuis Firebase
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                FirebaseDB.init();
+                db.collection('content').doc('homepage').get().then(doc => {
+                    if (doc.exists && doc.data().reviews && doc.data().reviews.length > 0) {
+                        renderReviews(doc.data().reviews);
+                    } else {
+                        renderReviews(defaultReviews);
+                    }
+                }).catch(err => {
+                    console.log('Avis par défaut');
+                    renderReviews(defaultReviews);
+                });
+            } catch (e) {
+                console.log('Firebase non disponible, avis par défaut');
+                renderReviews(defaultReviews);
+            }
+        });
+    </script>
 </body>
 </html>

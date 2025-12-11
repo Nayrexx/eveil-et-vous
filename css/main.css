@@ -187,14 +187,17 @@ nav a:hover::after {
 }
 
 .btn-secondary {
-    background: white;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    background: linear-gradient(135deg, #4ECDC4, #6BCF7F);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
 }
 
 .btn-secondary:hover {
-    background: var(--primary);
+    background: linear-gradient(135deg, #3DBDB5, #5BBF6F);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
 }
 
 .menu-toggle {

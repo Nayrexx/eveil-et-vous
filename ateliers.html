@@ -27,6 +27,69 @@
             font-family: 'Myriad Pro', sans-serif;
         }
         
+        /* Menu Toggle Mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #2D3436;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 0;
+            background: white;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+        }
+        
+        .mobile-menu a {
+            color: #2D3436;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .mobile-menu .btn-mobile-cta {
+            background: linear-gradient(135deg, var(--rose), var(--turquoise));
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 968px) {
+            .main-nav {
+                display: none !important;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .mobile-menu.active {
+                display: flex;
+            }
+        }
+        
         .floating-bubble {
             position: absolute;
             border-radius: 50%;
@@ -118,13 +181,32 @@
                     <img src="images/logo.png" alt="Éveil & Vous" style="height: 50px; width: auto;">
                 </a>
                 
-                <nav style="display: flex; gap: 35px; align-items: center;">
-                    <a href="about.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a>
-                    <a href="activites.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a>
-                    <a href="ateliers.html" style="color: var(--rose); text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--rose);">Ateliers</a>
-                    <a href="contact.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
-                    <a href="reservation.html" style="background: linear-gradient(135deg, var(--rose), var(--turquoise)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(244, 166, 184, 0.3);">Réserver un séjour</a>
+                <nav class="main-nav">
+                    <ul style="display: flex; gap: 35px; align-items: center; list-style: none; margin: 0; padding: 0;">
+                        <li><a href="about.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">À Propos</a></li>
+                        <li><a href="activites.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Activités</a></li>
+                        <li><a href="ateliers.html" style="background: linear-gradient(135deg, #3DBDB5, #5BBF6F); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(78, 205, 196, 0.3);">Ateliers</a></li>
+                        <li><a href="galerie.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Galerie</a></li>
+                        <li><a href="contact.html" style="color: #2D3436; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a></li>
+                        <li><a href="reservation.html" style="background: linear-gradient(135deg, var(--rose), var(--turquoise)); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 20px rgba(244, 166, 184, 0.3);">Réserver un séjour</a></li>
+                    </ul>
                 </nav>
+                
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            
+            <!-- Menu Mobile -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="about.html">À Propos</a>
+                <a href="activites.html">Activités</a>
+                <a href="ateliers.html" style="color: var(--rose); font-weight: 600;">Ateliers</a>
+                <a href="galerie.html">Galerie</a>
+                <a href="contact.html">Contact</a>
+                <a href="reservation.html" class="btn-mobile-cta">Réserver un séjour</a>
             </div>
         </div>
     </header>
@@ -414,5 +496,12 @@
     </footer>
 
     <script src="js/app.js"></script>
+    <script>
+        // Menu Mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

@@ -413,6 +413,24 @@
             </div>
         </div>
 
+        <!-- Section Gestion des Catégories -->
+        <div class="upload-section" style="margin-bottom: 30px;">
+            <h2>📁 Gestion des Catégories</h2>
+            <p style="color: #666; margin-bottom: 20px;">Créez des catégories personnalisées pour organiser vos photos (ex: Atelier Halloween, Noël, etc.)</p>
+            
+            <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                <input type="text" id="newCategoryName" placeholder="Nom de la catégorie (ex: Atelier Halloween)" style="flex: 1; min-width: 200px; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem;">
+                <input type="text" id="newCategoryEmoji" placeholder="Emoji 🎃" style="width: 100px; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; text-align: center;">
+                <button type="button" class="btn btn-primary" onclick="addCategory()" style="white-space: nowrap;">
+                    ➕ Ajouter
+                </button>
+            </div>
+            
+            <div id="categoriesList" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <!-- Catégories chargées ici -->
+            </div>
+        </div>
+
         <!-- Section Upload -->
         <div class="upload-section">
             <h2>📤 Ajouter une photo</h2>
@@ -465,14 +483,8 @@
                     <div class="form-group">
                         <label>📁 Catégorie</label>
                         <select id="photoCategory" required>
-                            <option value="">-- Choisir --</option>
-                            <option value="ateliers-solo">Ateliers E&V Solo</option>
-                            <option value="ateliers-duo">Ateliers E&V Duo</option>
-                            <option value="sejours">Séjours en famille</option>
-                            <option value="nature">Activités Nature</option>
-                            <option value="creatif">Créatif & Artistique</option>
-                            <option value="yoga">Yoga & Relaxation</option>
-                            <option value="autres">Autres</option>
+                            <option value="">-- Choisir une catégorie --</option>
+                            <!-- Catégories chargées dynamiquement -->
                         </select>
                     </div>
                 </div>
@@ -510,6 +522,15 @@
     <script>
         let firebaseReady = false;
         let galleryData = [];
+        let categoriesData = [];
+        
+        // Catégories par défaut
+        const defaultCategories = [
+            { id: 'ateliers-solo', name: 'Ateliers E&V Solo', emoji: '👤' },
+            { id: 'ateliers-duo', name: 'Ateliers E&V Duo', emoji: '👨‍👩‍👧' },
+            { id: 'sejours', name: 'Séjours en famille', emoji: '🏕️' },
+            { id: 'mmm', name: 'MMM Junior', emoji: '✨' }
+        ];
         
         // =============================================
         // INITIALISATION
@@ -531,6 +552,7 @@
                 
                 // Écoute temps réel
                 setupRealtimeListener();
+                setupCategoriesRealtimeListener();
             } catch (e) {
                 console.warn('Firebase non disponible:', e);
                 firebaseReady = false;
@@ -538,6 +560,9 @@
                 document.getElementById('firebaseStatus').className = 'firebase-status offline';
                 loadFromLocalStorage();
             }
+            
+            // Charger les catégories d'abord
+            await loadCategories();
             
             // Charger les données
             await loadGallery();
@@ -563,6 +588,202 @@
             }, (error) => {
                 console.error('Erreur listener galerie:', error);
             });
+        }
+        
+        function setupCategoriesRealtimeListener() {
+            if (!firebaseReady) return;
+            
+            db.collection('categories').orderBy('ordre', 'asc').onSnapshot((snapshot) => {
+                categoriesData = [];
+                snapshot.forEach(doc => {
+                    categoriesData.push({ id: doc.id, ...doc.data() });
+                });
+                renderCategoriesList();
+                updateCategorySelect();
+                console.log('🔄 Catégories mises à jour en temps réel');
+            }, (error) => {
+                console.error('Erreur listener catégories:', error);
+            });
+        }
+        
+        // =============================================
+        // GESTION DES CATÉGORIES
+        // =============================================
+        
+        async function loadCategories() {
+            if (firebaseReady) {
+                try {
+                    const snapshot = await db.collection('categories').orderBy('ordre', 'asc').get();
+                    
+                    // Si pas de catégories, créer les catégories par défaut
+                    if (snapshot.empty) {
+                        console.log('📁 Création des catégories par défaut...');
+                        for (let i = 0; i < defaultCategories.length; i++) {
+                            const cat = defaultCategories[i];
+                            await db.collection('categories').doc(cat.id).set({
+                                name: cat.name,
+                                emoji: cat.emoji,
+                                ordre: i
+                            });
+                        }
+                        // Recharger après création
+                        const newSnapshot = await db.collection('categories').orderBy('ordre', 'asc').get();
+                        categoriesData = [];
+                        newSnapshot.forEach(doc => {
+                            categoriesData.push({ id: doc.id, ...doc.data() });
+                        });
+                    } else {
+                        categoriesData = [];
+                        snapshot.forEach(doc => {
+                            categoriesData.push({ id: doc.id, ...doc.data() });
+                        });
+                    }
+                    
+                    renderCategoriesList();
+                    updateCategorySelect();
+                } catch (e) {
+                    console.error('Erreur chargement catégories:', e);
+                    categoriesData = [...defaultCategories];
+                    renderCategoriesList();
+                    updateCategorySelect();
+                }
+            } else {
+                // Mode local
+                const saved = localStorage.getItem('galerie-categories');
+                if (saved) {
+                    categoriesData = JSON.parse(saved);
+                } else {
+                    categoriesData = [...defaultCategories];
+                }
+                renderCategoriesList();
+                updateCategorySelect();
+            }
+        }
+        
+        async function addCategory() {
+            const nameInput = document.getElementById('newCategoryName');
+            const emojiInput = document.getElementById('newCategoryEmoji');
+            
+            const name = nameInput.value.trim();
+            const emoji = emojiInput.value.trim() || '📁';
+            
+            if (!name) {
+                showToast('Veuillez entrer un nom de catégorie', 'error');
+                return;
+            }
+            
+            // Créer un ID à partir du nom
+            const id = name.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+            
+            // Vérifier si la catégorie existe déjà
+            if (categoriesData.find(c => c.id === id)) {
+                showToast('Cette catégorie existe déjà', 'error');
+                return;
+            }
+            
+            const newCategory = {
+                name: name,
+                emoji: emoji,
+                ordre: categoriesData.length
+            };
+            
+            if (firebaseReady) {
+                try {
+                    await db.collection('categories').doc(id).set(newCategory);
+                    showToast('Catégorie ajoutée ! ✅');
+                } catch (e) {
+                    console.error('Erreur ajout catégorie:', e);
+                    showToast('Erreur lors de l\'ajout', 'error');
+                }
+            } else {
+                categoriesData.push({ id, ...newCategory });
+                localStorage.setItem('galerie-categories', JSON.stringify(categoriesData));
+                renderCategoriesList();
+                updateCategorySelect();
+                showToast('Catégorie ajoutée (mode local) ! ✅');
+            }
+            
+            // Reset inputs
+            nameInput.value = '';
+            emojiInput.value = '';
+        }
+        
+        async function deleteCategory(id) {
+            const category = categoriesData.find(c => c.id === id);
+            if (!category) return;
+            
+            // Vérifier si des photos utilisent cette catégorie
+            const photosUsingCategory = galleryData.filter(p => p.category === id);
+            
+            let confirmMessage = `Supprimer la catégorie "${category.name}" ?`;
+            if (photosUsingCategory.length > 0) {
+                confirmMessage = `⚠️ ${photosUsingCategory.length} photo(s) utilisent cette catégorie.\n\nSupprimer quand même "${category.name}" ?`;
+            }
+            
+            if (!confirm(confirmMessage)) return;
+            
+            if (firebaseReady) {
+                try {
+                    await db.collection('categories').doc(id).delete();
+                    showToast('Catégorie supprimée ! 🗑️');
+                } catch (e) {
+                    console.error('Erreur suppression catégorie:', e);
+                    showToast('Erreur lors de la suppression', 'error');
+                }
+            } else {
+                categoriesData = categoriesData.filter(c => c.id !== id);
+                localStorage.setItem('galerie-categories', JSON.stringify(categoriesData));
+                renderCategoriesList();
+                updateCategorySelect();
+                showToast('Catégorie supprimée (mode local) ! 🗑️');
+            }
+        }
+        
+        function renderCategoriesList() {
+            const container = document.getElementById('categoriesList');
+            if (!container) return;
+            
+            if (categoriesData.length === 0) {
+                container.innerHTML = '<p style="color: #888; text-align: center;">Aucune catégorie</p>';
+                return;
+            }
+            
+            container.innerHTML = categoriesData.map(cat => `
+                <div style="display: flex; align-items: center; justify-content: space-between; background: #2a2a2a; padding: 10px 15px; border-radius: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem;">${cat.emoji} ${cat.name}</span>
+                    <button onclick="deleteCategory('${cat.id}')" style="background: #ff4757; border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">🗑️</button>
+                </div>
+            `).join('');
+        }
+        
+        function updateCategorySelect() {
+            const select = document.getElementById('photoCategory');
+            if (!select) return;
+            
+            // Garder la valeur sélectionnée
+            const currentValue = select.value;
+            
+            select.innerHTML = '<option value="">-- Choisir une catégorie --</option>';
+            
+            categoriesData.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = `${cat.emoji} ${cat.name}`;
+                select.appendChild(option);
+            });
+            
+            // Restaurer la sélection si possible
+            if (currentValue && categoriesData.find(c => c.id === currentValue)) {
+                select.value = currentValue;
+            }
+        }
+        
+        function getCategoryName(categoryId) {
+            const cat = categoriesData.find(c => c.id === categoryId);
+            return cat ? `${cat.emoji} ${cat.name}` : categoryId;
         }
         
         // =============================================
@@ -641,16 +862,22 @@
         }
         
         function getCategoryLabel(category) {
-            const labels = {
-                'ateliers-solo': '🎨 Ateliers Solo',
-                'ateliers-duo': '👨‍👧 Ateliers Duo',
+            // Utiliser les catégories dynamiques
+            const cat = categoriesData.find(c => c.id === category);
+            if (cat) {
+                return `${cat.emoji} ${cat.name}`;
+            }
+            // Fallback pour anciennes valeurs
+            const legacyLabels = {
+                'ateliers-solo': '👤 Ateliers Solo',
+                'ateliers-duo': '👨‍👩‍👧 Ateliers Duo',
                 'sejours': '🏕️ Séjours',
                 'nature': '🌿 Nature',
                 'creatif': '✨ Créatif',
                 'yoga': '🧘 Yoga',
                 'autres': '📌 Autres'
             };
-            return labels[category] || category;
+            return legacyLabels[category] || category || 'Sans catégorie';
         }
         
         // =============================================

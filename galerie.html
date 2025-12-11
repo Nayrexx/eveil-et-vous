@@ -298,7 +298,7 @@
                     <ul>
                         <li><a href="about.html">À Propos</a></li>
                         <li><a href="activites.html">Activités</a></li>
-                        <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
                         <li><a href="galerie.html" style="color: var(--primary);">Galerie</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
@@ -332,25 +332,11 @@
     <!-- FILTRES -->
     <section style="padding: 60px 0 40px; background: white;">
         <div class="container">
-            <div class="filter-buttons">
+            <div class="filter-buttons" id="filterButtons">
                 <button class="filter-btn active" data-filter="all">
                     ✨ Toutes les photos
                 </button>
-                <button class="filter-btn" data-filter="ateliers">
-                    🎨 Ateliers
-                </button>
-                <button class="filter-btn" data-filter="sejours">
-                    🏕️ Séjours
-                </button>
-                <button class="filter-btn" data-filter="solo">
-                    👤 E&V Solo
-                </button>
-                <button class="filter-btn" data-filter="duo">
-                    👨‍👩‍👧 E&V Duo
-                </button>
-                <button class="filter-btn" data-filter="mmm">
-                    ✨ MMM Junior
-                </button>
+                <!-- Catégories chargées dynamiquement -->
             </div>
         </div>
     </section>
@@ -549,6 +535,15 @@
         
         let firebaseGalleryReady = false;
         let firebasePhotos = [];
+        let categoriesData = [];
+        
+        // Catégories par défaut si Firebase non dispo
+        const defaultCategories = [
+            { id: 'ateliers-solo', name: 'Ateliers E&V Solo', emoji: '👤' },
+            { id: 'ateliers-duo', name: 'Ateliers E&V Duo', emoji: '👨‍👩‍👧' },
+            { id: 'sejours', name: 'Séjours en famille', emoji: '🏕️' },
+            { id: 'mmm', name: 'MMM Junior', emoji: '✨' }
+        ];
         
         async function initFirebaseGallery() {
             try {
@@ -556,7 +551,10 @@
                 firebaseGalleryReady = true;
                 console.log('🔥 Firebase Galerie prêt');
                 
-                // Écoute temps réel
+                // Charger les catégories d'abord
+                await loadCategories();
+                
+                // Écoute temps réel des photos
                 db.collection('galerie').orderBy('dateAjout', 'desc').onSnapshot((snapshot) => {
                     firebasePhotos = [];
                     snapshot.forEach(doc => {
@@ -564,9 +562,89 @@
                     });
                     renderFirebasePhotos();
                 });
+                
+                // Écoute temps réel des catégories
+                db.collection('categories').orderBy('ordre', 'asc').onSnapshot((snapshot) => {
+                    categoriesData = [];
+                    snapshot.forEach(doc => {
+                        categoriesData.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderFilterButtons();
+                });
             } catch (e) {
                 console.warn('Firebase galerie non disponible:', e);
+                categoriesData = [...defaultCategories];
+                renderFilterButtons();
             }
+        }
+        
+        async function loadCategories() {
+            try {
+                const snapshot = await db.collection('categories').orderBy('ordre', 'asc').get();
+                categoriesData = [];
+                snapshot.forEach(doc => {
+                    categoriesData.push({ id: doc.id, ...doc.data() });
+                });
+                renderFilterButtons();
+            } catch (e) {
+                console.warn('Erreur chargement catégories:', e);
+                categoriesData = [...defaultCategories];
+                renderFilterButtons();
+            }
+        }
+        
+        function renderFilterButtons() {
+            const container = document.getElementById('filterButtons');
+            if (!container) return;
+            
+            // Garder le bouton "Toutes les photos"
+            container.innerHTML = `
+                <button class="filter-btn active" data-filter="all">
+                    ✨ Toutes les photos
+                </button>
+            `;
+            
+            // Ajouter les catégories dynamiques
+            categoriesData.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-filter', cat.id);
+                btn.textContent = `${cat.emoji} ${cat.name}`;
+                container.appendChild(btn);
+            });
+            
+            // Réattacher les événements de filtrage
+            setupFilterEvents();
+        }
+        
+        function setupFilterEvents() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Retirer la classe active de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
+                    button.classList.add('active');
+
+                    const filter = button.getAttribute('data-filter');
+
+                    // Récupérer tous les items (y compris ceux ajoutés par Firebase)
+                    const allItems = document.querySelectorAll('.gallery-item');
+                    
+                    allItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = 'block';
+                            // Animation d'apparition
+                            item.style.animation = 'fadeInUp 0.5s ease';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
         }
         
         function renderFirebasePhotos() {
@@ -604,16 +682,13 @@
         }
         
         function getCategoryLabel(category) {
-            const labels = {
-                'ateliers-solo': 'E&V Solo',
-                'ateliers-duo': 'E&V Duo',
-                'sejours': 'Séjours',
-                'nature': 'Nature',
-                'creatif': 'Créatif',
-                'yoga': 'Yoga',
-                'autres': 'Autres'
-            };
-            return labels[category] || category;
+            // Utiliser les catégories dynamiques
+            const cat = categoriesData.find(c => c.id === category);
+            if (cat) {
+                return `${cat.emoji} ${cat.name}`;
+            }
+            // Fallback
+            return category || 'Autres';
         }
         
         function updateGalleryItems() {
@@ -623,43 +698,6 @@
         
         // Charger au démarrage
         window.addEventListener('load', initFirebaseGallery);
-        
-        // =============================================
-        // SYSTÈME DE FILTRAGE (mis à jour)
-        // =============================================
-        
-        // Système de filtrage
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        let galleryItems = document.querySelectorAll('.gallery-item');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Retirer la classe active de tous les boutons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Ajouter la classe active au bouton cliqué
-                button.classList.add('active');
-
-                const filter = button.getAttribute('data-filter');
-
-                // Récupérer tous les items (y compris ceux ajoutés par Firebase)
-                const allItems = document.querySelectorAll('.gallery-item');
-                
-                allItems.forEach(item => {
-                    const category = item.getAttribute('data-category');
-                    
-                    // Convertir les catégories Firebase au format attendu
-                    const normalizedCategory = category.replace('-', ' ');
-                    
-                    if (filter === 'all' || normalizedCategory.includes(filter) || category.includes(filter)) {
-                        item.style.display = 'block';
-                        // Animation d'apparition
-                        item.style.animation = 'fadeInUp 0.5s ease';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
 
         // Lightbox functionality
         let currentImageIndex = 0;

@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
     <style>
         /* ===== SLIDER MOBILE FIX ===== */
         @media (max-width: 768px) {
@@ -114,7 +119,7 @@
                     <ul>
                         <li><a href="about.html">À Propos</a></li>
                         <li><a href="activites.html" style="color: var(--primary);">Activités</a></li>
-                        <li><a href="reserver-atelier.html">Ateliers</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
                         <li><a href="galerie.html">Galerie</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
@@ -523,62 +528,8 @@
                     </p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
-                    
-                    <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(255, 143, 163, 0.05)); padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 2px solid rgba(255, 140, 66, 0.15);">
-                        <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                            <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
-                        </div>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #666; font-style: italic; margin-bottom: 25px;">
-                            "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier, ils étaient à fond dans leurs créations. Et nous, les parents, on a pu les accompagner puis papoter entre nous. Bref, c'était une belle parenthèse créative et conviviale. J'ai kiffé ! ✨"
-                        </p>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #FF8C42, #FFB366); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
-                                M
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark);">Mariona</strong><br>
-                                <span style="color: #999; font-size: 0.95rem;">Maman de Chloé (4 ans) et Sophie (5 ans)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.05), rgba(93, 217, 209, 0.05)); padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 2px solid rgba(78, 205, 196, 0.15);">
-                        <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                            <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
-                        </div>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #666; font-style: italic; margin-bottom: 25px;">
-                            "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun. Organisation, sens du détail, tout y était. Nous avons hâte de pouvoir tester un autre atelier à ses côtés ! À venir tester rapidement et sans modération."
-                        </p>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #4ECDC4, #5DD9D1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
-                                C
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark);">Carine</strong><br>
-                                <span style="color: #999; font-size: 0.95rem;">Maman de Charlotte (5 ans)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, rgba(255, 230, 109, 0.05), rgba(255, 160, 122, 0.05)); padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 2px solid rgba(255, 230, 109, 0.15);">
-                        <div style="display: flex; gap: 5px; margin-bottom: 20px;">
-                            <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
-                        </div>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #666; font-style: italic; margin-bottom: 25px;">
-                            "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles. Un grand merci à Astrid pour son accueil, ses explications, son énergie et sa bonne humeur. Dès notre arrivée, nous sommes directement plongés dans le thème grâce à la décoration et la mise en scène."
-                        </p>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #FFE66D, #FFA07A); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
-                                A
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark);">Agathe</strong><br>
-                                <span style="color: #999; font-size: 0.95rem;">Maman de Charlie (8 ans) et Marceau (5 ans)</span>
-                            </div>
-                        </div>
-                    </div>
-
+                <div id="reviews-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
+                    <!-- Avis chargés dynamiquement depuis Firebase -->
                 </div>
             </div>
         </div>
@@ -853,5 +804,76 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="js/firebase-content.js"></script>
+    
+    <!-- Chargement des avis depuis Firebase -->
+    <script>
+        // Couleurs pour les cartes d'avis
+        const reviewColors = [
+            { bg: 'rgba(255, 140, 66, 0.05), rgba(255, 143, 163, 0.05)', border: 'rgba(255, 140, 66, 0.15)', gradient: '#FF8C42, #FFB366' },
+            { bg: 'rgba(78, 205, 196, 0.05), rgba(93, 217, 209, 0.05)', border: 'rgba(78, 205, 196, 0.15)', gradient: '#4ECDC4, #5DD9D1' },
+            { bg: 'rgba(255, 230, 109, 0.05), rgba(255, 160, 122, 0.05)', border: 'rgba(255, 230, 109, 0.15)', gradient: '#FFE66D, #FFA07A' },
+            { bg: 'rgba(167, 139, 250, 0.05), rgba(200, 162, 255, 0.05)', border: 'rgba(167, 139, 250, 0.15)', gradient: '#A78BFA, #C8A2FF' }
+        ];
+        
+        // Avis par défaut si Firebase non disponible
+        const defaultReviews = [
+            { text: "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier, ils étaient à fond dans leurs créations.", author: "Mariona, maman de Chloé (4 ans) et Sophie (5 ans)" },
+            { text: "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun.", author: "Carine, maman de Charlotte (5 ans)" },
+            { text: "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles.", author: "Agathe, maman de Charlie (8 ans) et Marceau (5 ans)" }
+        ];
+        
+        function renderReviews(reviews) {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            
+            container.innerHTML = reviews.map((review, index) => {
+                const color = reviewColors[index % reviewColors.length];
+                const initial = review.author ? review.author.charAt(0).toUpperCase() : '?';
+                const authorParts = review.author ? review.author.split(',') : ['Anonyme', ''];
+                const name = authorParts[0].trim();
+                const details = authorParts[1] ? authorParts[1].trim() : '';
+                
+                return `
+                    <div style="background: linear-gradient(135deg, ${color.bg}); padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 2px solid ${color.border};">
+                        <div style="display: flex; gap: 5px; margin-bottom: 20px;">
+                            <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
+                        </div>
+                        <p style="font-size: 1.05rem; line-height: 1.8; color: #666; font-style: italic; margin-bottom: 25px;">
+                            "${review.text}"
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, ${color.gradient}); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
+                                ${initial}
+                            </div>
+                            <div>
+                                <strong style="color: var(--dark);">${name}</strong><br>
+                                <span style="color: #999; font-size: 0.95rem;">${details}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Charger les avis depuis Firebase
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                FirebaseDB.init();
+                db.collection('content').doc('homepage').get().then(doc => {
+                    if (doc.exists && doc.data().reviews && doc.data().reviews.length > 0) {
+                        renderReviews(doc.data().reviews);
+                    } else {
+                        renderReviews(defaultReviews);
+                    }
+                }).catch(err => {
+                    console.log('Avis par défaut');
+                    renderReviews(defaultReviews);
+                });
+            } catch (e) {
+                console.log('Firebase non disponible, avis par défaut');
+                renderReviews(defaultReviews);
+            }
+        });
+    </script>
 </body>
 </html>
