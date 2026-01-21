@@ -1,0 +1,1397 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Des séjours pensés pour eux, des moments précieux pour vous. Éveil en famille au cœur de la nature.">
+    <title>Éveil & Vous | Séjours en famille au cœur de la nature</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/decorative-backgrounds.css">
+    
+    <style>
+        /* Header sticky et réduit */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 12px 0;
+            margin: 0;
+        }
+        
+        /* Hero amélioré */
+        .hero-new {
+            background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 100%);
+            padding: 30px 0 50px;
+            min-height: auto;
+            margin-top: 0;
+        }
+        
+        .hero-new .container {
+            max-width: 1200px;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+        
+        .hero-text .subtitle {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .hero-bullets {
+            list-style: none;
+            margin-bottom: 35px;
+            padding: 0;
+        }
+        
+        .hero-bullets li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.05rem;
+            color: #2D3436;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        
+        .hero-bullets li strong {
+            color: #1A1A2E;
+            font-weight: 700;
+        }
+        
+        .hero-bullets li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-image-container {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .hero-image-container img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title-center {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        /* Piliers - 3 colonnes */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .pillar-card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .pillar-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), #FFB366);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 25px;
+        }
+        
+        .pillar-card:nth-child(2) .pillar-icon {
+            background: linear-gradient(135deg, var(--secondary), #5DD9D1);
+        }
+        
+        .pillar-card:nth-child(3) .pillar-icon {
+            background: linear-gradient(135deg, var(--accent), #FFF099);
+        }
+        
+        .pillar-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .pillar-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .pillar-examples {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .pillar-examples strong {
+            color: var(--dark);
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .pillar-examples p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        /* Bénéfices - 2 colonnes */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+        }
+        
+        .benefits-box {
+            background: linear-gradient(135deg, #FFE6F0 0%, #FFF 100%);
+            padding: 40px;
+            border-radius: 25px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .benefits-box:nth-child(2) {
+            background: linear-gradient(135deg, #E0F7FA 0%, #FFF 100%);
+            border-left-color: var(--secondary);
+        }
+        
+        .benefits-box h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .benefits-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .benefits-box:nth-child(2) .benefits-list li::before {
+            color: var(--secondary);
+        }
+        
+        /* Témoignage */
+        .testimonial-box {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            border-top: 5px solid var(--accent);
+        }
+        
+        .testimonial-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Avis clients */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .review-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .review-stars {
+            color: #FFD700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .review-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .review-author {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        /* FAQ */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            padding: 0;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-left: 4px solid transparent;
+        }
+        
+        .faq-item:nth-child(1) { border-left-color: #FF8C42; }
+        .faq-item:nth-child(2) { border-left-color: #4ECDC4; }
+        .faq-item:nth-child(3) { border-left-color: #A78BFA; }
+        .faq-item:nth-child(4) { border-left-color: #6BCF7F; }
+        .faq-item:nth-child(5) { border-left-color: #FF6B9D; }
+        
+        .faq-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+        }
+        
+        .faq-question {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            color: var(--dark);
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .faq-question span {
+            flex: 1;
+        }
+        
+        .faq-question i {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            padding: 0 30px 25px;
+            background: linear-gradient(to bottom, rgba(255,140,66,0.03), rgba(78,205,196,0.03));
+        }
+        
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, #FF8C42 0%, #4ECDC4 100%);
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-banner h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 15px;
+        }
+        
+        .cta-banner p {
+            font-size: 1.125rem;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .cta-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0 35px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-bullets li {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+            }
+            
+            .hero-cta .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
+                </a>
+                
+                <nav>
+                    <ul>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== BANNIÈRE ANNIVERSAIRES & PRIVATISATION ===== -->
+    <div style="background: linear-gradient(135deg, #FF8C42 0%, #FFD93D 25%, #6BCF7F 50%, #4ECDC4 75%, #A78BFA 100%); padding: 15px 0; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); animation: shimmer 3s infinite;"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; text-align: center;">
+                <!-- Anniversaires -->
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.8rem;">🎂</span>
+                    <span style="color: white; font-weight: 600; font-size: 1.05rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        Anniversaires E&V - Fêtez en famille !
+                    </span>
+                </div>
+                <div style="width: 2px; height: 30px; background: rgba(255, 255, 255, 0.3);"></div>
+                <!-- Privatisation -->
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.8rem;">🏢</span>
+                    <span style="color: white; font-weight: 600; font-size: 1.05rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        Privatisation pour vos événements
+                    </span>
+                </div>
+                <a href="contact.html" style="background: white; color: #FF8C42; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; margin-left: 15px;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)';">
+                    📧 Nous contacter
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero-new hero-with-pictos">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <h1>Des séjours pensés pour eux, des moments précieux pour vous.</h1>
+                    <p class="subtitle">
+                        Dans un cadre sain et préservé, des ateliers d'éveil sous des formes ludiques et variées pour renforcer le lien parent-enfant et installer des rituels apaisants.
+                    </p>
+                    
+                    <ul class="hero-bullets">
+                        <li><strong>Âges :</strong> 4–12 ans</li>
+                        <li><strong>Formule :</strong> Séjours à la semaine (pendant les vacances scolaires)</li>
+                        <li><strong>Encadrement bienveillant</strong> par pros certifiés</li>
+                        <li><strong>Repas sains</strong> / activités outdoor</li>
+                    </ul>
+                    
+                    <div class="hero-cta">
+                        <a href="reservation.html" class="btn btn-primary" style="padding: 15px 35px; font-size: 1.05rem;">Réserver</a>
+                        <a href="#concept" class="btn btn-secondary" style="padding: 15px 35px; font-size: 1.05rem;">Découvrir les programmes</a>
+                    </div>
+                </div>
+                
+                <div class="hero-image-container">
+                    <img id="img-hero" src="images/image accueil.jpg" alt="Enfants heureux pendant une activité" onerror="this.src='https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONCEPT ===== -->
+    <section id="concept" class="section section-with-experience-picto" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title-center">Grandir ensemble, naturellement.</h2>
+            <p class="section-subtitle">
+                Une approche globale de l'éveil : chaque enfant explore ses sens, bouge, s'exprime, pense et ressent—sans pression, avec bienveillance.
+            </p>
+            
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">🌈</div>
+                    <h3>Éveil global</h3>
+                    <p>Stimuler sans surcharger, apprendre à se recentrer.</p>
+                    <div class="pillar-examples">
+                        <strong>Activités :</strong>
+                        <p>Lecture, jeux coopératifs, danse, yoga, cuisine.</p>
+                    </div>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">👨‍👩‍👧</div>
+                    <h3>Accompagnement parental</h3>
+                    <p>Renforcer le lien, retrouver des moments simples et efficaces.</p>
+                    <div class="pillar-examples">
+                        <strong>Activités :</strong>
+                        <p>Ateliers de gestion des émotions, cercle de parole, clés pour un quotidien apaisé.</p>
+                    </div>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">🌳</div>
+                    <h3>Cadre nature & bienveillance</h3>
+                    <p>Apaiser, sécuriser, favoriser l'autonomie.</p>
+                    <div class="pillar-examples">
+                        <strong>Activités :</strong>
+                        <p>Balade sensorielle en forêt, culture du potager, repas sains et équilibrés, groupe 7-12 enfants.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefits-box">
+                    <h3>Ce que votre enfant y gagne</h3>
+                    <ul class="benefits-list">
+                        <li>La joie d'être pleinement lui-même, dans un cadre bienveillant et sécurisant</li>
+                        <li>Des outils pour mieux comprendre et exprimer ses émotions</li>
+                        <li>La confiance en ses talents, sa créativité et sa sensibilité</li>
+                        <li>Le plaisir simple de grandir en douceur, au rythme de la nature 🌱</li>
+                    </ul>
+                </div>
+                
+                <div class="benefits-box">
+                    <h3>Ce que vous ramenez à la maison</h3>
+                    <ul class="benefits-list">
+                        <li>Des souvenirs partagés, remplis de rires, de douceur et de complicité</li>
+                        <li>Des outils simples pour cultiver le calme, la confiance et la joie au quotidien</li>
+                        <li>Une nouvelle façon de se relier — à soi, à son enfant, à la nature</li>
+                        <li>Et surtout… un cœur léger, apaisé et plein d'amour 💞</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 50px 0 30px;">
+                <h3 style="font-family: var(--font-heading); font-size: 2rem; color: var(--dark); margin-bottom: 10px;">
+                    En deux mots
+                </h3>
+                <p style="font-size: 1.5rem; color: var(--primary); font-weight: 600;">
+                    Moins d'agitation, plus de connexion.
+                </p>
+            </div>
+            
+            <div class="testimonial-box">
+                <div class="testimonial-text">
+                    "Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun. Organisation, sens du détail, tout y était."
+                </div>
+                <div class="testimonial-author">— Carine, maman de Charlotte (5 ans)</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="reservation.html" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.05rem;">Réserver mon séjour</a>
+                <a href="contact.html" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.05rem; margin-left: 15px;">Nous contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HORAIRES ET ACCESSIBILITÉ ===== -->
+    <section class="section">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                
+                <!-- Horaires et Informations -->
+                <div style="background: white; padding: 50px; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.1); border: 2px solid rgba(78, 205, 196, 0.15);">
+                    <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1)); padding: 35px; border-radius: 20px;">
+                        <div style="display: flex; align-items: start; gap: 20px; margin-bottom: 25px;">
+                            <span style="font-size: 3rem; flex-shrink: 0;">📅</span>
+                            <div>
+                                <strong style="color: var(--dark); font-size: 1.2rem; display: block; margin-bottom: 10px;">Horaires du séjour :</strong>
+                                <p style="color: #666; font-size: 1rem; line-height: 1.8; margin: 0;">
+                                    <strong>Arrivée :</strong> Dimanche à partir de 16h (inclus dans le tarif)<br>
+                                    <strong>Séjour :</strong> Du lundi au vendredi<br>
+                                    <strong>Départ :</strong> Vendredi à 16h après le goûter
+                                </p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 20px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 25px;">
+                            <span style="font-size: 3rem; flex-shrink: 0;">✨</span>
+                            <div>
+                                <strong style="color: var(--dark); font-size: 1.2rem; display: block; margin-bottom: 10px;">À noter :</strong>
+                                <p style="color: #666; font-size: 1rem; line-height: 1.8; margin: 0;">
+                                    Les activités s'adaptent en fonction de l'âge des enfants, des saisons, de la météo et des besoins individuels. Notre approche reste flexible et bienveillante.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ATELIERS HEBDOMADAIRES ===== -->
+    <section class="section ateliers-section-bg" style="background: white; padding: 80px 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <div style="display: inline-block; background: linear-gradient(135deg, rgba(255, 179, 142, 0.15), rgba(181, 232, 224, 0.15)); padding: 8px 20px; border-radius: 50px; margin-bottom: 20px;">
+                    <span style="color: var(--primary-color); font-weight: 600; font-size: 0.95rem;">📅 RENDEZ-VOUS RÉGULIERS</span>
+                </div>
+                <h2 class="section-title-center">Nos Ateliers Hebdomadaires</h2>
+                <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 15px; font-size: 1.1rem; line-height: 1.8;">
+                    Nos ateliers sont pensés pour accompagner les enfants et les familles vers plus de sérénité, de confiance et de joie au quotidien.
+                </p>
+                <p class="section-subtitle" style="max-width: 800px; margin: 0 auto; font-size: 1.05rem; font-style: italic; color: #666;">
+                    Des instants à vivre pleinement, dans un cadre doux, ludique et bienveillant.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; margin-bottom: 50px;">
+                
+                <!-- Ateliers E&V Solo du Mercredi -->
+                <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.08), rgba(255, 217, 61, 0.08)); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 3px solid rgba(255, 140, 66, 0.3); transition: all 0.3s;">
+                    <div style="background: #FF8C42; width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(255, 140, 66, 0.3);">
+                        <span style="font-size: 2.2rem;">🎨</span>
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 15px; color: #1A1A2E;">
+                        E&V Solo (2h)
+                    </h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px;">
+                        Des moments rien qu'à eux pour s'éveiller, bouger, créer et se détendre. Les enfants explorent leurs émotions et leur imaginaire dans un cadre bienveillant et ludique.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #666; margin-bottom: 20px; padding: 15px; background: rgba(255, 140, 66, 0.1); border-radius: 15px;">
+                        <strong style="color: #FF8C42;">📅 <span class="atelier-solo-jour">Mercredi et/ou Samedi (2h)</span></strong>
+                    </p>
+                    <a href="reserver-atelier.html" style="display: inline-block; background: linear-gradient(135deg, #FF8C42, #4ECDC4); color: white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3); width: 100%; text-align: center; transition: all 0.3s;">
+                        En savoir plus
+                    </a>
+                </div>
+                
+                <!-- Ateliers E&V Duo du Samedi -->
+                <div style="background: linear-gradient(135deg, rgba(181, 232, 224, 0.08), rgba(213, 181, 232, 0.08)); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 3px solid rgba(181, 232, 224, 0.3); transition: all 0.3s;">
+                    <div style="background: #4ECDC4; width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(181, 232, 224, 0.3);">
+                        <span style="font-size: 2.2rem;">👨‍👩‍👧</span>
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 15px; color: #1A1A2E;">
+                        E&V Duo (2h)
+                    </h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px;">
+                        Un instant complice à partager entre parent et enfant pour se reconnecter, renforcer les liens et savourer la joie d'être ensemble.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #666; margin-bottom: 20px; padding: 15px; background: rgba(78, 205, 196, 0.1); border-radius: 15px;">
+                        <strong style="color: #4ECDC4;">📅 <span class="atelier-duo-jour">Mercredi et/ou Samedi (2h)</span></strong>
+                    </p>
+                    <a href="reserver-atelier.html" style="display: inline-block; background: linear-gradient(135deg, #4ECDC4, #A78BFA); color: white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 8px 25px rgba(181, 232, 224, 0.3); width: 100%; text-align: center; transition: all 0.3s;">
+                        En savoir plus
+                    </a>
+                </div>
+
+                <!-- Ateliers MMM Juniors -->
+                <div style="background: linear-gradient(135deg, rgba(197, 168, 224, 0.08), rgba(255, 214, 153, 0.08)); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 3px solid rgba(197, 168, 224, 0.3); transition: all 0.3s;">
+                    <div style="background: white; width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(197, 168, 224, 0.3); padding: 8px;">
+                        <img src="images/Logo MMM.png" alt="Logo MMM" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 15px; color: #1A1A2E;">
+                        Mon Moment Magique MMM Junior (1h30)
+                    </h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #666; margin-bottom: 20px;">
+                        Les rituels MMM : une bulle de bien-être pour apprendre à se recentrer, respirer et s'apaiser. Les enfants repartent avec des outils simples pour cultiver la sérénité au quotidien.
+                    </p>
+                    <div style="font-size: 0.9rem; line-height: 1.7; color: #666; margin-bottom: 20px; padding: 15px; background: rgba(197, 168, 224, 0.1); border-radius: 15px;">
+                        <p style="margin-bottom: 10px; font-style: italic; color: #A78BFA; font-weight: 500;">🌟 Jusqu'à 2x par semaine (1h30)</p>
+                        <p style="margin: 0; font-size: 0.85rem;"><strong>MMM</strong> (Mon Moment Magique) : 1ère marque francophone d'ateliers bien-être avec <strong>1 000 000 de participants</strong></p>
+                    </div>
+                    <a href="https://www.monmomentmagique.com/les-ateliers/?type=26" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: linear-gradient(135deg, #A78BFA, #B565D8); color: white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; box-shadow: 0 8px 25px rgba(197, 168, 224, 0.3); width: 100%; text-align: center; transition: all 0.3s;">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LIEU ===== -->
+    <section id="lieu" class="section">
+        <div class="container">
+            <h2 class="section-title-center">Notre Lieu Magique</h2>
+            <p class="section-subtitle">
+                Un cadre naturel et apaisant à Limoux, dans l'Aude. Nos dômes géodésiques offrent un espace unique pour se ressourcer en famille.
+            </p>
+            
+            <!-- Note modèles 3D -->
+            <div id="note-3d-container" style="text-align: center; margin-bottom: 30px;">
+                <span id="note-3d" style="display: inline-block; background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(78, 205, 196, 0.15)); padding: 12px 25px; border-radius: 50px; font-size: 0.95rem; color: #666; border: 1px dashed rgba(167, 139, 250, 0.4);">
+                    🎨 <em>Visualisations 3D du projet - Construction en cours</em>
+                </span>
+            </div>
+            
+            <div class="lieu-gallery">
+                <div class="gallery-card" onclick="openDomeLightbox(document.getElementById('img-dome1').src, 'Dômes Géodésiques')" style="cursor: pointer;">
+                    <img id="img-dome1" src="images/domes.png" alt="Dômes Géodésiques" onerror="this.src='https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=600'">
+                    <div class="gallery-overlay">
+                        <h4>Dômes Géodésiques</h4>
+                        <p>Architecture en harmonie avec la nature</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-card" onclick="openDomeLightbox(document.getElementById('img-dome2').src, 'Espace Intérieur')" style="cursor: pointer;">
+                    <img id="img-dome2" src="images/domes2.png" alt="Espace Intérieur" onerror="this.src='https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600'">
+                    <div class="gallery-overlay">
+                        <h4>Espace Intérieur</h4>
+                        <p>Un cocon de bien-être baigné de lumière</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-card" onclick="openDomeLightbox(document.getElementById('img-dome3').src, 'Vue d\'Ensemble')" style="cursor: pointer;">
+                    <img id="img-dome3" src="images/domes3.png" alt="Vue d'Ensemble" onerror="this.src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'">
+                    <div class="gallery-overlay">
+                        <h4>Vue d'Ensemble</h4>
+                        <p>Un village d'éveil dans la verdure</p>
+                        <span style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px; display: block;">🔍 Cliquer pour agrandir</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lightbox pour les dômes -->
+    <div id="domeLightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; padding: 20px;">
+        <button onclick="closeDomeLightbox()" style="position: absolute; top: 20px; right: 30px; background: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; z-index: 10001; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">✕</button>
+        <div style="max-width: 95%; max-height: 90%; text-align: center;">
+            <img id="domeLightboxImg" src="" alt="" style="max-width: 100%; max-height: 80vh; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <p id="domeLightboxCaption" style="color: white; font-size: 1.2rem; margin-top: 20px; font-weight: 500;"></p>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 10px;">🎨 Modèle 3D - Projet en cours de construction</p>
+        </div>
+    </div>
+
+    <!-- ===== AVIS CLIENTS ===== -->
+    <section id="avis" class="section" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title-center">Ils en parlent mieux que nous</h2>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier, ils étaient à fond dans leurs créations. Et nous, les parents, on a pu les accompagner puis papoter entre nous. Bref, c'était une belle parenthèse créative et conviviale. J'ai kiffé ! ✨"
+                    </p>
+                    <div class="review-author">— Mariona, maman de Chloé (4 ans) et Sophie (5 ans)</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun. Organisation, sens du détail, tout y était. Nous avons hâte de pouvoir tester un autre atelier à ses côtés ! À venir tester rapidement et sans modération."
+                    </p>
+                    <div class="review-author">— Carine, maman de Charlotte (5 ans)</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles. Un grand merci à Astrid pour son accueil, ses explications, son énergie et sa bonne humeur. Dès notre arrivée, nous sommes directement plongés dans le thème grâce à la décoration et la mise en scène."
+                    </p>
+                    <div class="review-author">— Agathe, maman de Charlie (8 ans) et Marceau (5 ans)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section" style="background: linear-gradient(180deg, #fff 0%, rgba(255,140,66,0.05) 50%, rgba(78,205,196,0.05) 100%);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="display: inline-block; background: linear-gradient(135deg, rgba(255,140,66,0.15), rgba(78,205,196,0.15)); padding: 10px 25px; border-radius: 50px; font-size: 0.95rem; color: #FF8C42; font-weight: 600;">
+                    ❓ FAQ
+                </span>
+            </div>
+            <h2 class="section-title-center" style="margin-bottom: 15px;">Questions Fréquentes</h2>
+            <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Tout ce que vous devez savoir avant de réserver votre séjour
+            </p>
+            
+            <div class="faq-container">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>À partir de quel âge peut-on venir ?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        Nos séjours sont adaptés aux enfants de 4 à 12 ans. Chaque activité est pensée pour respecter le développement de chaque tranche d'âge.
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>Faut-il rester avec mon enfant pendant les activités ?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        Certaines activités sont en duo parent-enfant, d'autres sont réservées aux enfants seuls. Nous proposons les deux formules pour favoriser l'autonomie et renforcer le lien.
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>Que comprend le tarif du séjour ?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        Tous nos séjours sont en formule tout inclus. Le tarif de réservation comprend l'hébergement, les ateliers quotidiens et l'encadrement. Les repas sont à régler directement sur place au moment de l'enregistrement.
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>Comment se rendre sur le site Éveil & Vous ?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        Le lieu se situe dans la ville de Limoux, à 20 minutes de Carcassonne et à 1 heure de Toulouse. Un accès par le train est possible en gare de Limoux. En revanche, il est nécessaire d'être véhiculé pour rejoindre le site et y séjourner.
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>Combien de familles par séjour ?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        De 4 à 7 familles et de 4 à 14 enfants.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ANNIVERSAIRES & PRIVATISATION ===== -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(255, 179, 142, 0.05), rgba(181, 232, 224, 0.05)); padding: 80px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+                
+                <!-- Anniversaires -->
+                <div style="background: white; padding: 50px 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); text-align: center; border: 3px solid rgba(255, 140, 66, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 70px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)';">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #FF8C42, #FFB366); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 15px 35px rgba(255, 140, 66, 0.3);">
+                        <span style="font-size: 3.5rem;">🎂</span>
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 20px; color: #1A1A2E;">
+                        Les Anniversaires E&V
+                    </h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 30px;">
+                        Venez fêter l'anniversaire de votre enfant chez Éveil & Vous ! Une expérience unique et mémorable avec des activités d'éveil ludiques et créatives.
+                    </p>
+                    <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(255, 179, 102, 0.05)); padding: 25px; border-radius: 20px; margin-bottom: 30px;">
+                        <p style="font-size: 1.2rem; color: #FF8C42; font-weight: 700; margin-bottom: 10px;" class="anniversaire-prix">
+                            210€ TTC
+                        </p>
+                        <p style="font-size: 0.95rem; line-height: 1.7; color: #666;" class="anniversaire-details">
+                            2h30 d'animation • Goûter inclus (gâteau + boissons) • 10 enfants max
+                        </p>
+                    </div>
+                    <a href="contact.html" style="display: inline-block; background: linear-gradient(135deg, #FF8C42, #FFB366); color: white; padding: 16px 35px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.05rem; box-shadow: 0 10px 25px rgba(255, 140, 66, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(255, 140, 66, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(255, 140, 66, 0.3)';">
+                        📧 Contactez-nous pour plus d'infos
+                    </a>
+                </div>
+
+                <!-- Privatisation -->
+                <div style="background: white; padding: 50px 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); text-align: center; border: 3px solid rgba(78, 205, 196, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 70px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)';">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #4ECDC4, #5DD9D1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 15px 35px rgba(78, 205, 196, 0.3);">
+                        <span style="font-size: 3.5rem;">🏢</span>
+                    </div>
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 20px; color: #1A1A2E;">
+                        Privatisation du Lieu
+                    </h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 30px;">
+                        Organisez vos événements professionnels dans un cadre naturel et apaisant. Séminaires, team building, retraites... tout est possible !
+                    </p>
+                    <div style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(93, 217, 209, 0.05)); padding: 25px; border-radius: 20px; margin-bottom: 30px;">
+                        <p style="font-size: 1rem; color: #666; margin-bottom: 15px;">
+                            <strong style="color: #4ECDC4;">🌿 Espace privilégié</strong>
+                        </p>
+                        <p style="font-size: 0.95rem; line-height: 1.7; color: #666;">
+                            Séminaires • Team building • Retraites bien-être • Événements sur mesure
+                        </p>
+                    </div>
+                    <a href="contact.html" style="display: inline-block; background: linear-gradient(135deg, #4ECDC4, #5DD9D1); color: white; padding: 16px 35px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.05rem; box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(78, 205, 196, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(78, 205, 196, 0.3)';">
+                        📧 Demander un devis
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Prêts pour un séjour qui apaise toute la famille ?</h2>
+            <p>Séjours en nature, activités guidées, rituels simples à ramener à la maison. Groupes limités.</p>
+            
+            <ul class="cta-bullets">
+                <li><i class="fas fa-check-circle"></i> Respiration 4-4 & routine du soir</li>
+                <li><i class="fas fa-check-circle"></i> Jeux d'attention & vocabulaire des émotions</li>
+                <li><i class="fas fa-check-circle"></i> Activités nature adaptées à l'âge</li>
+            </ul>
+            
+            <div class="cta-buttons">
+                <a href="reservation.html" class="btn" style="background: white; color: var(--primary); padding: 15px 40px; font-size: 1.05rem;">Je réserve une place</a>
+                <a href="#avis" class="btn" style="background: transparent; border: 2px solid white; color: white; padding: 15px 40px; font-size: 1.05rem;">Voir les avis</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h3 class="footer-brand">Éveil & Vous</h3>
+                    <p class="footer-tagline">Éveil en famille au milieu de la nature</p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Pages</h3>
+                    <p><a href="about.html">À Propos</a></p>
+                    <p><a href="activites.html">Activités</a></p>
+                    <p><a href="reservation.html">Réserver</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Contact</h3>
+                    <p class="footer-contact-info">Limoux, Aude (11)<br>contact@eveiletvous.org</p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100090154845987" class="footer-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/eveiletvous.11300/" class="footer-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"><p class="footer-copyright">&copy; 2025 Éveil & Vous | <a href="cgv.html" style="color: inherit; text-decoration: none;">CGV</a> | <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions légales</a></p></div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/cookies.js"></script>
+    
+    <!-- Firebase pour contenu dynamique -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Charger le contenu dynamique depuis Firebase
+        (function() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
+                authDomain: "eveil-et-vous.firebaseapp.com",
+                projectId: "eveil-et-vous",
+                storageBucket: "eveil-et-vous.firebasestorage.app",
+                messagingSenderId: "1059815739498",
+                appId: "1:1059815739498:web:0ad0c624266a46521c33f9"
+            };
+            
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            
+            // Charger le contenu de la page d'accueil
+            db.collection('content').doc('homepage').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    
+                    // Hero Title
+                    if (data.heroTitle) {
+                        const heroTitle = document.querySelector('.hero-text h1');
+                        if (heroTitle) heroTitle.textContent = data.heroTitle;
+                    }
+                    
+                    // Hero Subtitle
+                    if (data.heroSubtitle) {
+                        const heroSubtitle = document.querySelector('.hero-text .subtitle');
+                        if (heroSubtitle) heroSubtitle.textContent = data.heroSubtitle;
+                    }
+                    
+                    // Hero Bullets
+                    if (data.heroBullets && data.heroBullets.length > 0) {
+                        const bulletsList = document.querySelector('.hero-bullets');
+                        if (bulletsList) {
+                            bulletsList.innerHTML = data.heroBullets.map(bullet => {
+                                // Séparer le texte en gras et normal si contient ":"
+                                const parts = bullet.split(':');
+                                if (parts.length > 1) {
+                                    return `<li><strong>${parts[0]}:</strong>${parts.slice(1).join(':')}</li>`;
+                                }
+                                return `<li>${bullet}</li>`;
+                            }).join('');
+                        }
+                    }
+                    
+                    // Concept Title
+                    if (data.conceptTitle) {
+                        const conceptTitle = document.querySelector('#concept .section-title-center');
+                        if (conceptTitle) conceptTitle.textContent = data.conceptTitle;
+                    }
+                    
+                    // Concept Subtitle
+                    if (data.conceptSubtitle) {
+                        const conceptSubtitle = document.querySelector('#concept .section-subtitle');
+                        if (conceptSubtitle) conceptSubtitle.textContent = data.conceptSubtitle;
+                    }
+                    
+                    // Concept Slogan
+                    if (data.conceptSlogan) {
+                        const slogan = document.querySelector('#concept p[style*="font-size: 1.5rem"]');
+                        if (slogan) slogan.textContent = data.conceptSlogan;
+                    }
+                    
+                    // Testimonial
+                    if (data.testimonialText) {
+                        const testimonialText = document.querySelector('.testimonial-text');
+                        if (testimonialText) testimonialText.textContent = '"' + data.testimonialText + '"';
+                    }
+                    
+                    if (data.testimonialAuthor) {
+                        const testimonialAuthor = document.querySelector('.testimonial-author');
+                        if (testimonialAuthor) testimonialAuthor.textContent = data.testimonialAuthor;
+                    }
+                    
+                    // Reviews
+                    if (data.reviews && data.reviews.length > 0) {
+                        const reviewsGrid = document.querySelector('.reviews-grid');
+                        if (reviewsGrid) {
+                            reviewsGrid.innerHTML = data.reviews.map(review => `
+                                <div class="review-card">
+                                    <div class="review-stars">★★★★★</div>
+                                    <p class="review-text">"${review.text}"</p>
+                                    <div class="review-author">${review.author}</div>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                }
+            }).catch(err => console.log('Contenu homepage par défaut'));
+            
+            // Charger les dates des ateliers
+            db.collection('content').doc('ateliers').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    
+                    // E&V Solo
+                    const soloJour = document.querySelector('.atelier-solo-jour');
+                    const soloHoraire = document.querySelector('.atelier-solo-horaire');
+                    if (soloJour && data.soloJour) soloJour.textContent = data.soloJour;
+                    if (soloHoraire && data.soloHoraire) soloHoraire.textContent = data.soloHoraire;
+                    
+                    // E&V Duo
+                    const duoJour = document.querySelector('.atelier-duo-jour');
+                    const duoHoraire = document.querySelector('.atelier-duo-horaire');
+                    if (duoJour && data.duoJour) duoJour.textContent = data.duoJour;
+                    if (duoHoraire && data.duoHoraire) duoHoraire.textContent = data.duoHoraire;
+                    
+                    // Anniversaires
+                    const anniversairePrix = document.querySelector('.anniversaire-prix');
+                    const anniversaireDetails = document.querySelector('.anniversaire-details');
+                    if (anniversairePrix && data.anniversairePrix) anniversairePrix.textContent = data.anniversairePrix;
+                    if (anniversaireDetails && data.anniversaireDetails) anniversaireDetails.textContent = data.anniversaireDetails;
+                }
+            }).catch(err => console.log('Dates ateliers par défaut'));
+            
+            // Charger la bannière
+            db.collection('content').doc('banniere').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const banniereSection = document.querySelector('[style*="linear-gradient(135deg, #FF8C42"]');
+                    if (banniereSection) {
+                        const annivSpan = banniereSection.querySelectorAll('span[style*="font-size: 1.8rem"]');
+                        const textSpans = banniereSection.querySelectorAll('span[style*="font-weight: 600"]');
+                        const btn = banniereSection.querySelector('a');
+                        
+                        if (annivSpan[0] && data.annivEmoji) annivSpan[0].textContent = data.annivEmoji;
+                        if (annivSpan[1] && data.privatEmoji) annivSpan[1].textContent = data.privatEmoji;
+                        if (textSpans[0] && data.annivText) textSpans[0].textContent = data.annivText;
+                        if (textSpans[1] && data.privatText) textSpans[1].textContent = data.privatText;
+                        if (btn && data.btnText) btn.textContent = data.btnText;
+                        if (btn && data.btnLink) btn.href = data.btnLink;
+                    }
+                }
+            }).catch(err => console.log('Bannière par défaut'));
+            
+            // Charger les piliers
+            db.collection('content').doc('piliers').get().then(doc => {
+                if (doc.exists && doc.data().items) {
+                    const piliers = doc.data().items;
+                    const pillarCards = document.querySelectorAll('.pillar-card');
+                    
+                    piliers.forEach((pilier, i) => {
+                        if (pillarCards[i]) {
+                            const icon = pillarCards[i].querySelector('.pillar-icon');
+                            const title = pillarCards[i].querySelector('h3');
+                            const desc = pillarCards[i].querySelector('p');
+                            const examples = pillarCards[i].querySelector('.pillar-examples');
+                            
+                            if (icon && pilier.emoji) icon.textContent = pilier.emoji;
+                            if (title && pilier.title) title.textContent = pilier.title;
+                            if (desc && pilier.description) desc.textContent = pilier.description;
+                            if (examples && pilier.activitesLabel && pilier.activites) {
+                                examples.innerHTML = `<strong>${pilier.activitesLabel}</strong><p>${pilier.activites}</p>`;
+                            }
+                        }
+                    });
+                }
+            }).catch(err => console.log('Piliers par défaut'));
+            
+            // Charger le lieu
+            db.collection('content').doc('lieu').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const lieuSection = document.querySelector('#lieu');
+                    
+                    if (lieuSection) {
+                        const title = lieuSection.querySelector('.section-title-center');
+                        const subtitle = lieuSection.querySelector('.section-subtitle');
+                        
+                        if (title && data.title) title.textContent = data.title;
+                        if (subtitle && data.subtitle) subtitle.textContent = data.subtitle;
+                        
+                        if (data.images) {
+                            const galleryCards = lieuSection.querySelectorAll('.gallery-card');
+                            data.images.forEach((img, i) => {
+                                if (galleryCards[i]) {
+                                    const h4 = galleryCards[i].querySelector('h4');
+                                    const p = galleryCards[i].querySelector('p');
+                                    if (h4 && img.title) h4.textContent = img.title;
+                                    if (p && img.desc) p.textContent = img.desc;
+                                }
+                            });
+                        }
+                    }
+                }
+            }).catch(err => console.log('Lieu par défaut'));
+            
+            // Charger la note 3D (peut être masquée)
+            db.collection('settings').doc('note-3d').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const noteContainer = document.getElementById('note-3d-container');
+                    const noteSpan = document.getElementById('note-3d');
+                    
+                    if (data.visible === false) {
+                        // Masquer complètement
+                        if (noteContainer) noteContainer.style.display = 'none';
+                    } else if (data.text && noteSpan) {
+                        // Afficher avec texte personnalisé
+                        noteSpan.innerHTML = data.text;
+                    }
+                }
+            }).catch(err => console.log('Note 3D par défaut'));
+            
+            // Charger les étapes
+            db.collection('content').doc('etapes').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const etapesSection = document.querySelector('section[style*="rgba(78, 205, 196, 0.08)"]');
+                    
+                    if (etapesSection) {
+                        const title = etapesSection.querySelector('h2');
+                        const subtitle = etapesSection.querySelector('p[style*="font-size: 1.3rem"]');
+                        
+                        if (title && data.title) title.textContent = data.title;
+                        if (subtitle && data.subtitle) subtitle.textContent = data.subtitle;
+                        
+                        if (data.items) {
+                            const etapeCards = etapesSection.querySelectorAll('[style*="min-width: 280px"]');
+                            data.items.forEach((etape, i) => {
+                                if (etapeCards[i]) {
+                                    const h3 = etapeCards[i].querySelector('h3');
+                                    const p = etapeCards[i].querySelector('p[style*="font-size: 1.05rem"]');
+                                    if (h3 && etape.title) h3.textContent = etape.title;
+                                    if (p && etape.description) p.innerHTML = etape.description;
+                                }
+                            });
+                        }
+                    }
+                }
+            }).catch(err => console.log('Étapes par défaut'));
+            
+            // Charger la FAQ
+            db.collection('content').doc('faq').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const faqSection = document.querySelector('.faq-container');
+                    
+                    if (faqSection && data.items) {
+                        const titleSection = faqSection.parentElement.querySelector('.section-title-center');
+                        if (titleSection && data.title) titleSection.textContent = data.title;
+                        
+                        faqSection.innerHTML = data.items.map(faq => `
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>${faq.question}</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="faq-answer">${faq.answer}</div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            }).catch(err => console.log('FAQ par défaut'));
+            
+            // Charger le footer
+            db.collection('content').doc('footer').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const footer = document.querySelector('footer');
+                    
+                    if (footer) {
+                        const widgets = footer.querySelectorAll('.footer-widget');
+                        
+                        // Premier widget - Marque
+                        if (widgets[0]) {
+                            const h3 = widgets[0].querySelector('h3');
+                            const p = widgets[0].querySelector('p');
+                            if (h3 && data.brand) h3.textContent = data.brand;
+                            if (p && data.tagline) p.textContent = data.tagline;
+                        }
+                        
+                        // Troisième widget - Contact
+                        if (widgets[2]) {
+                            const p = widgets[2].querySelector('p');
+                            if (p && (data.location || data.email)) {
+                                p.innerHTML = `${data.location || 'Limoux, Aude (11)'}<br>${data.email || 'contact@eveiletvous.org'}`;
+                            }
+                        }
+                        
+                        // Quatrième widget - Réseaux sociaux
+                        if (widgets[3]) {
+                            const socialLinks = widgets[3].querySelector('.social-links');
+                            if (socialLinks) {
+                                const fbLink = socialLinks.querySelector('a:first-child');
+                                const igLink = socialLinks.querySelector('a:last-child');
+                                if (fbLink && data.facebook) fbLink.href = data.facebook;
+                                if (igLink && data.instagram) igLink.href = data.instagram;
+                            }
+                        }
+                        
+                        // Copyright
+                        const copyright = footer.querySelector('.footer-bottom p');
+                        if (copyright && data.copyright) {
+                            copyright.innerHTML = `${data.copyright} | <a href="cgv.html" style="color: inherit; text-decoration: none;">CGV</a> | <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions légales</a>`;
+                        }
+                    }
+                }
+            }).catch(err => console.log('Footer par défaut'));
+            
+            // Charger les images personnalisées de l'accueil
+            db.collection('settings').doc('homepage-images').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    
+                    // Image Hero
+                    if (data.hero) {
+                        const heroImg = document.getElementById('img-hero');
+                        if (heroImg) heroImg.src = data.hero;
+                    }
+                    
+                    // Images Dômes
+                    if (data.dome1) {
+                        const dome1Img = document.getElementById('img-dome1');
+                        if (dome1Img) dome1Img.src = data.dome1;
+                    }
+                    if (data.dome2) {
+                        const dome2Img = document.getElementById('img-dome2');
+                        if (dome2Img) dome2Img.src = data.dome2;
+                    }
+                    if (data.dome3) {
+                        const dome3Img = document.getElementById('img-dome3');
+                        if (dome3Img) dome3Img.src = data.dome3;
+                    }
+                }
+            }).catch(err => console.log('Images accueil par défaut'));
+        })();
+        
+        // =============================================
+        // FAQ ACCORDÉON
+        // =============================================
+        
+        function toggleFaq(item) {
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+            
+            // Fermer tous les autres
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+                faq.querySelector('.faq-answer').style.display = 'none';
+            });
+            
+            // Ouvrir celui-ci si il était fermé
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.display = 'block';
+            }
+        }
+        
+        // =============================================
+        // LIGHTBOX DÔMES
+        // =============================================
+        
+        function openDomeLightbox(imgSrc, caption) {
+            const lightbox = document.getElementById('domeLightbox');
+            const img = document.getElementById('domeLightboxImg');
+            const captionEl = document.getElementById('domeLightboxCaption');
+            
+            img.src = imgSrc;
+            captionEl.textContent = caption;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDomeLightbox() {
+            const lightbox = document.getElementById('domeLightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Fermer avec Escape ou clic en dehors
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDomeLightbox();
+        });
+        
+        document.getElementById('domeLightbox')?.addEventListener('click', (e) => {
+            if (e.target.id === 'domeLightbox') closeDomeLightbox();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez notre philosophie et notre expérience. Formée Montessori et ambassadrice Mon Moment Magique, j'accompagne l'éveil des enfants à Limoux dans un cadre naturel bienveillant.">
+    <title>À Propos | Éveil & Vous</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="Éveil & Vous" style="height: 50px; width: auto;">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="about.html" style="color: var(--primary);">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
+                </nav>
+                <button class="menu-toggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%); padding: 180px 0 100px; position: relative; overflow: hidden;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #FF8C42, #4ECDC4); padding: 12px 30px; border-radius: 50px; margin-bottom: 30px;">
+                    <span style="color: white; font-weight: 600; font-size: 1rem; letter-spacing: 1px;">NOTRE HISTOIRE</span>
+                </div>
+                <h1 style="font-family: var(--font-heading); font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 30px; color: var(--dark); line-height: 1.2;">
+                    Une passion pour l'éveil <span style="background: linear-gradient(135deg, #FF8C42, #4ECDC4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">de vos enfants</span>
+                </h1>
+                <p style="font-size: 1.3rem; line-height: 1.8; color: #666; max-width: 700px; margin: 0 auto;">
+                    Découvrez la philosophie et l'expérience qui guident notre approche bienveillante de l'accompagnement familial
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section style="background: linear-gradient(135deg, #FF8C42, #FFB366); padding: 80px 0; position: relative;">
+        <div class="container">
+            <div style="max-width: 900px; margin: 0 auto; text-align: center; position: relative;">
+                <div style="font-size: 5rem; color: rgba(255,255,255,0.2); position: absolute; top: -30px; left: 50px; font-family: Georgia, serif;">"</div>
+                <p style="font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.7; color: white; font-style: italic; margin-bottom: 30px; position: relative; z-index: 1;">
+                    Les enfants sont des êtres extraordinaires avec un potentiel immense. Ils ont le pouvoir d'apporter magie et lumière dans leur vie.
+                </p>
+                <div style="width: 60px; height: 4px; background: white; margin: 0 auto 25px; border-radius: 2px; opacity: 0.8;"></div>
+                <p style="font-size: 1.2rem; color: rgba(255,255,255,0.95); font-weight: 600;">
+                    Notre mission : Accompagner leur éveil à eux-mêmes, à leur être profond
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="section" style="background: #FAFBFC;">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--dark);">
+                        Qui suis-je ?
+                    </h2>
+                    <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto;">
+                        Un parcours guidé par la passion d'accompagner les enfants dans leur épanouissement
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px;">
+                    
+                    <!-- Experience Card -->
+                    <div style="background: linear-gradient(135deg, #4ECDC4, #5DD9D1); padding: 45px; border-radius: 30px; box-shadow: 0 20px 50px rgba(78, 205, 196, 0.3); transition: transform 0.3s; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -20px; right: -20px; font-size: 10rem; opacity: 0.1;">👩‍🏫</div>
+                        <div style="background: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                            <span style="font-size: 2.2rem;">💼</span>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px; color: white;">
+                            Mon Parcours
+                        </h3>
+                        <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.95); margin-bottom: 20px;">
+                            Après <strong>15 années dans la finance</strong>, j'ai choisi de suivre une nouvelle voie à la naissance de mon troisième enfant : <strong>Éveiller les enfants</strong>.
+                        </p>
+                        <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.95);">
+                            Maman de 3 enfants, je partage aujourd'hui mon expérience de vie familiale et mes formations pour accompagner d'autres familles.
+                        </p>
+                    </div>
+
+                    <!-- Qualifications Card -->
+                    <div style="background: white; padding: 45px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 2px solid #f0f0f0;">
+                        <div style="background: linear-gradient(135deg, #FF8C42, #FFB366); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(255,140,66,0.3);">
+                            <span style="font-size: 2.2rem;">✨</span>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 25px; color: var(--dark);">
+                            Mes Certifications
+                        </h3>
+                        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <span style="color: #FF8C42; font-size: 1.2rem;">✓</span>
+                                <span style="color: var(--dark); font-size: 1rem;"><strong>Pédagogie Montessori</strong> - Formation certifiée</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <span style="color: #4ECDC4; font-size: 1.2rem;">✓</span>
+                                <span style="color: var(--dark); font-size: 1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><strong>Ambassadrice Mon Moment Magique</strong> <img src="images/Logo MMM.png" alt="MMM" style="height: 22px;"></span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <span style="color: #FFE66D; font-size: 1.2rem;">✓</span>
+                                <span style="color: var(--dark); font-size: 1rem;"><strong>Animatrice Ateliers d'Éveil</strong></span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <span style="color: #A78BFA; font-size: 1.2rem;">✓</span>
+                                <span style="color: var(--dark); font-size: 1rem;"><strong>Sommet "Vivre les émotions en famille"</strong> - 2024 & 2025</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <span style="color: #FF8F9C; font-size: 1.2rem;">✓</span>
+                                <span style="color: var(--dark); font-size: 1rem;"><strong>Sommet "Tout ce qu'on n'apprend pas à l'école"</strong> - 2023</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectifs Section -->
+    <section class="section">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--dark);">
+                        Nos Objectifs
+                    </h2>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        Ce que nous vous proposons de vivre ensemble
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(255, 230, 109, 0.15), rgba(255, 140, 66, 0.15)); padding: 60px; border-radius: 35px; border: 3px solid rgba(255, 140, 66, 0.2);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
+                        
+                        <div>
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FF8C42, #FFB366); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(255, 140, 66, 0.3);">
+                                <span style="font-size: 2.5rem;">🎯</span>
+                            </div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 15px; color: var(--dark);">
+                                Énergie & Bonnes Ondes
+                            </h3>
+                            <p style="font-size: 1.05rem; line-height: 1.8; color: #666;">
+                                Faire le plein d'énergie et de bonnes ondes, en vivant l'expérience unique d'ateliers avec vos enfants, en participant à leur éveil.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4ECDC4, #5DD9D1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);">
+                                <span style="font-size: 2.5rem;">❤️</span>
+                            </div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 15px; color: var(--dark);">
+                                Moments en Famille
+                            </h3>
+                            <p style="font-size: 1.05rem; line-height: 1.8; color: #666;">
+                                Créer des souvenirs de moments uniques partagés en famille, dans un cadre bienveillant et propice aux échanges authentiques.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FFE66D, #FFA07A); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(255, 230, 109, 0.3);">
+                                <span style="font-size: 2.5rem;">🔑</span>
+                            </div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 15px; color: var(--dark);">
+                                Outils pour le Quotidien
+                            </h3>
+                            <p style="font-size: 1.05rem; line-height: 1.8; color: #666;">
+                                Repartir avec quelques clés pratiques pour vous aider à poursuivre cet éveil dans votre quotidien familial, à votre rythme.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Le Lieu Section -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.08), rgba(255, 140, 66, 0.08));">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--dark);">
+                        Le Lieu d'Accueil
+                    </h2>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        Un cadre naturel et apaisant pour votre séjour
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 50px; border-radius: 35px; box-shadow: 0 25px 60px rgba(0,0,0,0.1);">
+                    
+                    <div style="background: linear-gradient(135deg, #4ECDC4, #5DD9D1); padding: 40px; border-radius: 25px; margin-bottom: 40px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -30px; right: -30px; font-size: 12rem; opacity: 0.1;">🏡</div>
+                        <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 20px; color: white; position: relative; z-index: 1;">
+                            Un espace collectif chaleureux
+                        </h3>
+                        <div style="display: grid; gap: 20px; position: relative; z-index: 1;">
+                            <div style="display: flex; align-items: start; gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.2); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <span style="font-size: 1.5rem;">🎨</span>
+                                </div>
+                                <p style="color: rgba(255,255,255,0.95); font-size: 1.1rem; line-height: 1.7; padding-top: 8px;">
+                                    <strong>Salles d'activités</strong> équipées pour tous les ateliers d'éveil
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: start; gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.2); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <span style="font-size: 1.5rem;">📚</span>
+                                </div>
+                                <p style="color: rgba(255,255,255,0.95); font-size: 1.1rem; line-height: 1.7; padding-top: 8px;">
+                                    <strong>Salon de lecture</strong> cosy pour des moments calmes
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: start; gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.2); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <span style="font-size: 1.5rem;">🍽️</span>
+                                </div>
+                                <p style="color: rgba(255,255,255,0.95); font-size: 1.1rem; line-height: 1.7; padding-top: 8px;">
+                                    <strong>Espace restauration</strong> avec repas sains et équilibrés
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                        
+                        <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(255, 143, 163, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(255, 140, 66, 0.2);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">🌳</div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 15px; color: var(--dark);">
+                                Espace Extérieur
+                            </h4>
+                            <p style="font-size: 1.05rem; line-height: 1.7; color: #666;">
+                                Un grand espace extérieur avec potager pour se connecter à la nature et découvrir les cycles de vie.
+                            </p>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(255, 230, 109, 0.1), rgba(255, 160, 122, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(255, 230, 109, 0.3);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">🏕️</div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 15px; color: var(--dark);">
+                                Hébergement
+                            </h4>
+                            <p style="font-size: 1.05rem; line-height: 1.7; color: #666;">
+                                Dôme privatif pour votre famille (jusqu'à 2 adultes et 3 enfants), alliant confort et immersion nature.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nos Offres Section -->
+    <section class="section">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--dark);">
+                        Nos Offres
+                    </h2>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        Des séjours et ateliers pensés pour l'éveil de vos enfants et des familles
+                    </p>
+                </div>
+
+                <!-- Grille 2 colonnes : Séjours + Ateliers -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+                    
+                    <!-- SÉJOURS -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(78, 205, 196, 0.05)); padding: 40px; border-radius: 30px; border: 3px solid rgba(255, 140, 66, 0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.08);">
+                        <div style="display: flex; align-items: start; gap: 20px; margin-bottom: 30px;">
+                            <div style="background: linear-gradient(135deg, #FF8C42, #FFB366); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 15px 40px rgba(255, 140, 66, 0.3);">
+                                <span style="font-size: 2.5rem;">✨</span>
+                            </div>
+                            <div>
+                                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; margin-bottom: 10px; color: var(--dark);">
+                                    Séjours en famille
+                                </h3>
+                                <p style="font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 5px;">
+                                    7 jours / 6 nuits
+                                </p>
+                                <p style="font-size: 0.95rem; color: #666;">
+                                    Du dimanche 16h au vendredi 16h
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; gap: 15px; margin-bottom: 25px;">
+                            <div style="display: flex; align-items: start; gap: 12px;">
+                                <div style="background: linear-gradient(135deg, #4ECDC4, #5DD9D1); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <span style="color: white; font-size: 1.1rem;">👶</span>
+                                </div>
+                                <div>
+                                    <strong style="color: var(--dark); font-size: 0.95rem; display: block;">Pour qui ?</strong>
+                                    <span style="color: #666; font-size: 0.9rem;">Enfants de 4 à 12 ans</span>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; gap: 12px;">
+                                <div style="background: linear-gradient(135deg, #FFE66D, #FFA07A); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <span style="color: white; font-size: 1.1rem;">👥</span>
+                                </div>
+                                <div>
+                                    <strong style="color: var(--dark); font-size: 0.95rem; display: block;">Groupe</strong>
+                                    <span style="color: #666; font-size: 0.9rem;">8 à 12 enfants max</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+                            <h4 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 15px; color: var(--dark);">
+                                ✓ Inclus
+                            </h4>
+                            <ul style="list-style: none; padding: 0; display: grid; gap: 10px;">
+                                <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #666;">
+                                    <span style="color: var(--primary); font-size: 1rem;">✦</span>
+                                    Ateliers d'éveil quotidiens
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #666;">
+                                    <span style="color: var(--primary); font-size: 1rem;">✦</span>
+                                    Hébergement en dôme privatif
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #666;">
+                                    <span style="color: var(--primary); font-size: 1rem;">✦</span>
+                                    Pension complète
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #666;">
+                                    <span style="color: var(--primary); font-size: 1rem;">✦</span>
+                                    Accompagnement personnalisé
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #666;">
+                                    <span style="color: var(--primary); font-size: 1rem;">✦</span>
+                                    Accès potager & nature
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <a href="reservation.html" style="background: linear-gradient(135deg, #FF8C42, #4ECDC4); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.05rem; box-shadow: 0 10px 30px rgba(255, 140, 66, 0.3); display: inline-block; transition: transform 0.3s;">
+                                Réserver un séjour
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ATELIERS -->
+                    <div style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.05), rgba(167, 139, 250, 0.05)); padding: 40px; border-radius: 30px; border: 3px solid rgba(78, 205, 196, 0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.08);">
+                        <div style="display: flex; align-items: start; gap: 20px; margin-bottom: 30px;">
+                            <div style="background: linear-gradient(135deg, #4ECDC4, #5DD9D1); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 15px 40px rgba(78, 205, 196, 0.3);">
+                                <span style="font-size: 2.5rem;">🎨</span>
+                            </div>
+                            <div>
+                                <h3 style="font-family: var(--font-heading); font-size: 1.7rem; margin-bottom: 10px; color: var(--dark);">
+                                    Ateliers Hebdomadaires
+                                </h3>
+                                <p style="font-size: 1.1rem; color: #4ECDC4; font-weight: 700; margin-bottom: 5px;">
+                                    Toute l'année
+                                </p>
+                                <p style="font-size: 0.95rem; color: #666;">
+                                    Rendez-vous réguliers
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; gap: 20px; margin-bottom: 25px;">
+                            <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid rgba(255, 140, 66, 0.1);">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <div style="background: linear-gradient(135deg, #FF8C42, #FFB366); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: 1.1rem;">🎨</span>
+                                    </div>
+                                    <strong style="color: var(--dark); font-size: 1.05rem;">E&V Solo</strong>
+                                </div>
+                                <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
+                                    Mercredi et/ou Samedi (2h)<br>
+                                    Moments d'éveil pour les enfants
+                                </p>
+                            </div>
+
+                            <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid rgba(78, 205, 196, 0.1);">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <div style="background: linear-gradient(135deg, #4ECDC4, #5DD9D1); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <span style="color: white; font-size: 1.1rem;">👨‍👩‍👧</span>
+                                    </div>
+                                    <strong style="color: var(--dark); font-size: 1.05rem;">E&V Duo</strong>
+                                </div>
+                                <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
+                                    Mercredi et/ou Samedi (2h)<br>
+                                    Instant complice parent-enfant
+                                </p>
+                            </div>
+
+                            <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid rgba(167, 139, 250, 0.1);">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <div style="background: white; width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(167, 139, 250, 0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                        <img src="images/Logo MMM.png" alt="MMM" style="height: 24px; width: auto;">
+                                    </div>
+                                    <strong style="color: var(--dark); font-size: 1.05rem;">Mon Moment Magique Junior</strong>
+                                </div>
+                                <p style="color: #666; font-size: 0.85rem; line-height: 1.5;">
+                                    Jusqu'à 2x par semaine (1h30)<br>
+                                    Rituels pour cultiver la sérénité
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <a href="reserver-atelier.html" style="background: linear-gradient(135deg, #4ECDC4, #A78BFA); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.05rem; box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3); display: inline-block; transition: transform 0.3s;">
+                                Découvrir les ateliers
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages Section -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.08), rgba(255, 140, 66, 0.08));">
+        <div class="container">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--dark);">
+                        Ils ont vécu l'expérience
+                    </h2>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        Les témoignages de parents qui nous font confiance
+                    </p>
+                </div>
+
+                <div id="reviews-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
+                    <!-- Avis chargés dynamiquement depuis Firebase -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="background: linear-gradient(135deg, #FF8C42, #4ECDC4); padding: 100px 0; position: relative; overflow: hidden;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.5rem); color: white; margin-bottom: 25px; line-height: 1.3;">
+                    Prêt à vivre l'expérience ?
+                </h2>
+                <p style="font-size: 1.3rem; color: rgba(255,255,255,0.95); margin-bottom: 20px; line-height: 1.7;">
+                    Rejoignez-nous pour des moments uniques en famille, dans un cadre bienveillant au cœur de la nature
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 40px auto; text-align: left; display: inline-block; max-width: 500px;">
+                    <li style="color: white; padding: 12px 0; display: flex; align-items: center; gap: 15px; font-size: 1.1rem;">
+                        <span style="background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">✓</span>
+                        <span>Séjours d'une semaine pour toute la famille</span>
+                    </li>
+                    <li style="color: white; padding: 12px 0; display: flex; align-items: center; gap: 15px; font-size: 1.1rem;">
+                        <span style="background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">✓</span>
+                        <span>Ateliers d'éveil quotidiens et variés</span>
+                    </li>
+                    <li style="color: white; padding: 12px 0; display: flex; align-items: center; gap: 15px; font-size: 1.1rem;">
+                        <span style="background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">✓</span>
+                        <span>Hébergement en dôme privatif</span>
+                    </li>
+                </ul>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px;">
+                    <a href="reservation.html" style="background: white; color: var(--primary); padding: 18px 45px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 15px 40px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s; display: inline-block;">
+                        Réserver mon séjour
+                    </a>
+                    <a href="contact.html" style="background: rgba(255,255,255,0.15); color: white; padding: 18px 45px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; border: 2px solid white; transition: background 0.3s; display: inline-block; backdrop-filter: blur(10px);">
+                        Nous contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h3 class="footer-brand">Éveil & Vous</h3>
+                    <p class="footer-tagline">Éveil en famille au milieu de la nature</p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Pages</h3>
+                    <p><a href="index.html">Accueil</a></p>
+                    <p><a href="about.html">À Propos</a></p>
+                    <p><a href="activites.html">Activités</a></p>
+                    <p><a href="reservation.html">Réserver</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Contact</h3>
+                    <p class="footer-contact-info">Limoux, Aude (11)<br>contact@eveiletvous.org</p>
+                </div>
+                <div class="footer-widget">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100090154845987" class="footer-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/eveiletvous.11300/" class="footer-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"><p class="footer-copyright">&copy; 2025 Éveil & Vous</p></div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/cookies.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-content.js"></script>
+    
+    <!-- Chargement des avis depuis Firebase -->
+    <script>
+        // Couleurs pour les cartes d'avis
+        const reviewColors = [
+            { gradient: '#FF8C42, #FFB366', color: 'var(--primary)' },
+            { gradient: '#4ECDC4, #5DD9D1', color: 'var(--secondary)' },
+            { gradient: '#FFE66D, #FFA07A', color: 'var(--accent)' },
+            { gradient: '#A78BFA, #C8A2FF', color: '#A78BFA' }
+        ];
+        
+        // Avis par défaut si Firebase non disponible
+        const defaultReviews = [
+            { text: "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier.", author: "Mariona, maman de Chloé (4 ans) et Sophie (5 ans)" },
+            { text: "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive.", author: "Carine, maman de Charlotte (5 ans)" },
+            { text: "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles.", author: "Agathe, maman de Charlie (8 ans) et Marceau (5 ans)" }
+        ];
+        
+        function renderReviews(reviews) {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            
+            container.innerHTML = reviews.map((review, index) => {
+                const color = reviewColors[index % reviewColors.length];
+                const initial = review.author ? review.author.charAt(0).toUpperCase() : '?';
+                const authorParts = review.author ? review.author.split(',') : ['Anonyme', ''];
+                const name = authorParts[0].trim();
+                const details = authorParts[1] ? authorParts[1].trim() : '';
+                
+                return `
+                    <div style="background: white; padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); position: relative;">
+                        <div style="position: absolute; top: 30px; right: 30px; font-size: 4rem; opacity: 0.1; color: ${color.color};">"</div>
+                        <div style="margin-bottom: 25px;">
+                            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
+                                <span style="color: #FFD700; font-size: 1.3rem;">★★★★★</span>
+                            </div>
+                            <p style="font-size: 1.1rem; line-height: 1.8; color: #666; font-style: italic;">
+                                "${review.text}"
+                            </p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, ${color.gradient}); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700;">
+                                ${initial}
+                            </div>
+                            <div>
+                                <strong style="color: var(--dark); font-size: 1.1rem; display: block;">${name}</strong>
+                                <span style="color: #999; font-size: 0.95rem;">${details}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Charger les avis depuis Firebase
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Configuration Firebase
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDkMJzVnkhDYBqqPB_3uxsr4bvp8NaKJK0",
+                    authDomain: "eveil-et-vous.firebaseapp.com",
+                    projectId: "eveil-et-vous",
+                    storageBucket: "eveil-et-vous.firebasestorage.app",
+                    messagingSenderId: "640390073498",
+                    appId: "1:640390073498:web:515dd6c12e947b96bde720"
+                };
+                
+                // Initialiser Firebase si pas déjà fait
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const db = firebase.firestore();
+                
+                const doc = await db.collection('content').doc('homepage').get();
+                if (doc.exists && doc.data().reviews && doc.data().reviews.length > 0) {
+                    renderReviews(doc.data().reviews);
+                } else {
+                    renderReviews(defaultReviews);
+                }
+            } catch (e) {
+                console.log('Firebase non disponible, avis par défaut', e);
+                renderReviews(defaultReviews);
+            }
+        });
+    </script>
+</body>
+</html>

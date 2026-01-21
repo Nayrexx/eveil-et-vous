@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration | Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', sans-serif;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            color: #1A1A2E;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+        
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .admin-card {
+            background: white;
+            border-radius: 25px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+        
+        .admin-card-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .admin-card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 15px;
+        }
+        
+        .admin-card-description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .card-ateliers {
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1));
+        }
+        
+        .card-ateliers:hover {
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(78, 205, 196, 0.2));
+        }
+        
+        .card-galerie {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(167, 139, 250, 0.1));
+        }
+        
+        .card-galerie:hover {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(167, 139, 250, 0.2));
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #1A1A2E;
+        }
+        
+        .footer p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Administration Éveil & Vous</h1>
+            <p>Gérez facilement votre contenu en toute autonomie</p>
+        </div>
+        
+        <div class="admin-grid">
+            <!-- Admin Images Accueil -->
+            <a href="admin-images.html" class="admin-card" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 140, 66, 0.1));">
+                <span class="admin-card-icon">🖼️</span>
+                <div class="admin-card-title">Images Accueil</div>
+                <div class="admin-card-description">
+                    Changez les images de la page d'accueil : 
+                    hero, dômes, logo...
+                </div>
+            </a>
+            
+            <!-- Admin Contenu -->
+            <a href="admin-contenu.html" class="admin-card" style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(255, 217, 61, 0.1));">
+                <span class="admin-card-icon">✏️</span>
+                <div class="admin-card-title">Contenu du Site</div>
+                <div class="admin-card-description">
+                    Modifiez tous les textes du site : 
+                    titres, descriptions, témoignages, tarifs...
+                </div>
+            </a>
+            
+            <!-- Admin Réservations -->
+            <a href="admin-reservations.html" class="admin-card" style="background: linear-gradient(135deg, rgba(107, 207, 127, 0.1), rgba(78, 205, 196, 0.1));">
+                <span class="admin-card-icon">📋</span>
+                <div class="admin-card-title">Réservations</div>
+                <div class="admin-card-description">
+                    Gérez les réservations, 
+                    marquez les ateliers complets, exportez en CSV
+                </div>
+            </a>
+            
+            <!-- Gestion Galerie Photos -->
+            <a href="admin-galerie.html" class="admin-card" style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(255, 140, 66, 0.1));">
+                <span class="admin-card-icon">📸</span>
+                <div class="admin-card-title">Galerie Photos</div>
+                <div class="admin-card-description">
+                    Ajoutez des photos en glisser-déposer, 
+                    gérez et organisez votre galerie
+                </div>
+            </a>
+            
+            <!-- Génération Factures -->
+            <a href="admin-factures.html" class="admin-card" style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(255, 193, 7, 0.1));">
+                <span class="admin-card-icon">🧾</span>
+                <div class="admin-card-title">Factures</div>
+                <div class="admin-card-description">
+                    Créez des factures professionnelles 
+                    et téléchargez-les en PDF
+                </div>
+            </a>
+            
+            <!-- Historique des modifications -->
+            <a href="admin-historique.html" class="admin-card" style="background: linear-gradient(135deg, rgba(103, 58, 183, 0.1), rgba(63, 81, 181, 0.1));">
+                <span class="admin-card-icon">📜</span>
+                <div class="admin-card-title">Historique</div>
+                <div class="admin-card-description">
+                    Suivez toutes les modifications 
+                    effectuées sur le site
+                </div>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <h3>💡 Comment ça marche ?</h3>
+            <p>
+                <strong>1.</strong> Cliquez sur le module que vous voulez gérer<br>
+                <strong>2.</strong> Ajoutez ou modifiez vos contenus<br>
+                <strong>3.</strong> Les modifications sont sauvegardées automatiquement<br>
+                <strong>4.</strong> Vos changements sont visibles immédiatement sur le site
+            </p>
+            
+            <a href="index.html" class="btn-back">
+                ← Retour au site
+            </a>
+            
+            <button onclick="logoutAdmin()" style="margin-top: 15px; padding: 10px 30px; background: #f44336; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: inherit;">
+                🚪 Se déconnecter
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Vérifier la connexion Firebase Auth
+        checkAdminAuth().then(user => {
+            console.log('Admin connecté:', user.email);
+        }).catch(() => {
+            // Redirection gérée par checkAdminAuth
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin | Éveil & Vous</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', Arial, sans-serif;
+            background: linear-gradient(135deg, #FFE5D9 0%, #E5F9F6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 35px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #FF8C42;
+            box-shadow: 0 0 0 4px rgba(255, 140, 66, 0.1);
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #FF8C42, #4ECDC4);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 140, 66, 0.3);
+        }
+        
+        .error {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: #FF8C42;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">🔐</div>
+        <h1>Espace Administration</h1>
+        <p class="subtitle">Éveil & Vous</p>
+        
+        <div class="error" id="errorMsg">
+            ❌ Identifiants incorrects
+        </div>
+        
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="admin@eveil-et-vous.fr" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="Entrez le mot de passe" required>
+            </div>
+            
+            <button type="submit" class="btn-login" id="btnLogin">
+                Se connecter →
+            </button>
+        </form>
+        
+        <a href="index.html" class="back-link">← Retour au site</a>
+    </div>
+    
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
+            authDomain: "eveil-et-vous.firebaseapp.com",
+            projectId: "eveil-et-vous",
+            storageBucket: "eveil-et-vous.firebasestorage.app",
+            messagingSenderId: "1095424492114",
+            appId: "1:1095424492114:web:79a65370efab450ed6d58b"
+        };
+        
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // Vérifier si déjà connecté
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Déjà connecté, rediriger vers admin
+                window.location.href = 'admin.html';
+            }
+        });
+        
+        async function login(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const btnLogin = document.getElementById('btnLogin');
+            
+            // Désactiver le bouton pendant la connexion
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Connexion en cours...';
+            errorMsg.style.display = 'none';
+            
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                // Connexion réussie - la redirection se fait via onAuthStateChanged
+            } catch (error) {
+                // Erreur de connexion
+                errorMsg.style.display = 'block';
+                
+                if (error.code === 'auth/user-not-found') {
+                    errorMsg.textContent = '❌ Aucun compte avec cet email';
+                } else if (error.code === 'auth/wrong-password') {
+                    errorMsg.textContent = '❌ Mot de passe incorrect';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMsg.textContent = '❌ Email invalide';
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorMsg.textContent = '❌ Trop de tentatives. Réessayez plus tard.';
+                } else {
+                    errorMsg.textContent = '❌ Erreur de connexion: ' + error.message;
+                }
+                
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+                
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Se connecter →';
+            }
+        }
+    </script>
+</body>
+</html>

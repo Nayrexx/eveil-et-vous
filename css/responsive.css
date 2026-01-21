@@ -1,0 +1,489 @@
+/* Styles responsifs */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+
+    /* Navigation */
+    .nav-menu {
+        position: static;
+        height: auto;
+        background: none;
+        flex-direction: row;
+        width: auto;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+
+    /* Typography */
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    h2 {
+        font-size: 2.8rem;
+    }
+
+    /* Lieu Section */
+    .lieu-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Activities Slider - Tablettes */
+    .activity-card {
+        flex: 0 0 350px !important;
+        width: 350px !important;
+    }
+
+    .activities-slider-container {
+        padding: 0 4rem;
+    }
+
+    /* Sections */
+    .section {
+        padding: var(--spacing-2xl) 0;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: var(--container-max-width);
+    }
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Responsive Spacing */
+@media (max-width: 768px) {
+    .section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .grid {
+        gap: var(--spacing-md);
+    }
+
+    /* Lieu Section */
+    .lieu-section {
+        padding: 3rem 0;
+    }
+
+    .lieu-gallery {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .gallery-image {
+        height: 280px;
+    }
+
+    .lieu-description {
+        margin: 2rem 1rem 0;
+        padding: 2rem 1.5rem;
+    }
+
+    .lieu-description h3 {
+        font-size: 1.6rem;
+    }
+
+    .lieu-intro {
+        padding: 0 1rem;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+        min-height: 70vh;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    /* Activities Slider */
+    .activities-slider-container {
+        padding: 0 3.5rem;
+    }
+
+    .activity-card {
+        flex: 0 0 300px !important;
+        width: 300px !important;
+        min-height: 350px;
+    }
+
+    .slider-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .slider-btn i {
+        font-size: 1rem;
+    }
+
+    .slider-btn-prev {
+        left: 0.5rem;
+    }
+
+    .slider-btn-next {
+        right: 0.5rem;
+    }
+
+    /* Concept */
+    .concept-features {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* Responsive Images */
+@media (max-width: 576px) {
+    .responsive-img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Responsive Forms */
+@media (max-width: 576px) {
+    .form-group {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .form-input {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+}
+
+/* ===== OPTIMISATION MOBILE COMPLÈTE ===== */
+
+/* Mobile Small (320px - 375px) */
+@media (max-width: 375px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Hero mobile */
+    .hero {
+        min-height: 60vh;
+        padding: 2rem 1rem;
+    }
+    
+    .hero h1, .hero-title {
+        font-size: 1.8rem !important;
+        line-height: 1.3;
+    }
+    
+    .hero p {
+        font-size: 0.95rem;
+    }
+    
+    /* Boutons tactiles */
+    button, .btn, a.cta-button, [class*="button"] {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+    
+    /* Cartes d'ateliers */
+    .workshop-card {
+        padding: 20px !important;
+    }
+    
+    .workshop-card h4 {
+        font-size: 1.2rem !important;
+    }
+    
+    .workshops-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Modal mobile */
+    #bookingModal > div {
+        padding: 25px !important;
+        width: 95% !important;
+    }
+    
+    /* Formulaires */
+    input, textarea, select {
+        font-size: 16px !important; /* Évite le zoom sur iOS */
+        padding: 12px !important;
+    }
+    
+    /* Navigation mobile */
+    header nav ul {
+        font-size: 1.1rem;
+    }
+    
+    /* Upload module galerie */
+    .upload-module {
+        padding: 20px !important;
+    }
+    
+    #uploadForm input,
+    #uploadForm select,
+    #uploadForm textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Mobile Medium (376px - 767px) */
+@media (min-width: 376px) and (max-width: 767px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .hero h1, .hero-title {
+        font-size: 2.2rem !important;
+    }
+    
+    /* Grilles 2 colonnes pour les moyens mobiles */
+    .workshops-grid {
+        grid-template-columns: 1fr !important;
+        gap: 25px !important;
+    }
+}
+
+/* Tablettes (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .workshops-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 25px !important;
+    }
+    
+    .workshop-card {
+        padding: 25px !important;
+    }
+    
+    /* Galerie photos */
+    .gallery-item {
+        flex: 0 0 calc(50% - 15px);
+    }
+    
+    /* Sliders */
+    .themes-slider-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* Touch targets pour tous les mobiles */
+@media (max-width: 1024px) {
+    /* Augmenter la zone de touch */
+    a, button, input[type="submit"], input[type="button"] {
+        position: relative;
+        min-height: 44px;
+    }
+    
+    /* Navigation */
+    nav a {
+        padding: 15px 20px;
+        display: block;
+    }
+    
+    /* Sliders arrows */
+    .slider-prev, .slider-next {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.5rem !important;
+    }
+    
+    /* Cards hover sur mobile = tap */
+    .workshop-card:active,
+    .theme-card:active,
+    .gradient-card:active {
+        transform: scale(0.98);
+    }
+    
+    /* Formulaire upload drag & drop désactivé sur mobile */
+    .upload-zone {
+        padding: 30px 20px !important;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 40px 20px 20px !important;
+    }
+    
+    footer > div {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+    
+    /* Modal full screen sur mobile */
+    #bookingModal {
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    
+    #bookingModal > div {
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Filtres galerie */
+    .filters-container, [class*="filter"] {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .filter-btn, [class*="filter-btn"] {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    
+    /* Images responsive */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Text overflow */
+    h1, h2, h3, h4 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* Landscape mode mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+    }
+    
+    #bookingModal > div {
+        max-height: 95vh;
+    }
+}
+
+/* Fix iOS Safari bottom bar */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Responsive Buttons */
+@media (max-width: 576px) {
+    .button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Hide elements on mobile */
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+/* Hide elements on desktop */
+@media (min-width: 769px) {
+    .hide-desktop {
+        display: none !important;
+    }
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .footer-widget {
+        text-align: center;
+    }
+}
+
+/* Responsive Navigation Menu */
+@media (max-width: 768px) {
+    .site-header {
+        padding: var(--spacing-xs) 0;
+    }
+
+    .header-inner {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .site-logo img {
+        height: 40px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .container {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-size: 12pt;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+}
