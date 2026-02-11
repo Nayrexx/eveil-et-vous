@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Réserver un Atelier d'Éveil | E&V Solo & Duo - Éveil & Vous Limoux</title>
+    <meta name="description" content="Réservez votre atelier d'éveil pour enfants 3-11 ans à Limoux : E&V Solo (mercredis 14h30-16h) ou E&V Duo parent-enfant (samedis 10h-12h). 18€ TTC, places limitées à 6 enfants.">
+    <meta name="keywords" content="réservation atelier éveil Limoux, atelier enfant mercredi, activité parent-enfant samedi, atelier créatif enfant Aude">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://eveiletvouss.fr/reserver-atelier.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eveiletvouss.fr/reserver-atelier.html">
+    <meta property="og:title" content="Réservez un Atelier d'Éveil | Éveil & Vous Limoux">
+    <meta property="og:description" content="16 ateliers d'éveil disponibles : Solo (mercredis) ou Duo parent-enfant (samedis). 18€ TTC, groupes de 6 enfants max.">
+    <meta property="og:image" content="https://eveiletvouss.fr/images/logo.png">
+    
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- EmailJS pour les notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
+    <style>
+        :root {
+            --corail: #FF6B6B;
+            --turquoise: #4ECDC4;
+            --lavande: #A78BFA;
+            --rose: #FF6B9D;
+            --vert: #6BCF7F;
+            --orange: #FF8C42;
+        }
+
+        /* ===== CALENDRIER INTERACTIF ===== */
+        .calendar-section {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A1A2E;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav button {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav button:hover {
+            transform: scale(1.1);
+        }
+
+        .calendar-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #555;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 700;
+            color: #888;
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: default;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        .calendar-day.today {
+            background: #f0f0f0;
+            font-weight: 700;
+        }
+
+        .calendar-day.has-atelier {
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.15), rgba(78, 205, 196, 0.15));
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        .calendar-day.has-atelier:hover {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .calendar-day.has-atelier .atelier-count {
+            position: absolute;
+            bottom: 4px;
+            font-size: 0.65rem;
+            background: var(--turquoise);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .calendar-day.complet {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+        }
+
+        .calendar-day.complet:hover {
+            background: #EF4444;
+            color: white;
+        }
+
+        /* Liste des ateliers du jour sélectionné */
+        .day-ateliers {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed #e5e7eb;
+            display: none;
+        }
+
+        .day-ateliers.show {
+            display: block;
+        }
+
+        .day-ateliers-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 15px;
+        }
+
+        .day-atelier-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .day-atelier-item:hover {
+            background: #f0f0f0;
+        }
+
+        .day-atelier-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .day-atelier-emoji {
+            font-size: 2rem;
+        }
+
+        .day-atelier-details h4 {
+            font-size: 1rem;
+            color: #1A1A2E;
+            margin-bottom: 3px;
+        }
+
+        .day-atelier-details span {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* ===== VUE TOGGLE ===== */
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .view-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ===== LISTE D'ATTENTE ===== */
+        .waitlist-btn {
+            background: linear-gradient(135deg, #9333EA, #EC4899);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .waitlist-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        /* Modal Liste d'attente */
+        .waitlist-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .waitlist-modal.show {
+            display: flex;
+        }
+
+        .waitlist-content {
+            background: white;
+            border-radius: 25px;
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .waitlist-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .waitlist-content h3 {
+            font-size: 1.5rem;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+
+        .waitlist-content p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .waitlist-form input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: var(--lavande);
+        }
+
+        .waitlist-submit {
+            background: linear-gradient(135deg, #9333EA, #EC4899);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .waitlist-close {
+            background: none;
+            border: none;
+            color: #888;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Filtres */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--orange), var(--turquoise));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Bouton MMM spécial */
+        .filter-btn.mmm-btn {
+            background: linear-gradient(135deg, #A78BFA, #B565D8);
+            color: white;
+            border-color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-btn.mmm-btn img {
+            height: 24px;
+            width: auto;
+            border-radius: 50%;
+            background: white;
+            padding: 2px;
+        }
+        
+        .filter-btn.mmm-btn:hover {
+            background: linear-gradient(135deg, #9171E8, #A34FC6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(167, 139, 250, 0.3);
+        }
+
+        /* Grille des ateliers */
+        .ateliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Cartes Atelier */
+        .atelier-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .atelier-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .atelier-card.complet {
+            opacity: 0.7;
+        }
+
+        .atelier-card.complet::after {
+            content: 'COMPLET';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #EF4444;
+            color: white;
+            padding: 8px 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transform: rotate(45deg);
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4);
+        }
+
+        .card-header {
+            padding: 25px 25px 15px;
+            position: relative;
+        }
+
+        .card-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-type.solo {
+            background: linear-gradient(135deg, var(--corail), #FF9A76);
+            color: white;
+        }
+
+        .card-type.duo {
+            background: linear-gradient(135deg, var(--turquoise), #7ECFC0);
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 5px;
+        }
+
+        .card-body {
+            padding: 0 25px 25px;
+        }
+
+        .card-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--orange);
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        .card-time {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            min-height: 50px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1A1A2E;
+        }
+
+        .card-places {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-places.disponible {
+            background: rgba(107, 207, 127, 0.15);
+            color: #059669;
+        }
+
+        .card-places.peu {
+            background: rgba(251, 191, 36, 0.15);
+            color: #D97706;
+        }
+
+        .card-places.complet {
+            background: rgba(239, 68, 68, 0.15);
+            color: #DC2626;
+        }
+
+        .btn-reserver {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            color: white;
+        }
+
+        .btn-reserver:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-reserver:disabled {
+            background: #ccc !important;
+            cursor: not-allowed;
+        }
+
+        /* Modal Réservation */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f3f4f6;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: #EF4444;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            padding: 35px 35px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-emoji {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            margin-bottom: 10px;
+        }
+
+        .modal-info {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            color: #666;
+        }
+
+        .modal-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-body {
+            padding: 30px 35px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1A1A2E;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--turquoise);
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-note {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #92400E;
+            margin-bottom: 20px;
+        }
+
+        .form-note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--orange), var(--corail));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Confirmation */
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 50px 35px;
+        }
+
+        .confirmation.show {
+            display: block;
+        }
+
+        .confirmation-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .confirmation h2 {
+            font-size: 1.8rem;
+            color: #059669;
+            margin-bottom: 15px;
+        }
+
+        .confirmation p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .confirmation-details {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .confirmation-details p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .confirmation-details strong {
+            color: #1A1A2E;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 10001;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 5px solid #10B981;
+        }
+
+        .toast.error {
+            border-left: 5px solid #EF4444;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast-message {
+            font-weight: 600;
+            color: #1A1A2E;
+        }
+
+        /* Badge dernières places */
+        .badge-urgence {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ateliers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal {
+                margin: 10px;
+                border-radius: 20px;
+            }
+
+            .modal-header, .modal-body {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="Éveil & Vous" style="height: 70px; width: auto;">
+                </a>
+                
+                <nav>
+                    <ul>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="activites.html">Activités</a></li>
+                        <li><a href="reserver-atelier.html" class="btn btn-secondary">Ateliers</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reservation.html" class="btn btn-primary">Réserver mon séjour</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section style="background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 50%, #F5F0FF 100%); padding: 100px 0 60px; text-align: center;">
+        <div class="container">
+            <div style="display: inline-block; background: white; padding: 10px 25px; border-radius: 50px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+                <span style="background: linear-gradient(90deg, var(--orange), var(--turquoise)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">📅 RÉSERVATION EN LIGNE</span>
+            </div>
+            <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 20px; color: #1A1A2E; font-weight: 700;">
+                Réservez Votre Atelier
+            </h1>
+            <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto 30px;">
+                Ateliers disponibles • Places limitées • Paiement sur place
+            </p>
+        </div>
+    </section>
+
+    <!-- FILTRES + ATELIERS -->
+    <section style="padding: 60px 0 100px; background: white;">
+        <div class="container">
+            
+            <!-- Toggle Vue Calendrier / Grille -->
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">📋 Vue Grille</button>
+                <button class="view-btn" data-view="calendar">📅 Vue Calendrier</button>
+            </div>
+
+            <!-- CALENDRIER INTERACTIF -->
+            <div class="calendar-section" id="calendarSection" style="display: none;">
+                <div class="calendar-header">
+                    <h3 class="calendar-title">📅 Calendrier des Ateliers</h3>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)">←</button>
+                        <span class="calendar-month" id="calendarMonth">Décembre 2024</span>
+                        <button onclick="changeMonth(1)">→</button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <div class="calendar-day-header">Lun</div>
+                    <div class="calendar-day-header">Mar</div>
+                    <div class="calendar-day-header">Mer</div>
+                    <div class="calendar-day-header">Jeu</div>
+                    <div class="calendar-day-header">Ven</div>
+                    <div class="calendar-day-header">Sam</div>
+                    <div class="calendar-day-header">Dim</div>
+                    <!-- Jours générés dynamiquement -->
+                </div>
+                
+                <!-- Ateliers du jour sélectionné -->
+                <div class="day-ateliers" id="dayAteliers">
+                    <h4 class="day-ateliers-title" id="dayAteliersTitle">Ateliers du jour</h4>
+                    <div id="dayAteliersList"></div>
+                </div>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters" id="filtersSection">
+                <button class="filter-btn active" data-filter="all">✨ Tous les ateliers</button>
+                <button class="filter-btn" data-filter="solo">🌟 E&V Solo</button>
+                <button class="filter-btn" data-filter="duo">👨‍👩‍👧 E&V Duo</button>
+                <button class="filter-btn mmm-btn" onclick="openMMMPopup()"><img src="images/Logo MMM.png" alt="MMM">Ateliers MMM</button>
+            </div>
+
+            <!-- Grille des ateliers -->
+            <div class="ateliers-grid" id="ateliersGrid">
+                <!-- Les cartes seront générées dynamiquement -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MODAL LISTE D'ATTENTE -->
+    <div class="waitlist-modal" id="waitlistModal">
+        <div class="waitlist-content">
+            <div class="waitlist-icon">🔔</div>
+            <h3>Liste d'attente</h3>
+            <p>Recevez une notification si une place se libère pour cet atelier</p>
+            <form class="waitlist-form" onsubmit="submitWaitlist(event)">
+                <input type="hidden" id="waitlistAtelierId">
+                <input type="text" id="waitlistNom" placeholder="Votre nom" required>
+                <input type="email" id="waitlistEmail" placeholder="Votre email" required>
+                <input type="tel" id="waitlistTel" placeholder="Votre téléphone (optionnel)">
+                <button type="submit" class="waitlist-submit">🔔 M'inscrire à la liste d'attente</button>
+            </form>
+            <button class="waitlist-close" onclick="closeWaitlistModal()">Annuler</button>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section style="background: linear-gradient(135deg, var(--orange), var(--turquoise), var(--lavande)); padding: 80px 0; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 20px;">
+                Besoin d'informations ?
+            </h2>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 30px;">
+                Contactez-nous pour toute question sur nos ateliers
+            </p>
+            <a href="contact.html" style="display: inline-block; background: white; color: var(--orange); padding: 18px 45px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                📞 Nous contacter
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: #2D3436; color: white; padding: 60px 0 20px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Éveil & Vous</h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Éveil en famille au milieu de la nature</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Pages</h3>
+                    <p><a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">À Propos</a></p>
+                    <p><a href="activites.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Activités</a></p>
+                    <p><a href="ateliers.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Ateliers</a></p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Contact</h3>
+                    <p style="color: rgba(255,255,255,0.7);">📍 Limoux, Aude</p>
+                    <p style="color: rgba(255,255,255,0.7);">📧 contact@eveiletvouss.fr</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; color: rgba(255,255,255,0.5);">
+                © 2025 Éveil & Vous. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL RÉSERVATION -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            
+            <!-- Formulaire -->
+            <div id="formContainer">
+                <div class="modal-header">
+                    <div class="modal-emoji" id="modalEmoji">🎨</div>
+                    <h2 class="modal-title" id="modalTitle">Réserver cet atelier</h2>
+                    <div class="modal-info">
+                        <span>📅 <span id="modalDate">--</span></span>
+                        <span>⏰ <span id="modalTime">--</span></span>
+                        <span>💰 <span id="modalPrice">--</span></span>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form id="reservationForm">
+                        <input type="hidden" id="atelierId">
+                        <input type="hidden" id="atelierType">
+                        
+                        <div class="form-note">
+                            <strong>💳 Paiement sur place</strong>
+                            Aucun paiement en ligne requis. Vous réglerez directement le jour de l'atelier.
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>👤 Nom du parent *</label>
+                                <input type="text" id="parentNom" required placeholder="Votre nom">
+                            </div>
+                            <div class="form-group">
+                                <label>📧 Email *</label>
+                                <input type="email" id="parentEmail" required placeholder="votre@email.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>📱 Téléphone *</label>
+                                <input type="tel" id="parentTel" required placeholder="06 XX XX XX XX">
+                            </div>
+                            <div class="form-group">
+                                <label>👶 Prénom de l'enfant *</label>
+                                <input type="text" id="enfantPrenom" required placeholder="Prénom">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>🎂 Âge de l'enfant *</label>
+                                <select id="enfantAge" required>
+                                    <option value="">Sélectionnez...</option>
+                                    <option value="3">3 ans</option>
+                                    <option value="4">4 ans</option>
+                                    <option value="5">5 ans</option>
+                                    <option value="6">6 ans</option>
+                                    <option value="7">7 ans</option>
+                                    <option value="8">8 ans</option>
+                                    <option value="9">9 ans</option>
+                                    <option value="10">10 ans</option>
+                                    <option value="11">11 ans</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="parentParticipantGroup" style="display: none;">
+                                <label>👨‍👩‍👧 Parent participant *</label>
+                                <input type="text" id="parentParticipant" placeholder="Prénom du parent">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>💬 Message (optionnel)</label>
+                            <textarea id="message" rows="2" placeholder="Allergies, besoins particuliers..."></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="acceptCGV" required style="margin-top: 4px;">
+                                <span style="font-size: 0.9rem; color: #666;">
+                                    J'accepte les <a href="cgv.html" target="_blank" style="color: var(--orange);">conditions générales</a> et je m'engage à prévenir en cas d'annulation
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit" id="btnSubmit">
+                            ✅ Confirmer ma réservation
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Confirmation -->
+            <div class="confirmation" id="confirmationContainer">
+                <div class="confirmation-icon">🎉</div>
+                <h2>Réservation confirmée !</h2>
+                <p>Votre place est réservée pour cet atelier.</p>
+                <p>Un email de confirmation vous a été envoyé.</p>
+                
+                <div class="confirmation-details" id="confirmationDetails">
+                    <!-- Détails dynamiques -->
+                </div>
+                
+                <p style="background: #FEF3C7; padding: 15px; border-radius: 10px; color: #92400E;">
+                    <strong>💳 Rappel :</strong> Le paiement s'effectue sur place le jour de l'atelier.
+                </p>
+                
+                <button onclick="closeModal()" style="margin-top: 25px; padding: 15px 40px; background: linear-gradient(135deg, var(--orange), var(--turquoise)); color: white; border: none; border-radius: 30px; font-weight: 700; font-size: 1.05rem; cursor: pointer;">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <span class="toast-message" id="toastMessage">Notification</span>
+    </div>
+
+    <script>
+        // =============================================
+        // DONNÉES DES ATELIERS (chargées depuis localStorage ou défaut)
+        // =============================================
+        
+        let ateliersData = {
+            ateliersSolo: [],
+            ateliersDuo: []
+        };
+        
+        // Données par défaut
+        const defaultData = {
+            ateliersSolo: [
+                { id: 1, titre: "Éveil Créatif", emoji: "🎨", date: "Mercredi 15 Janvier 2025", heure: "14h30 - 16h00", description: "Arts plastiques et expression artistique pour libérer la créativité.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#FF6B6B", theme: "creative" },
+                { id: 2, titre: "Éveil Sensoriel", emoji: "👃", date: "Mercredi 22 Janvier 2025", heure: "14h30 - 16h00", description: "Découverte des 5 sens à travers des expériences tactiles, olfactives et gustatives.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 5, complet: false, couleur: "#4ECDC4", theme: "sensory" },
+                { id: 3, titre: "Yoga & Relaxation", emoji: "🧘", date: "Mercredi 29 Janvier 2025", heure: "14h30 - 16h00", description: "Postures ludiques et techniques de retour au calme adaptées aux enfants.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 6, complet: false, couleur: "#A78BFA", theme: "yoga" },
+                { id: 4, titre: "Gestion des Émotions", emoji: "❤️", date: "Mercredi 5 Février 2025", heure: "14h30 - 16h00", description: "Identifier, nommer et accueillir ses émotions avec des outils concrets.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 7, complet: false, couleur: "#FF6B9D", theme: "emotion" },
+                { id: 5, titre: "Activités Nature", emoji: "🌳", date: "Mercredi 12 Février 2025", heure: "14h30 - 16h00", description: "Jardinage, land art et exploration extérieure pour se reconnecter à la nature.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#6BCF7F", theme: "nature" },
+                { id: 6, titre: "Éveil Créatif", emoji: "🎨", date: "Mercredi 19 Février 2025", heure: "14h30 - 16h00", description: "Nouvelles techniques artistiques et exploration créative approfondie.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 8, complet: false, couleur: "#FF6B6B", theme: "creative" },
+                { id: 7, titre: "Éveil Sensoriel", emoji: "👃", date: "Mercredi 26 Février 2025", heure: "14h30 - 16h00", description: "Nouvelles explorations sensorielles et expériences enrichissantes.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 6, complet: false, couleur: "#4ECDC4", theme: "sensory" },
+                { id: 8, titre: "Yoga & Relaxation", emoji: "🧘", date: "Mercredi 5 Mars 2025", heure: "14h30 - 16h00", description: "Approfondissement des postures et nouvelles techniques de relaxation.", prix: 18, prixAffiche: "18€ TTC", placesMax: 8, placesRestantes: 7, complet: false, couleur: "#A78BFA", theme: "yoga" }
+            ],
+            ateliersDuo: [
+                { id: 9, titre: "Éveil Créatif en Duo", emoji: "🎨", date: "Samedi 18 Janvier 2025", heure: "10h00 - 12h00", description: "Créez ensemble des œuvres artistiques uniques et partagez un moment créatif.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B6B", theme: "creative" },
+                { id: 10, titre: "Éveil Sensoriel en Duo", emoji: "👃", date: "Samedi 25 Janvier 2025", heure: "10h00 - 12h00", description: "Explorez les 5 sens ensemble à travers des expériences ludiques en binôme.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 5, complet: false, couleur: "#4ECDC4", theme: "sensory" },
+                { id: 11, titre: "Yoga & Relaxation en Duo", emoji: "🧘", date: "Samedi 1er Février 2025", heure: "10h00 - 12h00", description: "Postures de yoga en binôme et relaxation partagée pour se ressourcer.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#A78BFA", theme: "yoga" },
+                { id: 12, titre: "Gestion des Émotions en Duo", emoji: "❤️", date: "Samedi 8 Février 2025", heure: "10h00 - 12h00", description: "Apprenez à identifier et gérer les émotions ensemble avec bienveillance.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B9D", theme: "emotion" },
+                { id: 13, titre: "Activités Nature en Duo", emoji: "🌳", date: "Samedi 15 Février 2025", heure: "10h00 - 12h00", description: "Jardinage et land art pour se reconnecter à la nature en famille.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 7, complet: false, couleur: "#6BCF7F", theme: "nature" },
+                { id: 14, titre: "Éveil Créatif en Duo", emoji: "🎨", date: "Samedi 22 Février 2025", heure: "10h00 - 12h00", description: "Nouvelles techniques artistiques à découvrir ensemble en duo.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#FF6B6B", theme: "creative" },
+                { id: 15, titre: "Éveil Sensoriel en Duo", emoji: "👃", date: "Samedi 1er Mars 2025", heure: "10h00 - 12h00", description: "Nouvelles explorations sensorielles à vivre en complicité.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 5, complet: false, couleur: "#4ECDC4", theme: "sensory" },
+                { id: 16, titre: "Yoga & Relaxation en Duo", emoji: "🧘", date: "Samedi 8 Mars 2025", heure: "10h00 - 12h00", description: "Approfondissement des postures en duo et relaxation profonde.", prix: 18, prixAffiche: "18€ TTC/duo", placesMax: 6, placesRestantes: 6, complet: false, couleur: "#A78BFA", theme: "yoga" }
+            ]
+        };
+        
+        // Réservations stockées
+        let reservations = [];
+        
+        // Flag Firebase
+        let firebaseReady = false;
+        
+        // =============================================
+        // INITIALISATION
+        // =============================================
+        
+        async function init() {
+            // Initialiser Firebase
+            try {
+                FirebaseDB.init();
+                firebaseReady = true;
+                console.log('🔥 Firebase prêt');
+                
+                // Vérifier et migrer si nécessaire
+                await FirebaseDB.checkAndMigrate();
+                
+                // Activer l'écoute en temps réel
+                setupRealtimeListeners();
+            } catch (e) {
+                console.warn('⚠️ Firebase non disponible, utilisation localStorage:', e);
+                firebaseReady = false;
+            }
+            
+            // Charger les données
+            await loadData();
+            
+            // Afficher les ateliers
+            renderAteliers();
+            
+            // Mettre à jour les stats
+            updateStats();
+            
+            // Initialiser les filtres
+            initFilters();
+            
+            // Initialiser le formulaire
+            initForm();
+        }
+        
+        // =============================================
+        // ÉCOUTE EN TEMPS RÉEL FIREBASE
+        // =============================================
+        
+        function setupRealtimeListeners() {
+            if (!firebaseReady) return;
+            
+            console.log('👂 Activation de l\'écoute temps réel...');
+            
+            // Écouter les changements sur ateliersSolo
+            db.collection('ateliers').doc('ateliersSolo').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.items) {
+                        ateliersData.ateliersSolo = data.items;
+                        console.log('🔄 Ateliers Solo mis à jour en temps réel');
+                        refreshDisplay();
+                    }
+                }
+            }, (error) => {
+                console.warn('Erreur listener Solo:', error);
+            });
+            
+            // Écouter les changements sur ateliersDuo
+            db.collection('ateliers').doc('ateliersDuo').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.items) {
+                        ateliersData.ateliersDuo = data.items;
+                        console.log('🔄 Ateliers Duo mis à jour en temps réel');
+                        refreshDisplay();
+                    }
+                }
+            }, (error) => {
+                console.warn('Erreur listener Duo:', error);
+            });
+        }
+        
+        // Rafraîchir l'affichage sans perdre l'état
+        function refreshDisplay() {
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const currentFilter = activeFilter ? activeFilter.dataset.filter : 'all';
+            renderAteliers(currentFilter);
+            updateStats();
+            
+            // Mettre à jour le calendrier si visible
+            const calendarView = document.getElementById('calendarView');
+            if (calendarView && calendarView.style.display !== 'none') {
+                renderCalendar();
+            }
+        }
+        
+        async function loadData() {
+            if (firebaseReady) {
+                // Charger depuis Firebase
+                try {
+                    const firebaseAteliers = await FirebaseDB.getAteliers();
+                    if (firebaseAteliers && Object.keys(firebaseAteliers).length > 0) {
+                        // Convertir le format Firebase au format attendu
+                        // Les données sont stockées comme { ateliersSolo: { items: [...] }, ateliersDuo: { items: [...] } }
+                        if (firebaseAteliers.ateliersSolo && firebaseAteliers.ateliersDuo) {
+                            ateliersData = {
+                                ateliersSolo: firebaseAteliers.ateliersSolo.items || firebaseAteliers.ateliersSolo || [],
+                                ateliersDuo: firebaseAteliers.ateliersDuo.items || firebaseAteliers.ateliersDuo || []
+                            };
+                        } else {
+                            // Première fois, sauvegarder les données par défaut
+                            ateliersData = JSON.parse(JSON.stringify(defaultData));
+                            await saveData();
+                        }
+                    } else {
+                        // Base vide, utiliser les données par défaut
+                        ateliersData = JSON.parse(JSON.stringify(defaultData));
+                        await saveData();
+                    }
+                    
+                    // Charger les réservations
+                    reservations = await FirebaseDB.getReservations();
+                    console.log('✅ Données chargées depuis Firebase');
+                } catch (e) {
+                    console.error('Erreur Firebase, fallback localStorage:', e);
+                    loadFromLocalStorage();
+                }
+            } else {
+                loadFromLocalStorage();
+            }
+        }
+        
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('ateliers-reservations-data');
+            if (saved) {
+                ateliersData = JSON.parse(saved);
+            } else {
+                ateliersData = JSON.parse(JSON.stringify(defaultData));
+                saveDataLocal();
+            }
+            
+            const savedReservations = localStorage.getItem('reservations-list');
+            if (savedReservations) {
+                reservations = JSON.parse(savedReservations);
+            }
+        }
+        
+        async function saveData() {
+            if (firebaseReady) {
+                try {
+                    // Sauvegarder les ateliers dans Firebase
+                    await db.collection('ateliers').doc('ateliersSolo').set({ items: ateliersData.ateliersSolo });
+                    await db.collection('ateliers').doc('ateliersDuo').set({ items: ateliersData.ateliersDuo });
+                    console.log('✅ Données sauvegardées dans Firebase');
+                } catch (e) {
+                    console.error('Erreur sauvegarde Firebase:', e);
+                    saveDataLocal();
+                }
+            } else {
+                saveDataLocal();
+            }
+        }
+        
+        function saveDataLocal() {
+            localStorage.setItem('ateliers-reservations-data', JSON.stringify(ateliersData));
+            localStorage.setItem('reservations-list', JSON.stringify(reservations));
+        }
+        
+        // =============================================
+        // RENDU DES CARTES
+        // =============================================
+        
+        function renderAteliers(filter = 'all') {
+            const grid = document.getElementById('ateliersGrid');
+            let allAteliers = [];
+            
+            // Combiner Solo et Duo
+            ateliersData.ateliersSolo.forEach(a => allAteliers.push({...a, type: 'solo'}));
+            ateliersData.ateliersDuo.forEach(a => allAteliers.push({...a, type: 'duo'}));
+            
+            // Appliquer le filtre
+            if (filter === 'solo') {
+                allAteliers = allAteliers.filter(a => a.type === 'solo');
+            } else if (filter === 'duo') {
+                allAteliers = allAteliers.filter(a => a.type === 'duo');
+            }
+            
+            // Générer les cartes
+            grid.innerHTML = allAteliers.map(atelier => createCard(atelier)).join('');
+        }
+        
+        // Fonction pour ouvrir la popup MMM
+        function openMMMPopup() {
+            window.open('https://www.monmomentmagique.com/les-ateliers/', 'MMM_Ateliers', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+        }
+        
+        function createCard(atelier) {
+            const placesClass = atelier.complet ? 'complet' : (atelier.placesRestantes <= 2 ? 'peu' : 'disponible');
+            const placesText = atelier.complet ? 'Complet' : `${atelier.placesRestantes} place${atelier.placesRestantes > 1 ? 's' : ''}`;
+            const isUrgent = !atelier.complet && atelier.placesRestantes <= 2;
+            
+            return `
+                <div class="atelier-card ${atelier.complet ? 'complet' : ''}" data-type="${atelier.type}" data-id="${atelier.id}">
+                    ${isUrgent ? '<div class="badge-urgence">🔥 Dernières places !</div>' : ''}
+                    <div class="card-header">
+                        <span class="card-type ${atelier.type}">${atelier.type === 'solo' ? 'E&V Solo' : 'E&V Duo'}</span>
+                        <span class="card-emoji">${atelier.emoji}</span>
+                        <h3 class="card-title">${atelier.titre}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-date">📅 ${atelier.date}</div>
+                        <div class="card-time">⏰ ${atelier.heure}</div>
+                        <p class="card-description">${atelier.description}</p>
+                        <div class="card-footer">
+                            <span class="card-price">${atelier.prixAffiche}</span>
+                            <span class="card-places ${placesClass}">${placesText}</span>
+                        </div>
+                        <button 
+                            class="btn-reserver" 
+                            style="background: linear-gradient(135deg, ${atelier.couleur}, ${lightenColor(atelier.couleur, 20)});"
+                            onclick="openModal(${atelier.id}, '${atelier.type}')"
+                            ${atelier.complet ? 'disabled' : ''}
+                        >
+                            ${atelier.complet ? '❌ Complet' : '✨ Réserver ma place'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function lightenColor(color, percent) {
+            const num = parseInt(color.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+        
+        // =============================================
+        // STATISTIQUES
+        // =============================================
+        
+        function updateStats() {
+            const allAteliers = [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo];
+            const disponibles = allAteliers.filter(a => !a.complet);
+            const totalPlaces = allAteliers.reduce((sum, a) => sum + a.placesRestantes, 0);
+            
+            // Stats supprimées côté public - uniquement pour debug console
+            console.log('📊 Stats:', allAteliers.length, 'ateliers,', disponibles.length, 'disponibles,', totalPlaces, 'places');
+        }
+        
+        // =============================================
+        // FILTRES
+        // =============================================
+        
+        function initFilters() {
+            console.log('🔧 Initialisation des filtres...');
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+                console.log('  → Filtre trouvé:', btn.dataset.filter);
+                btn.addEventListener('click', () => {
+                    console.log('🖱️ Clic sur filtre:', btn.dataset.filter);
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderAteliers(btn.dataset.filter);
+                });
+            });
+            console.log('✅ Filtres initialisés');
+        }
+        
+        // =============================================
+        // MODAL RÉSERVATION
+        // =============================================
+        
+        let currentAtelier = null;
+        
+        function openModal(id, type) {
+            const source = type === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+            currentAtelier = source.find(a => a.id === id);
+            
+            if (!currentAtelier || currentAtelier.complet) return;
+            
+            // Remplir les infos
+            document.getElementById('modalEmoji').textContent = currentAtelier.emoji;
+            document.getElementById('modalTitle').textContent = currentAtelier.titre;
+            document.getElementById('modalDate').textContent = currentAtelier.date;
+            document.getElementById('modalTime').textContent = currentAtelier.heure;
+            document.getElementById('modalPrice').textContent = currentAtelier.prixAffiche;
+            document.getElementById('atelierId').value = id;
+            document.getElementById('atelierType').value = type;
+            
+            // Afficher/masquer champ parent participant pour Duo
+            const parentGroup = document.getElementById('parentParticipantGroup');
+            const parentInput = document.getElementById('parentParticipant');
+            if (type === 'duo') {
+                parentGroup.style.display = 'block';
+                parentInput.required = true;
+            } else {
+                parentGroup.style.display = 'none';
+                parentInput.required = false;
+            }
+            
+            // Reset
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('confirmationContainer').classList.remove('show');
+            document.getElementById('reservationForm').reset();
+            
+            // Ouvrir
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Fermer en cliquant dehors
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        });
+        
+        // =============================================
+        // FORMULAIRE
+        // =============================================
+        
+        function initForm() {
+            document.getElementById('reservationForm').addEventListener('submit', handleSubmit);
+        }
+        
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Traitement en cours...';
+            
+            // Collecter les données
+            const formData = {
+                id: Date.now(),
+                atelierId: parseInt(document.getElementById('atelierId').value),
+                atelierType: document.getElementById('atelierType').value,
+                atelierTitre: currentAtelier.titre,
+                atelierDate: currentAtelier.date,
+                atelierHeure: currentAtelier.heure,
+                parentNom: document.getElementById('parentNom').value,
+                parentEmail: document.getElementById('parentEmail').value,
+                parentTel: document.getElementById('parentTel').value,
+                enfantPrenom: document.getElementById('enfantPrenom').value,
+                enfantAge: document.getElementById('enfantAge').value,
+                parentParticipant: document.getElementById('parentParticipant').value || '',
+                message: document.getElementById('message').value || '',
+                dateReservation: new Date().toLocaleString('fr-FR'),
+                statut: 'confirmée'
+            };
+            
+            // Mettre à jour les places
+            const source = formData.atelierType === 'solo' ? ateliersData.ateliersSolo : ateliersData.ateliersDuo;
+            const atelier = source.find(a => a.id === formData.atelierId);
+            
+            if (atelier) {
+                atelier.placesRestantes--;
+                if (atelier.placesRestantes <= 0) {
+                    atelier.placesRestantes = 0;
+                    atelier.complet = true;
+                }
+            }
+            
+            // Sauvegarder la réservation
+            reservations.push(formData);
+            await saveData();
+            
+            // Sauvegarder aussi dans Firebase si disponible
+            if (firebaseReady) {
+                try {
+                    await FirebaseDB.addReservation(formData);
+                    console.log('✅ Réservation sauvegardée dans Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur Firebase, réservation sauvegardée localement');
+                }
+            }
+            
+            // Simuler envoi d'email (à remplacer par EmailJS si configuré)
+            await simulateEmailSend(formData);
+            
+            // Afficher confirmation
+            showConfirmation(formData);
+            
+            // Rafraîchir
+            renderAteliers(document.querySelector('.filter-btn.active').dataset.filter);
+            updateStats();
+            
+            btn.disabled = false;
+            btn.innerHTML = '✅ Confirmer ma réservation';
+        }
+        
+        async function simulateEmailSend(data) {
+            // =============================================
+            // SYSTÈME D'EMAILS AVEC EMAILJS
+            // =============================================
+            
+            const EMAILJS_ENABLED = true; // ACTIVÉ !
+            const EMAILJS_USER_ID = 'dPp6bk0pAGXNMGV-p'; // Votre Public Key EmailJS
+            const EMAILJS_SERVICE_ID = 'service_013sck9'; // Votre Service ID
+            const TEMPLATE_CLIENT = 'template_4q3zb9r'; // Template pour le client
+            const TEMPLATE_ADMIN = 'template_bg9tpzb'; // Template pour l'admin
+            const ADMIN_EMAIL = 'contact@eveiletvouss.fr'; // Email de l'entreprise
+            
+            if (!EMAILJS_ENABLED) {
+                console.log('📧 [SIMULATION] Email de confirmation envoyé à:', data.parentEmail);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return { success: true, simulated: true };
+            }
+            
+            // Vérifier que EmailJS est chargé
+            if (typeof emailjs === 'undefined') {
+                console.error('❌ EmailJS non chargé !');
+                alert('Erreur: Service email non disponible. Votre réservation est enregistrée, nous vous contacterons.');
+                return { success: false, error: 'EmailJS not loaded' };
+            }
+            
+            try {
+                // Initialiser EmailJS
+                emailjs.init(EMAILJS_USER_ID);
+                console.log('✅ EmailJS initialisé');
+                
+                // Paramètres pour le template client
+                const clientParams = {
+                    to_email: data.parentEmail,
+                    to_name: data.parentNom,
+                    from_name: 'Éveil & Vous',
+                    reply_to: ADMIN_EMAIL,
+                    parent_nom: data.parentNom,
+                    enfant_prenom: data.enfantPrenom,
+                    enfant_age: data.enfantAge,
+                    atelier_titre: data.atelierTitre,
+                    atelier_date: data.atelierDate,
+                    atelier_heure: data.atelierHeure,
+                    atelier_type: data.atelierType === 'duo' ? 'E&V Duo (parent-enfant)' : 'E&V Solo',
+                    parent_participant: data.parentParticipant || 'N/A',
+                    numero_reservation: data.id,
+                    date_reservation: data.dateReservation,
+                    prix: '18€ TTC',
+                    message: data.message || ''
+                };
+                
+                console.log('📧 Envoi email client à:', data.parentEmail);
+                console.log('📧 Paramètres:', clientParams);
+                
+                // 1. Email de confirmation au CLIENT
+                const resultClient = await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
+                console.log('✅ Email client envoyé:', resultClient);
+                
+                // Paramètres pour le template admin
+                const adminParams = {
+                    to_email: ADMIN_EMAIL,
+                    from_name: data.parentNom,
+                    reply_to: data.parentEmail,
+                    parent_nom: data.parentNom,
+                    parent_email: data.parentEmail,
+                    parent_tel: data.parentTel,
+                    enfant_prenom: data.enfantPrenom,
+                    enfant_age: data.enfantAge,
+                    atelier_titre: data.atelierTitre,
+                    atelier_date: data.atelierDate,
+                    atelier_heure: data.atelierHeure,
+                    atelier_type: data.atelierType === 'duo' ? 'E&V Duo' : 'E&V Solo',
+                    parent_participant: data.parentParticipant || 'N/A',
+                    message: data.message || 'Aucun message',
+                    numero_reservation: data.id,
+                    date_reservation: data.dateReservation
+                };
+                
+                console.log('📧 Envoi email admin à:', ADMIN_EMAIL);
+                
+                // 2. Email de notification à l'ADMIN
+                const resultAdmin = await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, adminParams);
+                console.log('✅ Email admin envoyé:', resultAdmin);
+                
+                return { success: true };
+                
+            } catch (error) {
+                console.error('❌ Erreur envoi email:', error);
+                console.error('❌ Détails:', JSON.stringify(error));
+                alert('Note: Email non envoyé (' + (error.text || error.message || 'erreur inconnue') + '). Votre réservation est bien enregistrée !');
+                return { success: false, error: error.message || error.text };
+            }
+        }
+        
+        function showConfirmation(data) {
+            document.getElementById('formContainer').style.display = 'none';
+            
+            document.getElementById('confirmationDetails').innerHTML = `
+                <p><strong>Atelier :</strong> ${data.atelierTitre}</p>
+                <p><strong>Date :</strong> ${data.atelierDate}</p>
+                <p><strong>Horaire :</strong> ${data.atelierHeure}</p>
+                <p><strong>Enfant :</strong> ${data.enfantPrenom} (${data.enfantAge} ans)</p>
+                ${data.parentParticipant ? `<p><strong>Parent participant :</strong> ${data.parentParticipant}</p>` : ''}
+                <p><strong>Contact :</strong> ${data.parentEmail}</p>
+                <p><strong>N° de réservation :</strong> #${data.id}</p>
+            `;
+            
+            document.getElementById('confirmationContainer').classList.add('show');
+            
+            showToast('🎉 Réservation confirmée !', 'success');
+        }
+        
+        // =============================================
+        // TOAST
+        // =============================================
+        
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('.toast-icon');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toastIcon.textContent = type === 'success' ? '✅' : '❌';
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+        
+        // =============================================
+        // CALENDRIER INTERACTIF
+        // =============================================
+        
+        let currentCalendarDate = new Date();
+        
+        function initCalendar() {
+            renderCalendar();
+            initViewToggle();
+        }
+        
+        function initViewToggle() {
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const view = btn.dataset.view;
+                    const calendarSection = document.getElementById('calendarSection');
+                    const filtersSection = document.getElementById('filtersSection');
+                    const ateliersGrid = document.getElementById('ateliersGrid');
+                    
+                    if (view === 'calendar') {
+                        calendarSection.style.display = 'block';
+                        filtersSection.style.display = 'none';
+                        ateliersGrid.style.display = 'none';
+                        renderCalendar();
+                    } else {
+                        calendarSection.style.display = 'none';
+                        filtersSection.style.display = 'flex';
+                        ateliersGrid.style.display = 'grid';
+                    }
+                });
+            });
+        }
+        
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthLabel = document.getElementById('calendarMonth');
+            
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+            
+            // Nom du mois
+            const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+                               'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            monthLabel.textContent = `${monthNames[month]} ${year}`;
+            
+            // Vider la grille (garder les headers)
+            const headers = grid.querySelectorAll('.calendar-day-header');
+            grid.innerHTML = '';
+            headers.forEach(h => grid.appendChild(h));
+            
+            // Premier jour du mois
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // Jour de la semaine du premier jour (0 = dimanche, on veut lundi = 0)
+            let startDay = firstDay.getDay() - 1;
+            if (startDay < 0) startDay = 6;
+            
+            // Jours du mois précédent
+            const prevMonth = new Date(year, month, 0);
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.textContent = prevMonth.getDate() - i;
+                grid.appendChild(day);
+            }
+            
+            // Récupérer tous les ateliers avec leurs dates parsées
+            const allAteliers = getAllAteliers();
+            
+            // Jours du mois actuel
+            const today = new Date();
+            for (let d = 1; d <= lastDay.getDate(); d++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.textContent = d;
+                
+                const currentDate = new Date(year, month, d);
+                
+                // Vérifier si c'est aujourd'hui
+                if (currentDate.toDateString() === today.toDateString()) {
+                    day.classList.add('today');
+                }
+                
+                // Vérifier s'il y a des ateliers ce jour
+                const dayAteliers = allAteliers.filter(a => {
+                    const atelierDate = parseAtelierDate(a.date);
+                    return atelierDate && 
+                           atelierDate.getDate() === d && 
+                           atelierDate.getMonth() === month && 
+                           atelierDate.getFullYear() === year;
+                });
+                
+                if (dayAteliers.length > 0) {
+                    const allComplet = dayAteliers.every(a => a.complet || a.placesRestantes <= 0);
+                    
+                    if (allComplet) {
+                        day.classList.add('has-atelier', 'complet');
+                    } else {
+                        day.classList.add('has-atelier');
+                    }
+                    
+                    if (dayAteliers.length > 1) {
+                        const badge = document.createElement('span');
+                        badge.className = 'atelier-count';
+                        badge.textContent = dayAteliers.length;
+                        day.appendChild(badge);
+                    }
+                    
+                    day.addEventListener('click', () => showDayAteliers(dayAteliers, currentDate));
+                }
+                
+                grid.appendChild(day);
+            }
+            
+            // Jours du mois suivant pour compléter la grille
+            const totalCells = grid.querySelectorAll('.calendar-day').length;
+            const remaining = (7 - (totalCells % 7)) % 7;
+            for (let i = 1; i <= remaining; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.textContent = i;
+                grid.appendChild(day);
+            }
+        }
+        
+        function changeMonth(delta) {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + delta);
+            renderCalendar();
+            document.getElementById('dayAteliers').classList.remove('show');
+        }
+        
+        function parseAtelierDate(dateStr) {
+            // Parse "Mercredi 15 Janvier 2025" ou "Samedi 1er Février 2025"
+            const months = {
+                'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+                'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
+            };
+            
+            const parts = dateStr.toLowerCase().replace('1er', '1').split(' ');
+            if (parts.length >= 4) {
+                const day = parseInt(parts[1]);
+                const month = months[parts[2]];
+                const year = parseInt(parts[3]);
+                if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                    return new Date(year, month, day);
+                }
+            }
+            return null;
+        }
+        
+        function showDayAteliers(ateliers, date) {
+            const container = document.getElementById('dayAteliers');
+            const title = document.getElementById('dayAteliersTitle');
+            const list = document.getElementById('dayAteliersList');
+            
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            title.textContent = `📅 ${date.toLocaleDateString('fr-FR', options)}`;
+            
+            list.innerHTML = ateliers.map(a => {
+                const type = a.id <= 8 ? 'solo' : 'duo';
+                const disponible = !a.complet && a.placesRestantes > 0;
+                
+                return `
+                    <div class="day-atelier-item">
+                        <div class="day-atelier-info">
+                            <span class="day-atelier-emoji">${a.emoji}</span>
+                            <div class="day-atelier-details">
+                                <h4>${a.titre}</h4>
+                                <span>${a.heure} • ${a.placesRestantes} place(s) • ${a.prixAffiche}</span>
+                            </div>
+                        </div>
+                        ${disponible 
+                            ? `<button class="btn-reserver" onclick="openModal(${a.id}, '${type}')">Réserver</button>`
+                            : `<button class="waitlist-btn" style="width: auto; padding: 10px 20px;" onclick="openWaitlistModal(${a.id})">🔔 Liste d'attente</button>`
+                        }
+                    </div>
+                `;
+            }).join('');
+            
+            container.classList.add('show');
+        }
+        
+        function getAllAteliers() {
+            return [...ateliersData.ateliersSolo, ...ateliersData.ateliersDuo];
+        }
+        
+        // =============================================
+        // LISTE D'ATTENTE
+        // =============================================
+        
+        let waitlistData = JSON.parse(localStorage.getItem('waitlist-data')) || [];
+        
+        // Charger la liste d'attente depuis Firebase au démarrage
+        async function loadWaitlistFromFirebase() {
+            if (firebaseReady) {
+                try {
+                    waitlistData = await FirebaseDB.getWaitlist();
+                    console.log('✅ Liste d\'attente chargée depuis Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur chargement liste d\'attente Firebase');
+                }
+            }
+        }
+        
+        function openWaitlistModal(atelierId) {
+            document.getElementById('waitlistAtelierId').value = atelierId;
+            document.getElementById('waitlistModal').classList.add('show');
+        }
+        
+        function closeWaitlistModal() {
+            document.getElementById('waitlistModal').classList.remove('show');
+            document.getElementById('waitlistNom').value = '';
+            document.getElementById('waitlistEmail').value = '';
+            document.getElementById('waitlistTel').value = '';
+        }
+        
+        async function submitWaitlist(e) {
+            e.preventDefault();
+            
+            const atelierId = parseInt(document.getElementById('waitlistAtelierId').value);
+            const nom = document.getElementById('waitlistNom').value;
+            const email = document.getElementById('waitlistEmail').value;
+            const tel = document.getElementById('waitlistTel').value;
+            
+            const atelier = getAllAteliers().find(a => a.id === atelierId);
+            
+            const entry = {
+                id: Date.now(),
+                atelierId: atelierId,
+                atelierTitre: atelier ? atelier.titre : 'Atelier',
+                atelierDate: atelier ? atelier.date : '',
+                nom: nom,
+                email: email,
+                tel: tel,
+                dateInscription: new Date().toLocaleString('fr-FR'),
+                notified: false
+            };
+            
+            waitlistData.push(entry);
+            localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+            
+            // Sauvegarder dans Firebase
+            if (firebaseReady) {
+                try {
+                    await FirebaseDB.addToWaitlist(entry);
+                    console.log('✅ Liste d\'attente sauvegardée dans Firebase');
+                } catch (e) {
+                    console.warn('⚠️ Erreur Firebase liste d\'attente');
+                }
+            }
+            
+            closeWaitlistModal();
+            showToast('🔔 Vous êtes inscrit(e) à la liste d\'attente !', 'success');
+            
+            // Envoyer un email de confirmation liste d'attente (optionnel)
+            sendWaitlistConfirmationEmail(entry);
+        }
+        
+        async function sendWaitlistConfirmationEmail(entry) {
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, {
+                    to_email: entry.email,
+                    parent_nom: entry.nom,
+                    atelier_titre: entry.atelierTitre,
+                    atelier_date: entry.atelierDate,
+                    subject: "Inscription liste d'attente - " + entry.atelierTitre
+                });
+            } catch (error) {
+                console.log('Email liste attente non envoyé:', error);
+            }
+        }
+        
+        // Notifier les personnes en liste d'attente quand une place se libère
+        async function notifyWaitlist(atelierId) {
+            const waitingPeople = waitlistData.filter(w => w.atelierId === atelierId && !w.notified);
+            
+            for (const person of waitingPeople) {
+                try {
+                    // Envoyer email de notification
+                    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, {
+                        to_email: person.email,
+                        parent_nom: person.nom,
+                        atelier_titre: person.atelierTitre,
+                        atelier_date: person.atelierDate,
+                        subject: "🎉 Une place s'est libérée - " + person.atelierTitre
+                    });
+                    
+                    // Marquer comme notifié
+                    person.notified = true;
+                    localStorage.setItem('waitlist-data', JSON.stringify(waitlistData));
+                    
+                } catch (error) {
+                    console.error('Erreur notification liste attente:', error);
+                }
+            }
+        }
+        
+        // =============================================
+        // SMS RAPPEL (Configuration Twilio)
+        // =============================================
+        
+        // Configuration SMS (à remplir avec vos identifiants Twilio)
+        const SMS_CONFIG = {
+            enabled: false, // Mettre à true une fois configuré
+            // Pour activer les SMS, créez un compte Twilio et renseignez :
+            // - Account SID
+            // - Auth Token  
+            // - Numéro Twilio
+            twilioAccountSid: 'VOTRE_ACCOUNT_SID',
+            twilioAuthToken: 'VOTRE_AUTH_TOKEN',
+            twilioPhoneNumber: '+33XXXXXXXXX',
+            reminderHoursBefore: 24 // Rappel 24h avant
+        };
+        
+        // Fonction pour programmer un rappel SMS (appelée après réservation)
+        function scheduleReminderSMS(reservationData) {
+            if (!SMS_CONFIG.enabled || !reservationData.parentTel) return;
+            
+            // Stocker les rappels à envoyer
+            let reminders = JSON.parse(localStorage.getItem('sms-reminders')) || [];
+            
+            const atelierDate = parseAtelierDate(reservationData.atelierDate);
+            if (!atelierDate) return;
+            
+            // Date de rappel = 24h avant
+            const reminderDate = new Date(atelierDate);
+            reminderDate.setHours(reminderDate.getHours() - SMS_CONFIG.reminderHoursBefore);
+            
+            reminders.push({
+                id: reservationData.id,
+                phone: reservationData.parentTel,
+                name: reservationData.parentNom,
+                childName: reservationData.enfantPrenom,
+                atelierTitre: reservationData.atelierTitre,
+                atelierDate: reservationData.atelierDate,
+                atelierHeure: reservationData.atelierHeure,
+                reminderDate: reminderDate.toISOString(),
+                sent: false
+            });
+            
+            localStorage.setItem('sms-reminders', JSON.stringify(reminders));
+            console.log('📱 Rappel SMS programmé pour:', reminderDate.toLocaleString('fr-FR'));
+        }
+        
+        // Vérifier et envoyer les rappels SMS (à appeler périodiquement)
+        async function checkAndSendReminders() {
+            if (!SMS_CONFIG.enabled) return;
+            
+            let reminders = JSON.parse(localStorage.getItem('sms-reminders')) || [];
+            const now = new Date();
+            
+            for (let reminder of reminders) {
+                if (reminder.sent) continue;
+                
+                const reminderDate = new Date(reminder.reminderDate);
+                if (now >= reminderDate) {
+                    // Envoyer le SMS via votre backend ou service
+                    const message = `Bonjour ${reminder.name} ! 🌟 Rappel : ${reminder.childName} a un atelier "${reminder.atelierTitre}" demain ${reminder.atelierDate} à ${reminder.atelierHeure}. À bientôt ! - Éveil & Vous`;
+                    
+                    console.log('📱 SMS à envoyer:', message);
+                    // await sendSMS(reminder.phone, message);
+                    
+                    reminder.sent = true;
+                }
+            }
+            
+            localStorage.setItem('sms-reminders', JSON.stringify(reminders));
+        }
+        
+        // Vérifier les rappels toutes les heures
+        setInterval(checkAndSendReminders, 3600000);
+        
+        // =============================================
+        // LANCEMENT
+        // =============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+            initCalendar();
+            checkAndSendReminders();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Administration - Contenu du Site | Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
+    <style>
+        :root {
+            --primary: #FF8C42;
+            --primary-light: #FFB38A;
+            --secondary: #4ECDC4;
+            --secondary-light: #A8E6E2;
+            --accent: #A78BFA;
+            --accent-light: #DDD6FE;
+            --dark: #1A1A2E;
+            --gray-900: #111827;
+            --gray-700: #374151;
+            --gray-500: #6B7280;
+            --gray-400: #9CA3AF;
+            --gray-300: #D1D5DB;
+            --gray-200: #E5E7EB;
+            --gray-100: #F3F4F6;
+            --gray-50: #F9FAFB;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Myriad Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            padding: 25px 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 0 25px 25px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .sidebar-logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .sidebar-logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .sidebar-logo-text span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+        
+        .sidebar-nav {
+            padding: 0 15px;
+        }
+        
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-400);
+            padding: 15px 10px 8px;
+        }
+        
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            font-family: inherit;
+        }
+        
+        .nav-tab:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1));
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .nav-tab.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .nav-tab i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 25px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+        
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .sidebar-footer a:hover {
+            color: var(--gray-700);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        
+        .page-header p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+        
+        /* Cards */
+        .editor-panel {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .editor-panel-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .editor-panel-header-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        .editor-panel-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0;
+        }
+        
+        .editor-panel-header p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin: 3px 0 0;
+        }
+        
+        .editor-panel-body {
+            padding: 25px;
+        }
+        
+        /* Form Elements */
+        .form-section {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .form-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-section h3 i {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+            font-size: 0.875rem;
+        }
+        
+        .form-group small {
+            display: block;
+            color: var(--gray-400);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--white);
+            color: var(--gray-800);
+        }
+        
+        .form-group input:hover,
+        .form-group textarea:hover {
+            border-color: var(--gray-400);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.15);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--gray-400);
+        }
+        
+        /* List Items (Bullets, Reviews, etc.) */
+        .list-editor {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .list-item {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-100);
+            align-items: center;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .list-item input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .list-item button {
+            padding: 8px 12px;
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .list-item button:hover {
+            background: #DC2626;
+            transform: scale(1.05);
+        }
+        
+        .add-item-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .add-item-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+        
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 25px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-reset {
+            background: var(--white);
+            color: var(--gray-600);
+            border: 1px solid var(--gray-300);
+        }
+        
+        .btn-reset:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+        
+        .btn-back {
+            background: transparent;
+            color: var(--gray-500);
+            text-decoration: none;
+        }
+        
+        .btn-back:hover {
+            color: var(--gray-700);
+        }
+        
+        /* Content Panels */
+        .content-panel {
+            display: none;
+        }
+        
+        .content-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .status-bar.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .status-bar.success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-bar.error {
+            background: var(--error);
+            color: white;
+        }
+        
+        .status-bar.loading {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Review/Item Cards */
+        .item-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        
+        .item-card:hover {
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .item-card-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .item-card-title span {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: var(--error);
+            color: white;
+        }
+        
+        /* Preview Box */
+        .preview-box {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.08), rgba(167, 139, 250, 0.08));
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .preview-box h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        
+        .preview-box p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .editor-panel-body {
+                padding: 15px;
+            }
+            
+            .btn-group {
+                padding: 15px;
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        /* Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 90;
+        }
+        
+        .sidebar-overlay.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="admin.html" class="sidebar-logo">
+                <div class="sidebar-logo-icon">✏️</div>
+                <div class="sidebar-logo-text">
+                    Éditeur de Contenu
+                    <span>Éveil & Vous</span>
+                </div>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Page d'accueil</div>
+            <button class="nav-tab active" data-page="homepage">
+                <i class="fas fa-home"></i> Accueil (Hero)
+            </button>
+            <button class="nav-tab" data-page="banniere">
+                <i class="fas fa-bullhorn"></i> Bannière
+            </button>
+            <button class="nav-tab" data-page="piliers">
+                <i class="fas fa-columns"></i> Piliers
+            </button>
+            <button class="nav-tab" data-page="lieu">
+                <i class="fas fa-map-marker-alt"></i> Lieu
+            </button>
+            <button class="nav-tab" data-page="etapes">
+                <i class="fas fa-list-ol"></i> Étapes
+            </button>
+            <button class="nav-tab" data-page="faq">
+                <i class="fas fa-question-circle"></i> FAQ
+            </button>
+            <button class="nav-tab" data-page="ateliers">
+                <i class="fas fa-calendar-alt"></i> Ateliers (Dates)
+            </button>
+            
+            <div class="nav-section-title">Autres pages</div>
+            <button class="nav-tab" data-page="about">
+                <i class="fas fa-users"></i> À Propos
+            </button>
+            <button class="nav-tab" data-page="sejours">
+                <i class="fas fa-campground"></i> Séjours
+            </button>
+            <button class="nav-tab" data-page="contact">
+                <i class="fas fa-envelope"></i> Contact
+            </button>
+            
+            <div class="nav-section-title">Global</div>
+            <button class="nav-tab" data-page="footer">
+                <i class="fas fa-shoe-prints"></i> Footer
+            </button>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin.html">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Éditeur de Contenu</h1>
+            <p>Modifiez les textes de votre site en temps réel</p>
+        </div>
+        
+        <!-- ===== PANEL ACCUEIL ===== -->
+        <div id="panel-homepage" class="content-panel active">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🏠</div>
+                    <div>
+                        <h2>Page d'Accueil</h2>
+                        <p>Section Hero et présentation principale</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-star"></i> Section Hero (En-tête)</h3>
+                        
+                        <div class="form-group">
+                            <label for="hero-title">Titre principal</label>
+                            <small>Le grand titre accrocheur en haut de page</small>
+                            <input type="text" id="hero-title" placeholder="Des séjours pensés pour eux, des moments précieux pour vous.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hero-subtitle">Sous-titre</label>
+                            <small>La description sous le titre principal</small>
+                            <textarea id="hero-subtitle" placeholder="Dans un cadre sain et préservé..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Points clés (bullets)</label>
+                            <small>Les points forts affichés sous le sous-titre</small>
+                            <div class="list-editor" id="hero-bullets-editor">
+                                <!-- Items générés dynamiquement -->
+                            </div>
+                            <button class="add-item-btn" onclick="addBullet('hero-bullets')"><i class="fas fa-plus"></i> Ajouter un point</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-lightbulb"></i> Section Concept</h3>
+                        
+                        <div class="form-group">
+                            <label for="concept-title">Titre de la section</label>
+                            <input type="text" id="concept-title" placeholder="Grandir ensemble, naturellement.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="concept-subtitle">Description</label>
+                            <textarea id="concept-subtitle" placeholder="Une approche globale de l'éveil..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="concept-slogan">Slogan "En deux mots"</label>
+                            <input type="text" id="concept-slogan" placeholder="Moins d'agitation, plus de connexion.">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-quote-left"></i> Témoignage Principal</h3>
+                        
+                        <div class="form-group">
+                            <label for="testimonial-text">Texte du témoignage</label>
+                            <textarea id="testimonial-text" placeholder="On a enfin trouvé un rythme serein..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="testimonial-author">Auteur</label>
+                            <input type="text" id="testimonial-author" placeholder="— Leïla, maman de Lina (7 ans)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-star"></i> Avis Clients</h3>
+                        <div id="reviews-editor">
+                            <!-- Avis générés dynamiquement -->
+                        </div>
+                        <button class="add-item-btn" onclick="addReview()"><i class="fas fa-plus"></i> Ajouter un avis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL ATELIERS (DATES) ===== -->
+        <div id="panel-ateliers" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📅</div>
+                    <div>
+                        <h2>Ateliers - Dates & Horaires</h2>
+                        <p>Modifiez les jours et horaires des ateliers E&V Solo et E&V Duo</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-child"></i> E&V Solo</h3>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 20px;">Ateliers pour les enfants seuls</p>
+                        
+                        <div class="form-group">
+                            <label for="atelier-solo-jour">Jour</label>
+                            <small>Ex: Mercredi</small>
+                            <input type="text" id="atelier-solo-jour" placeholder="Mercredi">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="atelier-solo-horaire">Horaire</label>
+                            <small>Ex: 14h30 - 16h30</small>
+                            <input type="text" id="atelier-solo-horaire" placeholder="14h30 - 16h30">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-users"></i> E&V Duo</h3>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 20px;">Ateliers parent-enfant</p>
+                        
+                        <div class="form-group">
+                            <label for="atelier-duo-jour">Jour</label>
+                            <small>Ex: Samedi</small>
+                            <input type="text" id="atelier-duo-jour" placeholder="Samedi">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="atelier-duo-horaire">Horaire</label>
+                            <small>Ex: 14h30 - 16h30</small>
+                            <input type="text" id="atelier-duo-horaire" placeholder="14h30 - 16h30">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-birthday-cake"></i> Anniversaires E&V</h3>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 20px;">Tarifs et détails des anniversaires</p>
+                        
+                        <div class="form-group">
+                            <label for="anniversaire-prix">Prix</label>
+                            <small>Ex: 210€ TTC</small>
+                            <input type="text" id="anniversaire-prix" placeholder="210€ TTC">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="anniversaire-details">Détails inclus</label>
+                            <small>Ex: 2h30 d'animation • Goûter inclus...</small>
+                            <input type="text" id="anniversaire-details" placeholder="2h30 d'animation • Goûter inclus (gâteau + boissons) • 10 enfants max">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL À PROPOS ===== -->
+        <div id="panel-about" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">👥</div>
+                    <div>
+                        <h2>Page À Propos</h2>
+                        <p>Présentation de l'équipe et de la philosophie</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Présentation</h3>
+                        
+                        <div class="form-group">
+                            <label for="about-title">Titre de la page</label>
+                            <input type="text" id="about-title" placeholder="Notre Histoire">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="about-intro">Introduction</label>
+                            <textarea id="about-intro" placeholder="Éveil & Vous est né d'une envie..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="about-philosophy">Notre Philosophie</label>
+                            <textarea id="about-philosophy" placeholder="Nous croyons que..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> L'équipe</h3>
+                        
+                        <div class="form-group">
+                            <label for="team-name">Nom du fondateur/trice</label>
+                            <input type="text" id="team-name" placeholder="Marie">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="team-role">Rôle</label>
+                            <input type="text" id="team-role" placeholder="Fondatrice & Animatrice">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="team-bio">Biographie</label>
+                            <textarea id="team-bio" placeholder="Passionnée par l'accompagnement des familles..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL BANNIÈRE ===== -->
+        <div id="panel-banniere" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📢</div>
+                    <div>
+                        <h2>Bannière d'Annonce</h2>
+                        <p>La bannière colorée sous le menu (Anniversaires & Privatisation)</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-birthday-cake"></i> Anniversaires</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-anniv-emoji">Emoji</label>
+                            <input type="text" id="banniere-anniv-emoji" placeholder="🎂" style="width: 100px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-anniv-text">Texte</label>
+                            <input type="text" id="banniere-anniv-text" placeholder="Anniversaires E&V - Fêtez en famille !">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-building"></i> Privatisation</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-privat-emoji">Emoji</label>
+                            <input type="text" id="banniere-privat-emoji" placeholder="🏢" style="width: 100px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-privat-text">Texte</label>
+                            <input type="text" id="banniere-privat-text" placeholder="Privatisation pour vos événements">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-mouse-pointer"></i> Bouton CTA</h3>
+                        
+                        <div class="form-group">
+                            <label for="banniere-btn-text">Texte du bouton</label>
+                            <input type="text" id="banniere-btn-text" placeholder="📧 Nous contacter">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="banniere-btn-link">Lien du bouton</label>
+                            <input type="text" id="banniere-btn-link" placeholder="contact.html">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL PILIERS ===== -->
+        <div id="panel-piliers" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🌈</div>
+                    <div>
+                        <h2>Les 3 Piliers</h2>
+                        <p>Éveil global, Accompagnement parental, Cadre nature</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div id="piliers-editor">
+                        <!-- Piliers générés dynamiquement -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL LIEU ===== -->
+        <div id="panel-lieu" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📍</div>
+                    <div>
+                        <h2>Section Lieu</h2>
+                        <p>Les dômes géodésiques et le cadre naturel</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre et description</h3>
+                        
+                        <div class="form-group">
+                            <label for="lieu-title">Titre de la section</label>
+                            <input type="text" id="lieu-title" placeholder="Notre Lieu Magique">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lieu-subtitle">Description</label>
+                            <textarea id="lieu-subtitle" placeholder="Un cadre naturel et apaisant à Limoux..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-images"></i> Les 3 images</h3>
+                        
+                        <div class="form-group">
+                            <label>Image 1</label>
+                            <input type="text" id="lieu-img1-title" placeholder="Dômes Géodésiques" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img1-desc" placeholder="Architecture en harmonie avec la nature">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Image 2</label>
+                            <input type="text" id="lieu-img2-title" placeholder="Espace Intérieur" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img2-desc" placeholder="Un cocon de bien-être baigné de lumière">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Image 3</label>
+                            <input type="text" id="lieu-img3-title" placeholder="Vue d'Ensemble" style="margin-bottom: 8px;">
+                            <input type="text" id="lieu-img3-desc" placeholder="Un village d'éveil dans la verdure">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section" style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(78, 205, 196, 0.1)); border: 2px dashed rgba(167, 139, 250, 0.3);">
+                        <h3><i class="fas fa-paint-brush"></i> Note "Construction en cours"</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Ce badge s'affiche au-dessus des images des dômes. Masquez-le quand la construction sera terminée.</p>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="note3d-visible" checked style="width: 20px; height: 20px; cursor: pointer;">
+                                <span>Afficher la note</span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-group" id="note3d-text-group">
+                            <label for="note3d-text">Texte de la note</label>
+                            <input type="text" id="note3d-text" placeholder="🎨 Visualisations 3D du projet - Construction en cours" value="🎨 <em>Visualisations 3D du projet - Construction en cours</em>">
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="saveNote3D()" style="margin-top: 10px;">
+                            <i class="fas fa-save"></i> Enregistrer la note
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL ÉTAPES ===== -->
+        <div id="panel-etapes" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📋</div>
+                    <div>
+                        <h2>Comment ça marche ?</h2>
+                        <p>Les 4 étapes du processus de réservation</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre de la section</h3>
+                        
+                        <div class="form-group">
+                            <label for="etapes-title">Titre</label>
+                            <input type="text" id="etapes-title" placeholder="Comment ça marche ?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="etapes-subtitle">Sous-titre</label>
+                            <input type="text" id="etapes-subtitle" placeholder="Réserver votre séjour en famille est simple et rapide">
+                        </div>
+                    </div>
+                    
+                    <div id="etapes-editor">
+                        <!-- Étapes générées dynamiquement -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL FAQ ===== -->
+        <div id="panel-faq" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">❓</div>
+                    <div>
+                        <h2>Questions Fréquentes</h2>
+                        <p>FAQ avec questions/réponses courantes</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-heading"></i> Titre de la section</h3>
+                        
+                        <div class="form-group">
+                            <label for="faq-title">Titre</label>
+                            <input type="text" id="faq-title" placeholder="Questions Fréquentes">
+                        </div>
+                    </div>
+                    
+                    <div id="faq-editor">
+                        <!-- FAQ générées dynamiquement -->
+                    </div>
+                    <button class="add-item-btn" onclick="addFaq()"><i class="fas fa-plus"></i> Ajouter une question</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL FOOTER ===== -->
+        <div id="panel-footer" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🦶</div>
+                    <div>
+                        <h2>Footer (Pied de page)</h2>
+                        <p>Informations affichées en bas de chaque page</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-tag"></i> Présentation</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-brand">Nom de marque</label>
+                            <input type="text" id="footer-brand" placeholder="Éveil & Vous">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="footer-tagline">Slogan</label>
+                            <input type="text" id="footer-tagline" placeholder="Éveil en famille au milieu de la nature">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Contact</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-location">Localisation</label>
+                            <input type="text" id="footer-location" placeholder="Limoux, Aude (11)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="footer-instagram">Lien Instagram</label>
+                            <input type="url" id="footer-instagram" placeholder="https://instagram.com/eveilet vous">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-copyright"></i> Copyright</h3>
+                        
+                        <div class="form-group">
+                            <label for="footer-copyright">Texte de copyright</label>
+                            <input type="text" id="footer-copyright" placeholder="© 2025 Éveil & Vous">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL SÉJOURS ===== -->
+        <div id="panel-sejours" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">🏕️</div>
+                    <div>
+                        <h2>Page Séjours</h2>
+                        <p>Informations, tarifs et horaires des séjours</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Informations Générales</h3>
+                        
+                        <div class="form-group">
+                            <label for="sejours-title">Titre de la page</label>
+                            <input type="text" id="sejours-title" placeholder="Nos Séjours en Famille">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sejours-intro">Introduction</label>
+                            <textarea id="sejours-intro" placeholder="Des semaines inoubliables pour se reconnecter..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-euro-sign"></i> Tarifs</h3>
+                        
+                        <div class="form-group">
+                            <label for="tarif-adulte">Tarif Adulte</label>
+                            <input type="text" id="tarif-adulte" placeholder="850€">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tarif-enfant">Tarif Enfant</label>
+                            <input type="text" id="tarif-enfant" placeholder="650€">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tarifs-inclus">Ce qui est inclus</label>
+                            <textarea id="tarifs-inclus" placeholder="Hébergement, repas, activités..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-clock"></i> Horaires</h3>
+                        
+                        <div class="form-group">
+                            <label for="horaires-arrivee">Horaire d'arrivée</label>
+                            <input type="text" id="horaires-arrivee" placeholder="Dimanche à partir de 16h">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="horaires-depart">Horaire de départ</label>
+                            <input type="text" id="horaires-depart" placeholder="Vendredi à 16h après le goûter">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL CONTACT ===== -->
+        <div id="panel-contact" class="content-panel">
+            <div class="editor-panel">
+                <div class="editor-panel-header">
+                    <div class="editor-panel-header-icon">📧</div>
+                    <div>
+                        <h2>Page Contact</h2>
+                        <p>Coordonnées et informations de contact</p>
+                    </div>
+                </div>
+                <div class="editor-panel-body">
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Coordonnées</h3>
+                        
+                        <div class="form-group">
+                            <label for="contact-address">Adresse</label>
+                            <textarea id="contact-address" placeholder="123 Chemin des Dômes, 11300 Limoux"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Téléphone</label>
+                            <input type="text" id="contact-phone" placeholder="06 00 00 00 00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" placeholder="contact@eveil-et-vous.fr">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-clock"></i> Horaires d'ouverture</h3>
+                        
+                        <div class="form-group">
+                            <label for="contact-hours">Horaires</label>
+                            <textarea id="contact-hours" placeholder="Du lundi au vendredi : 9h - 18h&#10;Samedi : 10h - 16h"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-share-alt"></i> Réseaux Sociaux</h3>
+                        
+                        <div class="form-group">
+                            <label for="social-facebook">Facebook</label>
+                            <input type="url" id="social-facebook" placeholder="https://facebook.com/eveilet vous">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="social-instagram">Instagram</label>
+                            <input type="url" id="social-instagram" placeholder="https://instagram.com/eveilet vous">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Boutons d'action sticky -->
+        <div class="btn-group">
+            <button class="btn btn-save" onclick="saveContent()">
+                <i class="fas fa-save"></i> Sauvegarder les modifications
+            </button>
+            <button class="btn btn-reset" onclick="resetContent()">
+                <i class="fas fa-undo"></i> Réinitialiser
+            </button>
+        </div>
+    </main>
+    
+    <!-- Status Bar -->
+    <div id="status-bar" class="status-bar"></div>
+    
+    <script>
+        // Toggle sidebar pour mobile
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('show');
+        }
+        
+        // db est déjà initialisé via firebase-config.js
+        
+        // Structure des données par défaut
+        const defaultContent = {
+            homepage: {
+                heroTitle: "Des séjours pensés pour eux, des moments précieux pour vous.",
+                heroSubtitle: "Dans un cadre sain et préservé, des ateliers d'éveil sous des formes ludiques et variées pour renforcer le lien parent-enfant et installer des rituels apaisants.",
+                heroBullets: [
+                    "Âges : 4–12 ans",
+                    "Formule : Séjours à la semaine (pendant les vacances scolaires)",
+                    "Encadrement bienveillant par pros certifiés",
+                    "Repas sains / activités outdoor"
+                ],
+                conceptTitle: "Grandir ensemble, naturellement.",
+                conceptSubtitle: "Une approche globale de l'éveil : chaque enfant explore ses sens, bouge, s'exprime, pense et ressent—sans pression, avec bienveillance.",
+                conceptSlogan: "Moins d'agitation, plus de connexion.",
+                testimonialText: "Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun. Organisation, sens du détail, tout y était.",
+                testimonialAuthor: "— Carine, maman de Charlotte (5 ans)",
+                reviews: [
+                    {
+                        text: "🎃 Un moment magique et citrouillé ! Franchement, on a adoré. C'était atelier citrouilles pour Halloween et c'était vraiment trop bien ! 👻 Mes enfants se sont éclatés avec les autres copains de l'atelier, ils étaient à fond dans leurs créations. Et nous, les parents, on a pu les accompagner puis papoter entre nous. Bref, c'était une belle parenthèse créative et conviviale. J'ai kiffé ! ✨",
+                        author: "— Mariona, maman de Chloé (4 ans) et Sophie (5 ans)"
+                    },
+                    {
+                        text: "Nous avons eu le plaisir de participer à un atelier sur le thème d'Halloween pour la deuxième fois avec Astrid !! Tout était parfait, Astrid est faite pour cela. C'est une personne douce, attentive, qui se met à la portée de chacun. Organisation, sens du détail, tout y était. Nous avons hâte de pouvoir tester un autre atelier à ses côtés ! À venir tester rapidement et sans modération.",
+                        author: "— Carine, maman de Charlotte (5 ans)"
+                    },
+                    {
+                        text: "Un joli moment de partage et de créativité pendant cet atelier parent/enfant sur le thème d'Halloween. Les grands comme les petits ont pris beaucoup de plaisir à réaliser leurs citrouilles. Un grand merci à Astrid pour son accueil, ses explications, son énergie et sa bonne humeur. Dès notre arrivée, nous sommes directement plongés dans le thème grâce à la décoration et la mise en scène.",
+                        author: "— Agathe, maman de Charlie (8 ans) et Marceau (5 ans)"
+                    }
+                ]
+            },
+            banniere: {
+                annivEmoji: "🎂",
+                annivText: "Les Anniversaires E&V",
+                privatEmoji: "🏢",
+                privatText: "Privatisation pour vos événements",
+                btnText: "📧 Contactez-nous pour plus d'infos",
+                btnLink: "contact.html"
+            },
+            piliers: {
+                items: [
+                    {
+                        emoji: "🌈",
+                        title: "Éveil global",
+                        description: "Stimuler sans surcharger, apprendre à se recentrer.",
+                        activitesLabel: "Activités :",
+                        activites: "Lecture, jeux coopératifs, danse, yoga, cuisine."
+                    },
+                    {
+                        emoji: "👨‍👩‍👧",
+                        title: "Accompagnement parental",
+                        description: "Renforcer le lien, retrouver des moments simples et efficaces.",
+                        activitesLabel: "Activités :",
+                        activites: "Ateliers de gestion des émotions, cercle de parole, clés pour un quotidien apaisé."
+                    },
+                    {
+                        emoji: "🌳",
+                        title: "Cadre nature & bienveillance",
+                        description: "Apaiser, sécuriser, favoriser l'autonomie.",
+                        activitesLabel: "Activités :",
+                        activites: "Balade sensorielle en forêt, culture du potager, repas sains et équilibrés, groupe 7-12 enfants."
+                    }
+                ]
+            },
+            lieu: {
+                title: "Notre Lieu Magique",
+                subtitle: "Un cadre naturel et apaisant à Limoux, dans l'Aude. Nos dômes géodésiques offrent un espace unique pour se ressourcer en famille.",
+                images: [
+                    { title: "Dômes Géodésiques", desc: "Architecture en harmonie avec la nature" },
+                    { title: "Espace Intérieur", desc: "Un cocon de bien-être baigné de lumière" },
+                    { title: "Vue d'Ensemble", desc: "Un village d'éveil dans la verdure" }
+                ]
+            },
+            etapes: {
+                title: "Comment ça marche ?",
+                subtitle: "Réserver votre séjour en famille est simple et rapide",
+                items: [
+                    { title: "Choisissez vos dates", description: "Consultez le calendrier et sélectionnez la semaine qui vous convient. Séjours du lundi au vendredi (arrivée dimanche 16h, départ vendredi 16h)." },
+                    { title: "Remplissez le formulaire", description: "Indiquez les informations sur votre famille (nombre d'enfants, âges, besoins particuliers)." },
+                    { title: "Recevez la confirmation", description: "Nous vous contactons sous 48h pour confirmer votre réservation et répondre à vos questions." },
+                    { title: "Profitez de l'expérience", description: "Arrivez et laissez-vous guider pour une semaine d'éveil inoubliable en famille !" }
+                ]
+            },
+            faq: {
+                title: "Questions Fréquentes",
+                items: [
+                    { question: "À partir de quel âge peut-on venir ?", answer: "Nos séjours sont adaptés aux enfants de 4 à 12 ans. Chaque activité est pensée pour respecter le développement de chaque tranche d'âge." },
+                    { question: "Faut-il rester avec mon enfant pendant les activités ?", answer: "Certaines activités sont en duo parent-enfant, d'autres sont réservées aux enfants seuls. Nous proposons les deux formules pour favoriser l'autonomie et renforcer le lien." },
+                    { question: "Que comprend le tarif du séjour ?", answer: "Tous nos séjours sont en formule tout inclus. Le tarif de réservation comprend l'hébergement, les ateliers quotidiens et l'encadrement. Les repas sont à régler directement sur place au moment de l'enregistrement." },
+                    { question: "Comment se rendre sur le site Éveil & Vous ?", answer: "Le lieu se situe dans la ville de Limoux, à 20 minutes de Carcassonne et à 1 heure de Toulouse. Un accès par le train est possible en gare de Limoux. En revanche, il est nécessaire d'être véhiculé pour rejoindre le site et y séjourner." },
+                    { question: "Combien de familles par séjour ?", answer: "De 4 à 7 familles et de 4 à 14 enfants." }
+                ]
+            },
+            ateliers: {
+                soloJour: "Mercredi",
+                soloHoraire: "14h30 - 16h30",
+                duoJour: "Samedi",
+                duoHoraire: "14h30 - 16h30",
+                anniversairePrix: "210€ TTC",
+                anniversaireDetails: "2h30 d'animation • Goûter inclus (gâteau + boissons) • 10 enfants max"
+            },
+            footer: {
+                brand: "Éveil & Vous",
+                tagline: "Éveil en famille au milieu de la nature",
+                location: "Limoux, Aude (11)",
+                email: "contact@eveiletvous.org",
+                facebook: "",
+                instagram: "",
+                copyright: "© 2025 Éveil & Vous"
+            },
+            about: {
+                title: "Notre Histoire",
+                intro: "",
+                philosophy: "",
+                teamName: "Astrid",
+                teamRole: "Fondatrice",
+                teamBio: ""
+            },
+            sejours: {
+                title: "Nos Séjours en Famille",
+                intro: "",
+                tarifAdulte: "1224€",
+                tarifEnfant: "1224€",
+                tarifsInclus: "Hébergement, ateliers quotidiens, encadrement. Repas à régler sur place.",
+                horairesArrivee: "Dimanche à partir de 16h",
+                horairesDepart: "Vendredi à 16h après le goûter"
+            },
+            contact: {
+                address: "Limoux, Aude (11)",
+                phone: "",
+                email: "contact@eveiletvous.org",
+                hours: "",
+                facebook: "",
+                instagram: ""
+            }
+        };
+        
+        let currentContent = JSON.parse(JSON.stringify(defaultContent));
+        
+        // Navigation entre les panels
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(`panel-${tab.dataset.page}`).classList.add('active');
+            });
+        });
+        
+        // Afficher le status
+        function showStatus(message, type) {
+            const bar = document.getElementById('status-bar');
+            bar.textContent = message;
+            bar.className = `status-bar ${type} show`;
+            
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    bar.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // Charger le contenu depuis Firebase
+        async function loadContent() {
+            showStatus('⏳ Chargement du contenu...', 'loading');
+            
+            try {
+                // Vérifier Firebase
+                if (typeof db === 'undefined') {
+                    throw new Error('Firebase non initialisé');
+                }
+                
+                const pages = ['homepage', 'banniere', 'piliers', 'lieu', 'etapes', 'faq', 'footer', 'about', 'sejours', 'contact'];
+                
+                for (const page of pages) {
+                    try {
+                        const doc = await db.collection('content').doc(page).get();
+                        if (doc.exists) {
+                            currentContent[page] = { ...defaultContent[page], ...doc.data() };
+                        }
+                    } catch (pageError) {
+                        console.warn(`⚠️ Erreur chargement page ${page}:`, pageError);
+                        // Continuer avec les valeurs par défaut
+                    }
+                }
+                
+                populateForm();
+                showStatus('✅ Contenu chargé !', 'success');
+            } catch (error) {
+                console.error('Erreur chargement:', error);
+                showStatus('❌ Erreur de chargement: ' + error.message, 'error');
+                // Charger quand même avec les valeurs par défaut
+                populateForm();
+            }
+        }
+        
+        // Remplir le formulaire avec les données
+        function populateForm() {
+            // Fonction helper pour éviter les erreurs
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) el.value = value || '';
+            }
+            
+            // Homepage
+            setValue('hero-title', currentContent.homepage.heroTitle);
+            setValue('hero-subtitle', currentContent.homepage.heroSubtitle);
+            setValue('concept-title', currentContent.homepage.conceptTitle);
+            setValue('concept-subtitle', currentContent.homepage.conceptSubtitle);
+            setValue('concept-slogan', currentContent.homepage.conceptSlogan);
+            setValue('testimonial-text', currentContent.homepage.testimonialText);
+            setValue('testimonial-author', currentContent.homepage.testimonialAuthor);
+            
+            // Bullets
+            renderBullets();
+            
+            // Reviews
+            renderReviews();
+            
+            // Bannière
+            setValue('banniere-anniv-emoji', currentContent.banniere.annivEmoji || '🎂');
+            setValue('banniere-anniv-text', currentContent.banniere.annivText);
+            setValue('banniere-privat-emoji', currentContent.banniere.privatEmoji || '🏢');
+            setValue('banniere-privat-text', currentContent.banniere.privatText);
+            setValue('banniere-btn-text', currentContent.banniere.btnText);
+            setValue('banniere-btn-link', currentContent.banniere.btnLink);
+            
+            // Piliers
+            renderPiliers();
+            
+            // Lieu
+            setValue('lieu-title', currentContent.lieu.title);
+            setValue('lieu-subtitle', currentContent.lieu.subtitle);
+            const images = currentContent.lieu.images || [];
+            setValue('lieu-img1-title', images[0]?.title);
+            setValue('lieu-img1-desc', images[0]?.desc);
+            setValue('lieu-img2-title', images[1]?.title);
+            setValue('lieu-img2-desc', images[1]?.desc);
+            setValue('lieu-img3-title', images[2]?.title);
+            setValue('lieu-img3-desc', images[2]?.desc);
+            
+            // Étapes
+            setValue('etapes-title', currentContent.etapes.title);
+            setValue('etapes-subtitle', currentContent.etapes.subtitle);
+            renderEtapes();
+            
+            // FAQ
+            setValue('faq-title', currentContent.faq.title);
+            renderFaq();
+            
+            // Ateliers (Dates)
+            if (currentContent.ateliers) {
+                setValue('atelier-solo-jour', currentContent.ateliers.soloJour);
+                setValue('atelier-solo-horaire', currentContent.ateliers.soloHoraire);
+                setValue('atelier-duo-jour', currentContent.ateliers.duoJour);
+                setValue('atelier-duo-horaire', currentContent.ateliers.duoHoraire);
+                setValue('anniversaire-prix', currentContent.ateliers.anniversairePrix);
+                setValue('anniversaire-details', currentContent.ateliers.anniversaireDetails);
+            }
+            
+            // Footer
+            setValue('footer-brand', currentContent.footer.brand);
+            setValue('footer-tagline', currentContent.footer.tagline);
+            setValue('footer-location', currentContent.footer.location);
+            setValue('footer-email', currentContent.footer.email);
+            setValue('footer-facebook', currentContent.footer.facebook);
+            setValue('footer-instagram', currentContent.footer.instagram);
+            setValue('footer-copyright', currentContent.footer.copyright);
+            
+            // About
+            setValue('about-title', currentContent.about.title);
+            setValue('about-intro', currentContent.about.intro);
+            setValue('about-philosophy', currentContent.about.philosophy);
+            setValue('team-name', currentContent.about.teamName);
+            setValue('team-role', currentContent.about.teamRole);
+            setValue('team-bio', currentContent.about.teamBio);
+            
+            // Séjours
+            setValue('sejours-title', currentContent.sejours.title);
+            setValue('sejours-intro', currentContent.sejours.intro);
+            setValue('tarif-adulte', currentContent.sejours.tarifAdulte);
+            setValue('tarif-enfant', currentContent.sejours.tarifEnfant);
+            setValue('tarifs-inclus', currentContent.sejours.tarifsInclus);
+            setValue('horaires-arrivee', currentContent.sejours.horairesArrivee);
+            setValue('horaires-depart', currentContent.sejours.horairesDepart);
+            
+            // Contact
+            setValue('contact-address', currentContent.contact.address);
+            setValue('contact-phone', currentContent.contact.phone);
+            setValue('contact-email', currentContent.contact.email);
+            setValue('contact-hours', currentContent.contact.hours);
+            setValue('social-facebook', currentContent.contact.facebook);
+            setValue('social-instagram', currentContent.contact.instagram);
+        }
+        
+        // Render bullets
+        function renderBullets() {
+            const editor = document.getElementById('hero-bullets-editor');
+            const bullets = currentContent.homepage.heroBullets || [];
+            
+            editor.innerHTML = bullets.map((bullet, i) => `
+                <div class="list-item">
+                    <input type="text" value="${bullet}" onchange="updateBullet(${i}, this.value)">
+                    <button onclick="removeBullet(${i})"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+        
+        function addBullet() {
+            currentContent.homepage.heroBullets.push('Nouveau point');
+            renderBullets();
+        }
+        
+        function updateBullet(index, value) {
+            currentContent.homepage.heroBullets[index] = value;
+        }
+        
+        function removeBullet(index) {
+            currentContent.homepage.heroBullets.splice(index, 1);
+            renderBullets();
+        }
+        
+        // Render reviews
+        function renderReviews() {
+            const editor = document.getElementById('reviews-editor');
+            const reviews = currentContent.homepage.reviews || [];
+            
+            editor.innerHTML = reviews.map((review, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Avis #${i + 1}</strong>
+                        <button onclick="removeReview(${i})" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Texte de l'avis</label>
+                        <textarea onchange="updateReview(${i}, 'text', this.value)">${review.text}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Auteur</label>
+                        <input type="text" value="${review.author}" onchange="updateReview(${i}, 'author', this.value)">
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function addReview() {
+            currentContent.homepage.reviews.push({
+                text: "Nouvel avis...",
+                author: "— Prénom"
+            });
+            renderReviews();
+        }
+        
+        function updateReview(index, field, value) {
+            currentContent.homepage.reviews[index][field] = value;
+        }
+        
+        function removeReview(index) {
+            currentContent.homepage.reviews.splice(index, 1);
+            renderReviews();
+        }
+        
+        // Render Piliers
+        function renderPiliers() {
+            const editor = document.getElementById('piliers-editor');
+            const piliers = currentContent.piliers.items || [];
+            
+            editor.innerHTML = piliers.map((pilier, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Pilier #${i + 1}</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Emoji</label>
+                        <input type="text" value="${pilier.emoji}" onchange="updatePilier(${i}, 'emoji', this.value)" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" value="${pilier.title}" onchange="updatePilier(${i}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updatePilier(${i}, 'description', this.value)">${pilier.description}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Label activités</label>
+                        <input type="text" value="${pilier.activitesLabel}" onchange="updatePilier(${i}, 'activitesLabel', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Liste des activités</label>
+                        <textarea onchange="updatePilier(${i}, 'activites', this.value)">${pilier.activites}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updatePilier(index, field, value) {
+            currentContent.piliers.items[index][field] = value;
+        }
+        
+        // Render Étapes
+        function renderEtapes() {
+            const editor = document.getElementById('etapes-editor');
+            const etapes = currentContent.etapes.items || [];
+            
+            editor.innerHTML = etapes.map((etape, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Étape #${i + 1}</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" value="${etape.title}" onchange="updateEtape(${i}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updateEtape(${i}, 'description', this.value)">${etape.description}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateEtape(index, field, value) {
+            currentContent.etapes.items[index][field] = value;
+        }
+        
+        // Render FAQ
+        function renderFaq() {
+            const editor = document.getElementById('faq-editor');
+            const faqs = currentContent.faq.items || [];
+            
+            editor.innerHTML = faqs.map((faq, i) => `
+                <div class="form-section" style="background: white; border: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>Question #${i + 1}</strong>
+                        <button onclick="removeFaq(${i})" style="background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Question</label>
+                        <input type="text" value="${faq.question}" onchange="updateFaq(${i}, 'question', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Réponse</label>
+                        <textarea onchange="updateFaq(${i}, 'answer', this.value)">${faq.answer}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function addFaq() {
+            currentContent.faq.items.push({
+                question: "Nouvelle question ?",
+                answer: "Réponse à la question..."
+            });
+            renderFaq();
+        }
+        
+        function updateFaq(index, field, value) {
+            currentContent.faq.items[index][field] = value;
+        }
+        
+        function removeFaq(index) {
+            currentContent.faq.items.splice(index, 1);
+            renderFaq();
+        }
+        
+        // Collecter les données du formulaire
+        function collectFormData() {
+            // Fonction helper pour récupérer les valeurs en toute sécurité
+            function getValue(id) {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            }
+            
+            return {
+                homepage: {
+                    heroTitle: getValue('hero-title'),
+                    heroSubtitle: getValue('hero-subtitle'),
+                    heroBullets: currentContent.homepage.heroBullets,
+                    conceptTitle: getValue('concept-title'),
+                    conceptSubtitle: getValue('concept-subtitle'),
+                    conceptSlogan: getValue('concept-slogan'),
+                    testimonialText: getValue('testimonial-text'),
+                    testimonialAuthor: getValue('testimonial-author'),
+                    reviews: currentContent.homepage.reviews
+                },
+                banniere: {
+                    annivEmoji: getValue('banniere-anniv-emoji'),
+                    annivText: getValue('banniere-anniv-text'),
+                    privatEmoji: getValue('banniere-privat-emoji'),
+                    privatText: getValue('banniere-privat-text'),
+                    btnText: getValue('banniere-btn-text'),
+                    btnLink: getValue('banniere-btn-link')
+                },
+                piliers: {
+                    items: currentContent.piliers.items
+                },
+                lieu: {
+                    title: getValue('lieu-title'),
+                    subtitle: getValue('lieu-subtitle'),
+                    images: [
+                        { title: getValue('lieu-img1-title'), desc: getValue('lieu-img1-desc') },
+                        { title: getValue('lieu-img2-title'), desc: getValue('lieu-img2-desc') },
+                        { title: getValue('lieu-img3-title'), desc: getValue('lieu-img3-desc') }
+                    ]
+                },
+                etapes: {
+                    title: getValue('etapes-title'),
+                    subtitle: getValue('etapes-subtitle'),
+                    items: currentContent.etapes.items
+                },
+                faq: {
+                    title: getValue('faq-title'),
+                    items: currentContent.faq.items
+                },
+                ateliers: {
+                    soloJour: getValue('atelier-solo-jour'),
+                    soloHoraire: getValue('atelier-solo-horaire'),
+                    duoJour: getValue('atelier-duo-jour'),
+                    duoHoraire: getValue('atelier-duo-horaire'),
+                    anniversairePrix: getValue('anniversaire-prix'),
+                    anniversaireDetails: getValue('anniversaire-details')
+                },
+                footer: {
+                    brand: getValue('footer-brand'),
+                    tagline: getValue('footer-tagline'),
+                    location: getValue('footer-location'),
+                    email: getValue('footer-email'),
+                    facebook: getValue('footer-facebook'),
+                    instagram: getValue('footer-instagram'),
+                    copyright: getValue('footer-copyright')
+                },
+                about: {
+                    title: getValue('about-title'),
+                    intro: getValue('about-intro'),
+                    philosophy: getValue('about-philosophy'),
+                    teamName: getValue('team-name'),
+                    teamRole: getValue('team-role'),
+                    teamBio: getValue('team-bio')
+                },
+                sejours: {
+                    title: getValue('sejours-title'),
+                    intro: getValue('sejours-intro'),
+                    tarifAdulte: getValue('tarif-adulte'),
+                    tarifEnfant: getValue('tarif-enfant'),
+                    tarifsInclus: getValue('tarifs-inclus'),
+                    horairesArrivee: getValue('horaires-arrivee'),
+                    horairesDepart: getValue('horaires-depart')
+                },
+                contact: {
+                    address: getValue('contact-address'),
+                    phone: getValue('contact-phone'),
+                    email: getValue('contact-email'),
+                    hours: getValue('contact-hours'),
+                    facebook: getValue('social-facebook'),
+                    instagram: getValue('social-instagram')
+                }
+            };
+        }
+        
+        // Sauvegarder le contenu
+        async function saveContent() {
+            showStatus('⏳ Sauvegarde en cours...', 'loading');
+            
+            try {
+                // Vérifier Firebase
+                if (typeof db === 'undefined') {
+                    throw new Error('Firebase non connecté');
+                }
+                
+                const data = collectFormData();
+                
+                // Sauvegarder chaque page
+                for (const [page, content] of Object.entries(data)) {
+                    try {
+                        await db.collection('content').doc(page).set(content);
+                    } catch (pageError) {
+                        console.error(`Erreur sauvegarde page ${page}:`, pageError);
+                        throw new Error(`Erreur sur la page ${page}`);
+                    }
+                }
+                
+                currentContent = data;
+                showStatus('✅ Contenu sauvegardé avec succès !', 'success');
+            } catch (error) {
+                console.error('Erreur sauvegarde:', error);
+                showStatus('❌ Erreur: ' + error.message, 'error');
+            }
+        }
+        
+        // Sauvegarder la note 3D
+        async function saveNote3D() {
+            try {
+                const visible = document.getElementById('note3d-visible').checked;
+                const text = document.getElementById('note3d-text').value;
+                
+                await db.collection('settings').doc('note-3d').set({
+                    visible: visible,
+                    text: text
+                });
+                
+                showStatus('✅ Note 3D sauvegardée !', 'success');
+            } catch (error) {
+                console.error('Erreur sauvegarde note 3D:', error);
+                showStatus('❌ Erreur: ' + error.message, 'error');
+            }
+        }
+        
+        // Charger la note 3D au démarrage
+        async function loadNote3D() {
+            try {
+                const doc = await db.collection('settings').doc('note-3d').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('note3d-visible').checked = data.visible !== false;
+                    if (data.text) {
+                        document.getElementById('note3d-text').value = data.text;
+                    }
+                    // Masquer/afficher le champ texte selon la checkbox
+                    document.getElementById('note3d-text-group').style.display = data.visible !== false ? 'block' : 'none';
+                }
+            } catch (error) {
+                console.log('Note 3D par défaut');
+            }
+        }
+        
+        // Toggle affichage du champ texte
+        document.getElementById('note3d-visible')?.addEventListener('change', function() {
+            document.getElementById('note3d-text-group').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Réinitialiser
+        function resetContent() {
+            if (confirm('⚠️ Voulez-vous vraiment réinitialiser tous les textes aux valeurs par défaut ?')) {
+                currentContent = JSON.parse(JSON.stringify(defaultContent));
+                populateForm();
+                showStatus('🔄 Contenu réinitialisé', 'success');
+            }
+        }
+        
+        // Vérifier la connexion admin Firebase
+        checkAdminAuth().then(() => {
+            initFirebase();
+            loadContent();
+            loadNote3D();
+        });
+    </script>
+</body>
+</html>

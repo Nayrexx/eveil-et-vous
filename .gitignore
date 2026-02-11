@@ -1,0 +1,20 @@
+# Fichiers sensibles - NE PAS COMMITER
+IDENTIFIANTS-ADMIN.md
+config-admin.js
+
+# Données locales
+data/*.json
+*.backup
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp
+~*

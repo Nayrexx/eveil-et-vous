@@ -1,0 +1,25 @@
+# robots.txt pour Éveil & Vous
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://eveiletvouss.fr/sitemap.xml
+
+# Désactiver l'exploration de certains dossiers
+Disallow: /css/old/
+Disallow: /js/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Autoriser l'indexation des pages principales
+Allow: /index.html
+Allow: /ateliers.html
+Allow: /sejours.html
+Allow: /activites.html
+Allow: /about.html
+Allow: /galerie.html
+Allow: /contact.html
+
+# Crawl-delay pour éviter la surcharge
+Crawl-delay: 1

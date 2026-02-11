@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Génération de Factures | Admin Éveil & Vous</title>
+    <link href="https://fonts.cdnfonts.com/css/myriad-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
+    <style>
+        :root {
+            --primary: #FF8C42;
+            --secondary: #4ECDC4;
+            --accent: #A78BFA;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Myriad Pro', sans-serif;
+            background: linear-gradient(135deg, #FFF4E6 0%, #F0FFFE 100%);
+            min-height: 100vh;
+            padding: 30px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-panel {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-panel h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .items-section {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .items-section h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .item-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr auto;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: end;
+        }
+        
+        .item-row input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-remove-item {
+            padding: 10px 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-add-item {
+            padding: 12px 25px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .totals-section {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(167, 139, 250, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .total-row.grand-total {
+            border-top: 2px solid var(--dark);
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-preview {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-save {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-back {
+            background: white;
+            color: var(--dark);
+            border: 2px solid #ddd;
+        }
+        
+        /* Modal aperçu */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        
+        /* Facture PDF Style */
+        .invoice {
+            padding: 40px;
+            font-family: 'Myriad Pro', Arial, sans-serif;
+        }
+        
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .invoice-logo h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .invoice-logo p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .invoice-info {
+            text-align: right;
+        }
+        
+        .invoice-info h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .invoice-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .invoice-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .invoice-parties h3 {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .invoice-parties p {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        .invoice-table th {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .invoice-table th:last-child,
+        .invoice-table td:last-child {
+            text-align: right;
+        }
+        
+        .invoice-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .invoice-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .invoice-totals {
+            margin-left: auto;
+            width: 300px;
+        }
+        
+        .invoice-totals .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        .invoice-totals .row.total {
+            border-top: 2px solid var(--dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+        
+        .invoice-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        .invoice-notes {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .invoice-notes h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .invoice-notes p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Factures sauvegardées */
+        .saved-invoices {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .saved-invoices h2 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .invoice-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .invoice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+        
+        .invoice-item-info h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .invoice-item-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .invoice-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .invoice-item-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .form-row { grid-template-columns: 1fr; }
+            .item-row { grid-template-columns: 1fr; }
+            .invoice-header { flex-direction: column; gap: 20px; }
+            .invoice-info { text-align: left; }
+            .invoice-parties { grid-template-columns: 1fr; }
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .form-panel, .btn-group, .saved-invoices, .header { display: none; }
+            .modal { display: block; position: static; background: none; }
+            .modal-content { max-width: 100%; box-shadow: none; }
+            .modal-close { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧾 Générateur de Factures</h1>
+            <p>Créez des factures professionnelles en quelques clics</p>
+        </div>
+        
+        <!-- Factures sauvegardées -->
+        <div class="saved-invoices" id="saved-invoices" style="display: none;">
+            <h2>📋 Factures récentes</h2>
+            <div class="invoice-list" id="invoice-list">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+        
+        <!-- Formulaire facture -->
+        <div class="form-panel">
+            <h2>📝 Informations de la facture</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Numéro de facture</label>
+                    <input type="text" id="invoice-number" placeholder="FAC-2025-001">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="invoice-date">
+                </div>
+            </div>
+            
+            <h2>👤 Client</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nom / Entreprise</label>
+                    <input type="text" id="client-name" placeholder="Nom du client">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="client-email" placeholder="email@exemple.com">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Adresse</label>
+                <textarea id="client-address" rows="2" placeholder="Adresse complète"></textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="client-phone" placeholder="06 00 00 00 00">
+                </div>
+                <div class="form-group">
+                    <label>Code postal / Ville</label>
+                    <input type="text" id="client-city" placeholder="11300 Limoux">
+                </div>
+            </div>
+            
+            <!-- Lignes de facture -->
+            <div class="items-section">
+                <h3>📦 Prestations / Articles</h3>
+                <div id="items-container">
+                    <!-- Items générés dynamiquement -->
+                </div>
+                <button class="btn-add-item" onclick="addItem()">
+                    <i class="fas fa-plus"></i> Ajouter une ligne
+                </button>
+            </div>
+            
+            <!-- Totaux -->
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Sous-total HT</span>
+                    <span id="subtotal">0,00 €</span>
+                </div>
+                <div class="total-row">
+                    <span>TVA (<span id="tva-rate">0</span>%)</span>
+                    <span id="tva-amount">0,00 €</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total TTC</span>
+                    <span id="total">0,00 €</span>
+                </div>
+            </div>
+            
+            <!-- Options -->
+            <div class="form-row" style="margin-top: 25px;">
+                <div class="form-group">
+                    <label>Taux de TVA (%)</label>
+                    <select id="tva-select" onchange="calculateTotals()">
+                        <option value="0">0% (Exonéré)</option>
+                        <option value="5.5">5,5%</option>
+                        <option value="10">10%</option>
+                        <option value="20" selected>20%</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Conditions de paiement</label>
+                    <select id="payment-terms">
+                        <option value="immediate">Paiement immédiat</option>
+                        <option value="15">Sous 15 jours</option>
+                        <option value="30">Sous 30 jours</option>
+                        <option value="45">Sous 45 jours</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Notes / Mentions légales</label>
+                <textarea id="invoice-notes" rows="3" placeholder="Conditions particulières, mentions légales..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Boutons -->
+        <div class="btn-group">
+            <button class="btn btn-preview" onclick="previewInvoice()">
+                <i class="fas fa-eye"></i> Aperçu
+            </button>
+            <button class="btn btn-generate" onclick="generatePDF()">
+                <i class="fas fa-file-pdf"></i> Télécharger PDF
+            </button>
+            <button class="btn btn-save" onclick="saveInvoice()">
+                <i class="fas fa-save"></i> Sauvegarder
+            </button>
+            <a href="admin.html" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+        </div>
+    </div>
+    
+    <!-- Modal aperçu -->
+    <div class="modal" id="preview-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePreview()">×</button>
+            <div class="invoice" id="invoice-preview">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- html2pdf pour export PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCw6cMaXCe8gqRYcRwuXT2gkzgDAcJLJp0",
+            authDomain: "eveil-et-vous.firebaseapp.com",
+            projectId: "eveil-et-vous",
+            storageBucket: "eveil-et-vous.firebasestorage.app",
+            messagingSenderId: "1059815739498",
+            appId: "1:1059815739498:web:0ad0c624266a46521c33f9"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        let items = [];
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Date du jour
+            document.getElementById('invoice-date').value = new Date().toISOString().split('T')[0];
+            
+            // Numéro de facture auto
+            generateInvoiceNumber();
+            
+            // Ajouter une première ligne
+            addItem();
+            
+            // Charger les factures sauvegardées
+            loadSavedInvoices();
+        });
+        
+        // Générer numéro de facture
+        async function generateInvoiceNumber() {
+            const year = new Date().getFullYear();
+            try {
+                const snapshot = await db.collection('factures')
+                    .where('year', '==', year)
+                    .orderBy('number', 'desc')
+                    .limit(1)
+                    .get();
+                
+                let nextNumber = 1;
+                if (!snapshot.empty) {
+                    nextNumber = (snapshot.docs[0].data().number || 0) + 1;
+                }
+                
+                document.getElementById('invoice-number').value = `FAC-${year}-${String(nextNumber).padStart(3, '0')}`;
+            } catch (e) {
+                document.getElementById('invoice-number').value = `FAC-${year}-001`;
+            }
+        }
+        
+        // Ajouter une ligne
+        function addItem() {
+            const id = Date.now();
+            items.push({ id, description: '', quantity: 1, price: 0 });
+            renderItems();
+        }
+        
+        // Supprimer une ligne
+        function removeItem(id) {
+            items = items.filter(item => item.id !== id);
+            if (items.length === 0) addItem();
+            renderItems();
+        }
+        
+        // Afficher les lignes
+        function renderItems() {
+            const container = document.getElementById('items-container');
+            container.innerHTML = items.map((item, index) => `
+                <div class="item-row">
+                    <div class="form-group" style="margin: 0;">
+                        <label style="font-size: 0.8rem;">Description</label>
+                        <input type="text" placeholder="Description" value="${item.description}" 
+                               onchange="updateItem(${item.id}, 'description', this.value)">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label style="font-size: 0.8rem;">Qté</label>
+                        <input type="number" min="1" value="${item.quantity}" 
+                               onchange="updateItem(${item.id}, 'quantity', this.value)">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label style="font-size: 0.8rem;">Prix unitaire (€)</label>
+                        <input type="number" min="0" step="0.01" value="${item.price}" 
+                               onchange="updateItem(${item.id}, 'price', this.value)">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label style="font-size: 0.8rem;">Total</label>
+                        <input type="text" value="${formatCurrency(item.quantity * item.price)}" readonly 
+                               style="background: #f5f5f5;">
+                    </div>
+                    <button class="btn-remove-item" onclick="removeItem(${item.id})" ${items.length === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            calculateTotals();
+        }
+        
+        // Mettre à jour une ligne
+        function updateItem(id, field, value) {
+            const item = items.find(i => i.id === id);
+            if (item) {
+                item[field] = field === 'description' ? value : parseFloat(value) || 0;
+                renderItems();
+            }
+        }
+        
+        // Calculer les totaux
+        function calculateTotals() {
+            const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+            const tvaRate = parseFloat(document.getElementById('tva-select').value) || 0;
+            const tvaAmount = subtotal * (tvaRate / 100);
+            const total = subtotal + tvaAmount;
+            
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('tva-rate').textContent = tvaRate;
+            document.getElementById('tva-amount').textContent = formatCurrency(tvaAmount);
+            document.getElementById('total').textContent = formatCurrency(total);
+        }
+        
+        // Formater en euros
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount);
+        }
+        
+        // Aperçu de la facture
+        function previewInvoice() {
+            const invoiceHTML = generateInvoiceHTML();
+            document.getElementById('invoice-preview').innerHTML = invoiceHTML;
+            document.getElementById('preview-modal').classList.add('active');
+        }
+        
+        // Fermer l'aperçu
+        function closePreview() {
+            document.getElementById('preview-modal').classList.remove('active');
+        }
+        
+        // Générer le HTML de la facture
+        function generateInvoiceHTML() {
+            const invoiceNumber = document.getElementById('invoice-number').value;
+            const invoiceDate = document.getElementById('invoice-date').value;
+            const clientName = document.getElementById('client-name').value || 'Client';
+            const clientEmail = document.getElementById('client-email').value;
+            const clientAddress = document.getElementById('client-address').value;
+            const clientPhone = document.getElementById('client-phone').value;
+            const clientCity = document.getElementById('client-city').value;
+            const notes = document.getElementById('invoice-notes').value;
+            const paymentTerms = document.getElementById('payment-terms').selectedOptions[0].text;
+            
+            const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+            const tvaRate = parseFloat(document.getElementById('tva-select').value) || 0;
+            const tvaAmount = subtotal * (tvaRate / 100);
+            const total = subtotal + tvaAmount;
+            
+            const formattedDate = new Date(invoiceDate).toLocaleDateString('fr-FR', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+            
+            return `
+                <div class="invoice-header">
+                    <div class="invoice-logo">
+                        <h1>🌈 Éveil & Vous</h1>
+                        <p>Séjours et ateliers d'éveil en famille</p>
+                        <p style="margin-top: 10px;">Limoux, Aude (11)</p>
+                        <p>contact@eveiletvous.org</p>
+                    </div>
+                    <div class="invoice-info">
+                        <h2>FACTURE</h2>
+                        <p><strong>N° :</strong> ${invoiceNumber}</p>
+                        <p><strong>Date :</strong> ${formattedDate}</p>
+                        <p><strong>Échéance :</strong> ${paymentTerms}</p>
+                    </div>
+                </div>
+                
+                <div class="invoice-parties">
+                    <div>
+                        <h3>Émetteur</h3>
+                        <p>
+                            <strong>Éveil & Vous</strong><br>
+                            [Adresse de l'entreprise]<br>
+                            11300 Limoux<br>
+                            SIRET: [Numéro SIRET]
+                        </p>
+                    </div>
+                    <div>
+                        <h3>Client</h3>
+                        <p>
+                            <strong>${clientName}</strong><br>
+                            ${clientAddress ? clientAddress + '<br>' : ''}
+                            ${clientCity ? clientCity + '<br>' : ''}
+                            ${clientPhone ? 'Tél: ' + clientPhone + '<br>' : ''}
+                            ${clientEmail ? 'Email: ' + clientEmail : ''}
+                        </p>
+                    </div>
+                </div>
+                
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${items.filter(i => i.description).map(item => `
+                            <tr>
+                                <td>${item.description}</td>
+                                <td>${item.quantity}</td>
+                                <td>${formatCurrency(item.price)}</td>
+                                <td>${formatCurrency(item.quantity * item.price)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                
+                <div class="invoice-totals">
+                    <div class="row">
+                        <span>Sous-total HT</span>
+                        <span>${formatCurrency(subtotal)}</span>
+                    </div>
+                    <div class="row">
+                        <span>TVA (${tvaRate}%)</span>
+                        <span>${formatCurrency(tvaAmount)}</span>
+                    </div>
+                    <div class="row total">
+                        <span>Total TTC</span>
+                        <span>${formatCurrency(total)}</span>
+                    </div>
+                </div>
+                
+                ${notes ? `
+                    <div class="invoice-notes">
+                        <h4>Notes</h4>
+                        <p>${notes}</p>
+                    </div>
+                ` : ''}
+                
+                <div class="invoice-footer">
+                    <p>Éveil & Vous - SIRET: [Numéro] - TVA: [Numéro TVA si applicable]</p>
+                    <p>Merci pour votre confiance !</p>
+                </div>
+            `;
+        }
+        
+        // Générer le PDF
+        function generatePDF() {
+            previewInvoice();
+            
+            const element = document.getElementById('invoice-preview');
+            const invoiceNumber = document.getElementById('invoice-number').value;
+            
+            const opt = {
+                margin: 10,
+                filename: `${invoiceNumber}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                closePreview();
+            });
+        }
+        
+        // Sauvegarder la facture
+        async function saveInvoice() {
+            const invoiceData = {
+                number: document.getElementById('invoice-number').value,
+                date: document.getElementById('invoice-date').value,
+                year: new Date().getFullYear(),
+                client: {
+                    name: document.getElementById('client-name').value,
+                    email: document.getElementById('client-email').value,
+                    address: document.getElementById('client-address').value,
+                    phone: document.getElementById('client-phone').value,
+                    city: document.getElementById('client-city').value
+                },
+                items: items.filter(i => i.description),
+                tvaRate: parseFloat(document.getElementById('tva-select').value),
+                paymentTerms: document.getElementById('payment-terms').value,
+                notes: document.getElementById('invoice-notes').value,
+                total: items.reduce((sum, item) => sum + (item.quantity * item.price), 0),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            try {
+                await db.collection('factures').add(invoiceData);
+                
+                // Ajouter à l'historique
+                await db.collection('historique').add({
+                    action: 'create',
+                    module: 'facture',
+                    title: `Facture ${invoiceData.number} créée`,
+                    description: `Client: ${invoiceData.client.name} - Total: ${formatCurrency(invoiceData.total)}`,
+                    user: sessionStorage.getItem('adminUser') || 'Admin',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert('✅ Facture sauvegardée !');
+                loadSavedInvoices();
+                
+                // Réinitialiser pour nouvelle facture
+                generateInvoiceNumber();
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('❌ Erreur lors de la sauvegarde');
+            }
+        }
+        
+        // Charger les factures sauvegardées
+        async function loadSavedInvoices() {
+            try {
+                const snapshot = await db.collection('factures')
+                    .orderBy('createdAt', 'desc')
+                    .limit(10)
+                    .get();
+                
+                if (snapshot.empty) {
+                    document.getElementById('saved-invoices').style.display = 'none';
+                    return;
+                }
+                
+                document.getElementById('saved-invoices').style.display = 'block';
+                
+                const list = document.getElementById('invoice-list');
+                list.innerHTML = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const date = data.date ? new Date(data.date).toLocaleDateString('fr-FR') : '';
+                    return `
+                        <div class="invoice-item">
+                            <div class="invoice-item-info">
+                                <h4>${data.number}</h4>
+                                <p>${data.client?.name || 'Client'} - ${date} - ${formatCurrency(data.total || 0)}</p>
+                            </div>
+                            <div class="invoice-item-actions">
+                                <button onclick="loadInvoice('${doc.id}')" style="background: var(--secondary); color: white;">
+                                    <i class="fas fa-edit"></i> Éditer
+                                </button>
+                                <button onclick="deleteInvoice('${doc.id}')" style="background: #f44336; color: white;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.log('Pas de factures sauvegardées');
+            }
+        }
+        
+        // Charger une facture existante
+        async function loadInvoice(id) {
+            try {
+                const doc = await db.collection('factures').doc(id).get();
+                if (!doc.exists) return;
+                
+                const data = doc.data();
+                
+                document.getElementById('invoice-number').value = data.number || '';
+                document.getElementById('invoice-date').value = data.date || '';
+                document.getElementById('client-name').value = data.client?.name || '';
+                document.getElementById('client-email').value = data.client?.email || '';
+                document.getElementById('client-address').value = data.client?.address || '';
+                document.getElementById('client-phone').value = data.client?.phone || '';
+                document.getElementById('client-city').value = data.client?.city || '';
+                document.getElementById('tva-select').value = data.tvaRate || 20;
+                document.getElementById('payment-terms').value = data.paymentTerms || 'immediate';
+                document.getElementById('invoice-notes').value = data.notes || '';
+                
+                items = data.items?.map((item, i) => ({ ...item, id: Date.now() + i })) || [];
+                if (items.length === 0) addItem();
+                renderItems();
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+        
+        // Supprimer une facture
+        async function deleteInvoice(id) {
+            if (!confirm('Supprimer cette facture ?')) return;
+            
+            try {
+                await db.collection('factures').doc(id).delete();
+                loadSavedInvoices();
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+        
+        // Vérifier la connexion admin Firebase
+        checkAdminAuth().then(() => {
+            initFirebase();
+        });
+    </script>
+</body>
+</html>
